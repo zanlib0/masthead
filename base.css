@@ -1,0 +1,162 @@
+/* ============================================================
+   MASTHEAD · base.css
+   Thin reset + bare-tag APPEARANCE ONLY + non-interactive
+   primitives. Zero spacing: no element here sets margin,
+   max-width, or position. Long-form rhythm is the caller's
+   job until .prose ships (DESIGN.md §9).
+   ============================================================ */
+
+/* ---------- Reset (minimal, bottom-up) ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+html { -webkit-text-size-adjust: 100%; }
+img, svg, video { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+
+/* ---------- Body ---------- */
+/* Root stays at the reader's default (≈16px). The fixed rem scale
+   is authored against that, so --text-18 resolves to a true 18px
+   reading size — the best-practice long-form body size — without
+   inflating every other token. Never hard-pin the root in px. */
+html { font-size: 100%; }
+body {
+  font-family: var(--font-serif);
+  font-feature-settings: var(--feat-serif);
+  font-variant-numeric: oldstyle-nums;
+  font-size: var(--text-18);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-prose);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Never fake a weight — EB Garamond's synthetic bold is the
+     "spilling ink" look. Pull the real variable axis or nothing. */
+  font-synthesis: none;
+}
+::selection { background: var(--selection-bg); color: var(--selection-fg); }
+
+/* ---------- Bare tags — appearance only, never spacing ----------
+   These exist so raw markup/markdown is legible. They set font,
+   colour, weight, leading. They never set margin/measure — that
+   is the caller's, or the deferred .prose scope's. */
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--track-display);
+  color: var(--ink);
+  text-wrap: balance;          /* even ragging on short headings */
+}
+h1 { font-size: var(--text-48); }
+h2 { font-size: var(--text-38); }
+h3 { font-size: var(--text-30); }
+h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--track-button);
+  color: var(--ink);
+}
+h4 { font-size: var(--text-20); }
+h5 { font-size: var(--text-14); letter-spacing: var(--track-eyebrow); }
+h6 { font-size: var(--text-12); letter-spacing: var(--track-eyebrow); color: var(--ink-3); }
+
+p { font-size: var(--text-18); line-height: var(--leading-prose); text-wrap: pretty; }
+small { font-size: var(--text-14); color: var(--ink-3); }
+strong, b { font-weight: var(--weight-semibold); }
+em, i { font-style: italic; }
+
+blockquote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-24);
+  line-height: 1.45;
+  color: var(--ink);
+}
+blockquote cite {
+  display: block;
+  font-family: var(--font-display);
+  font-style: normal;
+  font-size: var(--text-12);
+  letter-spacing: var(--track-eyebrow);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+code, kbd, samp { font-family: var(--font-mono); font-size: 0.9em; }
+pre { font-family: var(--font-mono); font-size: var(--text-14); line-height: 1.55; }
+pre code { font-size: inherit; }
+
+ul, ol { padding-left: 1.3em; }
+li::marker { color: var(--ink-3); }
+
+/* Bare links stay legible & accessible everywhere. The richer
+   treatments live in components/text-link.css (.text-link). */
+a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 0.6px;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 120ms, color 120ms;
+}
+a:hover { color: var(--accent-deep); text-decoration-color: var(--accent); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Primitives — non-interactive type & marks ----------
+   Utility-grade classes (not RSCSS two-word components). Still
+   layout-free: no margin, no measure. */
+.t-display  { font-family: var(--font-serif); font-weight: var(--weight-regular); font-size: var(--text-84); line-height: var(--leading-tight); letter-spacing: -0.018em; text-wrap: balance; }
+.t-heading  { font-family: var(--font-serif); font-weight: var(--weight-medium); font-size: var(--text-38); line-height: var(--leading-snug); text-wrap: balance; }
+.t-body     { font-family: var(--font-serif); font-size: var(--text-18); line-height: var(--leading-prose); text-wrap: pretty; }
+.t-lede     { font-family: var(--font-serif); font-style: italic; font-size: var(--text-24); line-height: 1.45; color: var(--ink-2); text-wrap: pretty; }
+.t-eyebrow  { font-family: var(--font-display); font-weight: var(--weight-semibold); font-size: var(--text-12); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--ink-3); }
+.t-label    { font-family: var(--font-display); font-weight: var(--weight-medium); font-size: var(--text-13); letter-spacing: 0.04em; text-transform: uppercase; }
+.t-mono     { font-family: var(--font-mono); font-size: var(--text-14); }
+.t-meta     { font-family: var(--font-serif); font-style: italic; font-size: var(--text-14); color: var(--ink-3); }
+.t-tabular  { font-variant-numeric: tabular-nums lining-nums; font-feature-settings: var(--feat-tabular); }
+/* Drop caps are intentionally NOT a system primitive — they are a
+   forward, per-article editorial concern (DESIGN.md §7, deferred). */
+
+/* Hairline rules — appearance only, zero margin. */
+.rule        { border: 0; border-top: var(--rule-1) solid var(--rule); }
+.rule-thick  { border: 0; border-top: var(--rule-2) solid var(--rule-strong); }
+.rule-double { border: 0; border-top: var(--rule-1) solid var(--rule); border-bottom: var(--rule-1) solid var(--rule); height: 4px; }
+hr           { border: 0; border-top: var(--rule-1) solid var(--rule); }
+
+/* Fleuron divider — a centred ❦ flanked by hairlines. No margin. */
+.fleuron-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  color: var(--rule);
+}
+.fleuron-divider::before,
+.fleuron-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+}
+.fleuron-divider > .mark {
+  font-family: var(--font-serif);
+  font-size: var(--text-20);
+  color: var(--ink-3);
+}
+
+.ornament { font-family: var(--font-serif); color: var(--ink-3); line-height: 1; }
+
+/* ---------- Motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

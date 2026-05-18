@@ -1,0 +1,100 @@
+/* ============================================================
+   .paper-card — a sheet of paper. FLAT by default.
+   Lift = literal duplicate sheets offset behind it: solid paper,
+   hairline edge, NO blur, NO rotation. Each deeper sheet sits
+   further into shadow (--sheet-1 darker, --sheet-2 darkest).
+   `position: relative` here is internal decoration scaffolding,
+   not placement of the card in the page.
+   -framed and -stack-* are mutually exclusive (both use ::before).
+
+   WHEN TO USE WHICH (elevation = how much is behind the surface,
+   never interactivity — the button owns "press me"):
+     • flat (default) ...... the resting state of almost everything.
+                             content that sits IN the page: list
+                             rows, form panels, peers in a grid.
+                             If unsure, flat.
+     • -stack-1 (1 sheet) .. "there is more behind this one": a card
+                             standing for a set (a thread, an album,
+                             a folder) or a single item promoted
+                             above its peers (featured / pinned).
+     • -stack-2 (2 sheets) . the heavy "pile of papers": a deep
+                             archive, a draft stack, or one hero
+                             object / a lifted dialog. Use sparingly;
+                             never a whole grid of them (noisy).
+   ============================================================ */
+.paper-card {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-1);
+  padding: var(--space-6);
+
+  > .title {
+    font-family: var(--font-serif);
+    font-weight: var(--weight-medium);
+    font-size: var(--text-24);
+    line-height: var(--leading-snug);
+    color: var(--ink);
+  }
+  > .body {
+    font-family: var(--font-serif);
+    font-size: var(--text-16);
+    line-height: var(--leading-prose);
+    color: var(--ink-2);
+  }
+  > .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-12);
+    letter-spacing: var(--track-eyebrow);
+    text-transform: uppercase;
+    color: var(--ink-3);
+    border-top: 1px solid var(--rule);
+    padding-top: var(--space-3);
+  }
+
+  /* Shared under-sheet template. */
+  &.-stack-1::before,
+  &.-stack-2::before,
+  &.-stack-2::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-1);
+    z-index: -1;
+  }
+  /* One sheet beneath — already a step into shadow. */
+  &.-stack-1::before {
+    background: var(--sheet-1);
+    transform: translate(var(--stack-shift), var(--stack-shift));
+  }
+  /* Two sheets — the deeper one is darker still (no rotation). */
+  &.-stack-2::before {
+    background: var(--sheet-1);
+    transform: translate(var(--stack-shift), var(--stack-shift));
+  }
+  &.-stack-2::after {
+    background: var(--sheet-2);
+    transform: translate(
+      calc(var(--stack-shift) * 2),
+      calc(var(--stack-shift) * 2));
+    z-index: -2;
+  }
+
+  /* Catalogue plate — a quiet doubled rule, inset. Softened:
+     a single firm (not jet-black) outer stroke + a hairline. */
+  &.-framed {
+    border: 1px solid var(--rule-strong);
+  }
+  &.-framed::before {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border: 1px solid var(--rule);
+    pointer-events: none;
+  }
+}

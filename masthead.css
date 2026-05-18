@@ -1,0 +1,31 @@
+/* ============================================================
+   MASTHEAD — entrypoint
+   The only file a consumer links. @imports everything in
+   cascade order. See DESIGN.md for the contract.
+   (@import must precede all other rules — this file is nothing
+   but imports, by design.)
+   ============================================================ */
+
+/* Webfonts — Google Fonts CDN (zero font management; needs net). */
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=League+Spartan:wght@100..900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+/* 1 — Tokens (immutable primitives + semantic aliases). */
+@import url('tokens/colours.css');
+@import url('tokens/type.css');
+@import url('tokens/space.css');
+@import url('tokens/shadows.css');
+
+/* 2 — Base: reset + bare-tag appearance + primitives. */
+@import url('base.css');
+
+/* 3 — Components (RSCSS, one per file, order-independent). */
+@import url('components/stamp-button.css');
+@import url('components/form-field.css');
+@import url('components/paper-card.css');
+@import url('components/data-table.css');
+@import url('components/press-masthead.css');
+@import url('components/cancel-stamp.css');
+@import url('components/text-link.css');
+
+/* 4 — Helpers (the only !important). */
+@import url('helpers.css');

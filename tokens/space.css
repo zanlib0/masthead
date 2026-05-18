@@ -1,0 +1,32 @@
+/* ============================================================
+   MASTHEAD · tokens/space.css
+   The 4px ruler, radii, rule weights.
+   NOTE: spacing is for a component's own intrinsic padding and
+   its internal gap ONLY. It is never emitted as margin — margin
+   is the caller's (see DESIGN.md §1).
+   ============================================================ */
+:root {
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Radii — print has none. 2px is the ceiling. */
+  --radius-0: 0;
+  --radius-1: 1px;
+  --radius-2: 2px;       /* MAX for anything rectangular */
+  --radius-pill: 9999px; /* the postmark only */
+
+  /* Rule weights — hairlines do the structural work */
+  --rule-1: 1px;
+  --rule-2: 2px;
+  --rule-3: 3px;
+}

@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-accent="sapphire">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Masthead — Specimen Book</title>
+<link rel="stylesheet" href="masthead.css">
+<style>
+/* ============================================================
+   CALLER LAYER — layout only. NOT part of Masthead.
+   Every margin, gap, grid, max-width and prose rhythm here
+   belongs to the consumer. Components carry none of it.
+   Prefixed .cl-* so it can never be mistaken for the system.
+   ============================================================ */
+.cl-page { max-width: 1140px; margin: 0 auto; padding: var(--space-12) var(--space-6) var(--space-24); }
+.cl-section { margin-top: var(--space-20); }
+.cl-section > .rule { margin: var(--space-4) 0 var(--space-10); }
+.cl-kicker { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-6); }
+.cl-lead { max-width: 60ch; margin-top: var(--space-3); color: var(--ink-2); }
+.cl-h4 { margin: var(--space-10) 0 var(--space-4); }
+.cl-h4:first-of-type { margin-top: var(--space-6); }
+
+.cl-grid { display: grid; gap: var(--space-6); }
+.cl-grid.-2 { grid-template-columns: repeat(2, 1fr); }
+.cl-grid.-3 { grid-template-columns: repeat(3, 1fr); }
+.cl-grid.-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 760px) { .cl-grid.-2, .cl-grid.-3, .cl-grid.-4 { grid-template-columns: 1fr; } }
+
+.cl-row { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
+.cl-stack > * + * { margin-top: var(--space-4); }
+
+.cl-spec { border: 1px solid var(--rule); border-radius: var(--radius-1); }
+.cl-spec > .cl-stage { padding: var(--space-8) var(--space-6); display: flex; flex-wrap: wrap; gap: var(--space-5); align-items: center; }
+.cl-spec > .cl-stage.-center { justify-content: center; }
+.cl-spec > .cl-stage.-block { display: block; }
+.cl-spec > .cl-cap {
+  border-top: 1px solid var(--rule); padding: var(--space-2) var(--space-4);
+  font-family: var(--font-mono); font-size: var(--text-12); color: var(--ink-3);
+  display: flex; justify-content: space-between; gap: var(--space-4);
+}
+.cl-note { font-family: var(--font-serif); font-style: italic; font-size: var(--text-14); color: var(--ink-3); margin-top: var(--space-3); max-width: 66ch; }
+
+.cl-ramp { display: grid; grid-template-columns: repeat(10, 1fr); border: 1px solid var(--rule); border-radius: var(--radius-1); overflow: hidden; }
+.cl-ramp > div { height: 46px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 3px; font-family: var(--font-mono); font-size: 9px; color: oklch(0 0 0 / .42); }
+.cl-ramp-label { font-family: var(--font-mono); font-size: var(--text-12); color: var(--ink-3); margin: var(--space-4) 0 var(--space-1); }
+.cl-chips { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.cl-chip { display: flex; flex-direction: column; gap: 4px; font-family: var(--font-mono); font-size: var(--text-12); color: var(--ink-3); }
+.cl-chip > i { display: block; width: 84px; height: 44px; border: 1px solid var(--rule); border-radius: var(--radius-1); }
+
+.cl-bar { background: var(--accent); height: 14px; border-radius: var(--radius-1); }
+.cl-radii { display: flex; gap: var(--space-5); flex-wrap: wrap; }
+.cl-radii > div { width: 80px; height: 64px; background: var(--paper-edge); border: 1px solid var(--ink-2); font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 4px; }
+
+.cl-type-row { display: grid; grid-template-columns: 5.5rem 1fr; gap: var(--space-5); align-items: baseline; padding: var(--space-2) 0; border-bottom: 1px solid var(--rule-soft); }
+.cl-type-row > code { font-family: var(--font-mono); font-size: var(--text-12); color: var(--ink-3); }
+
+.cl-stub { border: 1px dashed var(--ink-3); border-radius: var(--radius-1); padding: var(--space-5); color: var(--ink-3); }
+.cl-stub h4 { color: var(--ink-2); margin-bottom: 4px; }
+.cl-stub p { font-size: var(--text-14); font-style: italic; }
+
+.cl-dark { background: var(--paper); color: var(--ink); border-radius: var(--radius-2); padding: var(--space-10) var(--space-8); }
+
+.cl-uc { border: 1px solid var(--rule); border-radius: var(--radius-2); overflow: hidden; }
+.cl-uc + .cl-uc { margin-top: var(--space-10); }
+.cl-uc-body { padding: var(--space-12) var(--space-10); }
+.cl-uc-tag { font-family: var(--font-mono); font-size: var(--text-12); color: var(--ink-3); padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; }
+
+/* Devblog prose rhythm — DELIBERATELY caller-owned. The spacing
+   Masthead refuses to ship until .prose exists (DESIGN §9). */
+.cl-prose { max-width: 64ch; margin: var(--space-12) auto 0; }
+.cl-prose > * + * { margin-top: 1.1em; }
+.cl-prose > h2 { margin-top: 1.9em; }
+.cl-prose > h2 + * { margin-top: 0.5em; }
+.cl-prose .fleuron-divider { margin: 2em 0; }
+.cl-arthead { position: relative; }
+.cl-arthead .cancel-stamp { position: absolute; right: 0; top: 4px; }
+.cl-contents { margin: 1.6em 0; padding: var(--space-5) 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.cl-contents > .t-eyebrow { display: block; margin-bottom: var(--space-2); }
+.cl-pager { display: flex; justify-content: space-between; gap: var(--space-6); margin-top: 2.4em; border-top: 1px solid var(--rule); padding-top: var(--space-4); }
+
+.cl-catalogue { max-width: 760px; margin: 0 auto; }
+.cl-plates { margin-top: var(--space-12); }
+.cl-sub { max-width: 460px; margin: 0 auto; }
+.cl-sub .form-field + .form-field { margin-top: var(--space-5); }
+.cl-sub .stamp-button { margin-top: var(--space-6); }
+.cl-sub-foot { display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-6); }
+
+.cl-foot { margin-top: var(--space-24); color: var(--ink-3); font-size: var(--text-14); font-style: italic; }
+.cl-eyebrow-mono { font-family: var(--font-mono); font-size: var(--text-12); color: var(--ink-3); }
+.cl-lede { max-width: 60ch; margin-top: var(--space-6); }
+</style>
+</head>
+<body>
+<div class="cl-page">
+
+  <!-- ============ COVER ============ -->
+  <header class="press-masthead">
+    <a class="title" href="#">masthead</a>
+    <nav class="nav">
+      <a href="#tokens">tokens</a>
+      <a href="#components">components</a>
+      <a href="#cases" aria-current="page">in use</a>
+    </nav>
+  </header>
+  <p class="t-lede cl-lede">
+    A letterpress design system. Cool rag paper, blue&#8209;black ink, twelve
+    gemstone accents, hairline rules. The page is flat; only buttons lift off it;
+    only the cancellation stamp is allowed to be crooked.
+  </p>
+  <p class="cl-note">
+    Everything the system draws is layout&#8209;free. The
+    <code class="t-mono">.cl-*</code> caller layer owns every margin, grid and
+    measure on this page — proving the one rule: a component never carries its
+    demo's spacing with it.
+  </p>
+
+  <!-- ================================================================ -->
+  <!-- PART 1 — ISOLATION GALLERY                                        -->
+  <!-- ================================================================ -->
+
+  <!-- ---------- TOKENS ---------- -->
+  <section class="cl-section" id="tokens">
+    <div class="cl-kicker">
+      <span class="t-eyebrow">Part I · Plate 1</span>
+      <span class="cl-eyebrow-mono">tokens/</span>
+    </div>
+    <h2 class="t-heading">Tokens</h2>
+    <hr class="rule">
+    <p class="cl-lead">Layer 1 primitives are immutable; components only ever read
+      the Layer 2 semantic aliases. Every value is computed OKLCH.</p>
+
+    <h4 class="cl-h4">Gem ramps — twelve hues spread around the wheel</h4>
+    <div class="cl-stack" style="margin-top:var(--space-5)">
+      <div><div class="cl-ramp-label">ruby · 25&deg;</div><div class="cl-ramp"><div style="background:var(--gem-ruby-50)">50</div><div style="background:var(--gem-ruby-100)">100</div><div style="background:var(--gem-ruby-200)">200</div><div style="background:var(--gem-ruby-300)">300</div><div style="background:var(--gem-ruby-400)">400</div><div style="background:var(--gem-ruby-500)">500</div><div style="background:var(--gem-ruby-600)">600</div><div style="background:var(--gem-ruby-700)">700</div><div style="background:var(--gem-ruby-800)">800</div><div style="background:var(--gem-ruby-900)">900</div></div></div>
+      <div><div class="cl-ramp-label">carnelian · 47&deg;</div><div class="cl-ramp"><div style="background:var(--gem-carnelian-50)"></div><div style="background:var(--gem-carnelian-100)"></div><div style="background:var(--gem-carnelian-200)"></div><div style="background:var(--gem-carnelian-300)"></div><div style="background:var(--gem-carnelian-400)"></div><div style="background:var(--gem-carnelian-500)"></div><div style="background:var(--gem-carnelian-600)"></div><div style="background:var(--gem-carnelian-700)"></div><div style="background:var(--gem-carnelian-800)"></div><div style="background:var(--gem-carnelian-900)"></div></div></div>
+      <div><div class="cl-ramp-label">amber · 70&deg;</div><div class="cl-ramp"><div style="background:var(--gem-amber-50)"></div><div style="background:var(--gem-amber-100)"></div><div style="background:var(--gem-amber-200)"></div><div style="background:var(--gem-amber-300)"></div><div style="background:var(--gem-amber-400)"></div><div style="background:var(--gem-amber-500)"></div><div style="background:var(--gem-amber-600)"></div><div style="background:var(--gem-amber-700)"></div><div style="background:var(--gem-amber-800)"></div><div style="background:var(--gem-amber-900)"></div></div></div>
+      <div><div class="cl-ramp-label">citrine · 95&deg;</div><div class="cl-ramp"><div style="background:var(--gem-citrine-50)"></div><div style="background:var(--gem-citrine-100)"></div><div style="background:var(--gem-citrine-200)"></div><div style="background:var(--gem-citrine-300)"></div><div style="background:var(--gem-citrine-400)"></div><div style="background:var(--gem-citrine-500)"></div><div style="background:var(--gem-citrine-600)"></div><div style="background:var(--gem-citrine-700)"></div><div style="background:var(--gem-citrine-800)"></div><div style="background:var(--gem-citrine-900)"></div></div></div>
+      <div><div class="cl-ramp-label">peridot · 128&deg;</div><div class="cl-ramp"><div style="background:var(--gem-peridot-50)"></div><div style="background:var(--gem-peridot-100)"></div><div style="background:var(--gem-peridot-200)"></div><div style="background:var(--gem-peridot-300)"></div><div style="background:var(--gem-peridot-400)"></div><div style="background:var(--gem-peridot-500)"></div><div style="background:var(--gem-peridot-600)"></div><div style="background:var(--gem-peridot-700)"></div><div style="background:var(--gem-peridot-800)"></div><div style="background:var(--gem-peridot-900)"></div></div></div>
+      <div><div class="cl-ramp-label">emerald · 158&deg;</div><div class="cl-ramp"><div style="background:var(--gem-emerald-50)"></div><div style="background:var(--gem-emerald-100)"></div><div style="background:var(--gem-emerald-200)"></div><div style="background:var(--gem-emerald-300)"></div><div style="background:var(--gem-emerald-400)"></div><div style="background:var(--gem-emerald-500)"></div><div style="background:var(--gem-emerald-600)"></div><div style="background:var(--gem-emerald-700)"></div><div style="background:var(--gem-emerald-800)"></div><div style="background:var(--gem-emerald-900)"></div></div></div>
+      <div><div class="cl-ramp-label">malachite · 185&deg;</div><div class="cl-ramp"><div style="background:var(--gem-malachite-50)"></div><div style="background:var(--gem-malachite-100)"></div><div style="background:var(--gem-malachite-200)"></div><div style="background:var(--gem-malachite-300)"></div><div style="background:var(--gem-malachite-400)"></div><div style="background:var(--gem-malachite-500)"></div><div style="background:var(--gem-malachite-600)"></div><div style="background:var(--gem-malachite-700)"></div><div style="background:var(--gem-malachite-800)"></div><div style="background:var(--gem-malachite-900)"></div></div></div>
+      <div><div class="cl-ramp-label">turquoise · 213&deg;</div><div class="cl-ramp"><div style="background:var(--gem-turquoise-50)"></div><div style="background:var(--gem-turquoise-100)"></div><div style="background:var(--gem-turquoise-200)"></div><div style="background:var(--gem-turquoise-300)"></div><div style="background:var(--gem-turquoise-400)"></div><div style="background:var(--gem-turquoise-500)"></div><div style="background:var(--gem-turquoise-600)"></div><div style="background:var(--gem-turquoise-700)"></div><div style="background:var(--gem-turquoise-800)"></div><div style="background:var(--gem-turquoise-900)"></div></div></div>
+      <div><div class="cl-ramp-label">sapphire · 250&deg;</div><div class="cl-ramp"><div style="background:var(--gem-sapphire-50)"></div><div style="background:var(--gem-sapphire-100)"></div><div style="background:var(--gem-sapphire-200)"></div><div style="background:var(--gem-sapphire-300)"></div><div style="background:var(--gem-sapphire-400)"></div><div style="background:var(--gem-sapphire-500)"></div><div style="background:var(--gem-sapphire-600)"></div><div style="background:var(--gem-sapphire-700)"></div><div style="background:var(--gem-sapphire-800)"></div><div style="background:var(--gem-sapphire-900)"></div></div></div>
+      <div><div class="cl-ramp-label">lapis · 280&deg;</div><div class="cl-ramp"><div style="background:var(--gem-lapis-50)"></div><div style="background:var(--gem-lapis-100)"></div><div style="background:var(--gem-lapis-200)"></div><div style="background:var(--gem-lapis-300)"></div><div style="background:var(--gem-lapis-400)"></div><div style="background:var(--gem-lapis-500)"></div><div style="background:var(--gem-lapis-600)"></div><div style="background:var(--gem-lapis-700)"></div><div style="background:var(--gem-lapis-800)"></div><div style="background:var(--gem-lapis-900)"></div></div></div>
+      <div><div class="cl-ramp-label">amethyst · 310&deg;</div><div class="cl-ramp"><div style="background:var(--gem-amethyst-50)"></div><div style="background:var(--gem-amethyst-100)"></div><div style="background:var(--gem-amethyst-200)"></div><div style="background:var(--gem-amethyst-300)"></div><div style="background:var(--gem-amethyst-400)"></div><div style="background:var(--gem-amethyst-500)"></div><div style="background:var(--gem-amethyst-600)"></div><div style="background:var(--gem-amethyst-700)"></div><div style="background:var(--gem-amethyst-800)"></div><div style="background:var(--gem-amethyst-900)"></div></div></div>
+      <div><div class="cl-ramp-label">tourmaline · 350&deg;</div><div class="cl-ramp"><div style="background:var(--gem-tourmaline-50)"></div><div style="background:var(--gem-tourmaline-100)"></div><div style="background:var(--gem-tourmaline-200)"></div><div style="background:var(--gem-tourmaline-300)"></div><div style="background:var(--gem-tourmaline-400)"></div><div style="background:var(--gem-tourmaline-500)"></div><div style="background:var(--gem-tourmaline-600)"></div><div style="background:var(--gem-tourmaline-700)"></div><div style="background:var(--gem-tourmaline-800)"></div><div style="background:var(--gem-tourmaline-900)"></div></div></div>
+    </div>
+
+    <h4 class="cl-h4">Neutral ramps — paper &amp; ink</h4>
+    <div class="cl-stack" style="margin-top:var(--space-5)">
+      <div><div class="cl-ramp-label">paper 50&ndash;900</div><div class="cl-ramp"><div style="background:var(--paper-50)"></div><div style="background:var(--paper-100)"></div><div style="background:var(--paper-200)"></div><div style="background:var(--paper-300)"></div><div style="background:var(--paper-400)"></div><div style="background:var(--paper-500)"></div><div style="background:var(--paper-600)"></div><div style="background:var(--paper-700)"></div><div style="background:var(--paper-800)"></div><div style="background:var(--paper-900)"></div></div></div>
+      <div><div class="cl-ramp-label">ink 50&ndash;900</div><div class="cl-ramp"><div style="background:var(--ink-50)"></div><div style="background:var(--ink-100)"></div><div style="background:var(--ink-200)"></div><div style="background:var(--ink-300)"></div><div style="background:var(--ink-400)"></div><div style="background:var(--ink-500)"></div><div style="background:var(--ink-600)"></div><div style="background:var(--ink-700)"></div><div style="background:var(--ink-800)"></div><div style="background:var(--ink-900)"></div></div></div>
+    </div>
+
+    <h4 class="cl-h4">Semantic aliases (sapphire accent)</h4>
+    <div class="cl-chips" style="margin-top:var(--space-4)">
+      <span class="cl-chip"><i style="background:var(--paper)"></i>--paper</span>
+      <span class="cl-chip"><i style="background:var(--paper-sunk)"></i>--paper-sunk</span>
+      <span class="cl-chip"><i style="background:var(--paper-edge)"></i>--paper-edge</span>
+      <span class="cl-chip"><i style="background:var(--ink)"></i>--ink</span>
+      <span class="cl-chip"><i style="background:var(--ink-2)"></i>--ink-2</span>
+      <span class="cl-chip"><i style="background:var(--ink-3)"></i>--ink-3</span>
+      <span class="cl-chip"><i style="background:var(--rule)"></i>--rule</span>
+      <span class="cl-chip"><i style="background:var(--rule-strong)"></i>--rule-strong</span>
+      <span class="cl-chip"><i style="background:var(--accent)"></i>--accent</span>
+      <span class="cl-chip"><i style="background:var(--accent-solid)"></i>--accent-solid</span>
+      <span class="cl-chip"><i style="background:var(--accent-deep)"></i>--accent-deep</span>
+      <span class="cl-chip"><i style="background:var(--accent-tint)"></i>--accent-tint</span>
+      <span class="cl-chip"><i style="background:var(--ok)"></i>--ok</span>
+      <span class="cl-chip"><i style="background:var(--warn)"></i>--warn</span>
+      <span class="cl-chip"><i style="background:var(--err)"></i>--err</span>
+      <span class="cl-chip"><i style="background:var(--info)"></i>--info</span>
+    </div>
+
+    <div class="cl-grid -2" style="margin-top:var(--space-10)">
+      <div>
+        <h4>Spacing — the 4px ruler</h4>
+        <div class="cl-stack" style="margin-top:var(--space-4)">
+          <div class="cl-bar" style="width:var(--space-1)"></div>
+          <div class="cl-bar" style="width:var(--space-2)"></div>
+          <div class="cl-bar" style="width:var(--space-4)"></div>
+          <div class="cl-bar" style="width:var(--space-6)"></div>
+          <div class="cl-bar" style="width:var(--space-8)"></div>
+          <div class="cl-bar" style="width:var(--space-12)"></div>
+          <div class="cl-bar" style="width:var(--space-16)"></div>
+          <div class="cl-bar" style="width:var(--space-24)"></div>
+        </div>
+        <p class="cl-note">For intrinsic padding &amp; internal gap only — never margin.</p>
+      </div>
+      <div>
+        <h4>Radii — print has almost none</h4>
+        <div class="cl-radii" style="margin-top:var(--space-4)">
+          <div style="border-radius:var(--radius-0)">0</div>
+          <div style="border-radius:var(--radius-1)">1px</div>
+          <div style="border-radius:var(--radius-2)">2px max</div>
+          <div style="border-radius:var(--radius-pill)">pill*</div>
+        </div>
+        <p class="cl-note">*pill is reserved for the postmark alone.</p>
+      </div>
+    </div>
+
+    <h4 class="cl-h4">Type scale — fixed rem steps</h4>
+    <div style="margin-top:var(--space-4)">
+      <div class="cl-type-row"><code>--text-12</code><span style="font-size:var(--text-12)">The deliberate press of small apps</span></div>
+      <div class="cl-type-row"><code>--text-16</code><span style="font-size:var(--text-16)">The deliberate press of small apps</span></div>
+      <div class="cl-type-row"><code>--text-18</code><span style="font-size:var(--text-18)">The deliberate press of small apps</span></div>
+      <div class="cl-type-row"><code>--text-24</code><span style="font-size:var(--text-24)">The deliberate press of small apps</span></div>
+      <div class="cl-type-row"><code>--text-38</code><span style="font-size:var(--text-38)">Small apps</span></div>
+      <div class="cl-type-row"><code>--text-64</code><span style="font-size:var(--text-64);line-height:1.05">Press</span></div>
+      <div class="cl-type-row"><code>--display-2</code><span style="font-size:var(--display-2);line-height:1.02">Press</span></div>
+    </div>
+    <p class="cl-note">The last row is an opt-in fluid <code>--display-*</code> token,
+      applied by the caller (resize the window) — exactly like <code>.prose</code>.
+      Components themselves only use the fixed steps.</p>
+  </section>
+
+  <!-- ---------- PRIMITIVES ---------- -->
+  <section class="cl-section">
+    <div class="cl-kicker"><span class="t-eyebrow">Part I · Plate 2</span><span class="cl-eyebrow-mono">base.css</span></div>
+    <h2 class="t-heading">Primitives</h2>
+    <hr class="rule">
+    <div class="cl-grid -2">
+      <div class="cl-spec">
+        <div class="cl-stage" style="flex-direction:column;align-items:stretch;gap:var(--space-4)">
+          <span class="t-display" style="font-size:var(--text-38)">Display</span>
+          <span class="t-heading">Heading</span>
+          <span class="t-lede">A lede, set in italic serif.</span>
+          <span class="t-body">Body — EB Garamond at eighteen, weight 400.</span>
+          <span class="t-eyebrow">Eyebrow label</span>
+          <span class="t-label">UI label</span>
+          <span class="t-mono">mono 14 · 0027</span>
+          <span class="t-meta">metadata, italic</span>
+        </div>
+        <div class="cl-cap"><span>type roles</span><span>.t-display … .t-meta</span></div>
+      </div>
+      <div class="cl-spec">
+        <div class="cl-stage" style="flex-direction:column;align-items:stretch;gap:var(--space-5)">
+          <span class="t-body"><strong>Strong</strong> is a restrained 600 — no spilling ink.</span>
+          <hr class="rule">
+          <hr class="rule-thick">
+          <div class="rule-double"></div>
+          <div class="fleuron-divider"><span class="mark">&#10086;</span></div>
+          <span class="ornament" style="font-size:var(--text-24)">&#10087; &#10086; &#9670; &#167; &#182; &#8470;</span>
+        </div>
+        <div class="cl-cap"><span>weight · marks · rules</span><span>.rule · .fleuron-divider · .ornament</span></div>
+      </div>
+    </div>
+    <p class="cl-note">No drop cap: it is a forward, per-article editorial decision,
+      not a system primitive (DESIGN&nbsp;§7).</p>
+  </section>
+
+  <!-- ---------- COMPONENTS ---------- -->
+  <section class="cl-section" id="components">
+    <div class="cl-kicker"><span class="t-eyebrow">Part I · Plate 3</span><span class="cl-eyebrow-mono">components/</span></div>
+    <h2 class="t-heading">Components</h2>
+    <hr class="rule">
+    <p class="cl-lead">Each is a sealed box in an isolation frame. The frame and its
+      padding are caller chrome; the component brings only itself.</p>
+
+    <!-- stamp-button -->
+    <h4 class="cl-h4">.stamp-button — a desk paperweight</h4>
+    <div class="cl-spec">
+      <div class="cl-stage">
+        <button class="stamp-button">Subscribe</button>
+        <button class="stamp-button -accent">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Buy a licence
+        </button>
+        <button class="stamp-button -ghost">Read more</button>
+        <button class="stamp-button" disabled>Unavailable</button>
+        <button class="stamp-button -small">Export</button>
+        <button class="stamp-button -large -accent">Get started</button>
+      </div>
+      <div class="cl-cap"><span>default · -accent · -ghost · :disabled · -small · -large</span><span>hover &amp; press are live — try them</span></div>
+    </div>
+    <p class="cl-note">A matte solid lit from the upper-left: a key-light pool at
+      that corner, the face curving into its own shade opposite, and a cast thrown
+      down-right onto the paper. Hover brightens the light (no jump); pressing
+      settles it in. The label is engraved. <code>-ghost</code> is the flat
+      exception.</p>
+
+    <!-- form-field -->
+    <h4 class="cl-h4">.form-field</h4>
+    <div class="cl-spec">
+      <div class="cl-stage" style="gap:var(--space-8);align-items:flex-start">
+        <div class="form-field" style="width:240px">
+          <label class="label" for="d1">Email address</label>
+          <input class="input" id="d1" type="email" placeholder="you@example.com">
+        </div>
+        <div class="form-field -boxed" style="width:240px">
+          <label class="label" for="d2">Mail-order box</label>
+          <input class="input" id="d2" type="text" placeholder="Catalogue &#8470;">
+        </div>
+      </div>
+      <div class="cl-cap"><span>default ruled line · -boxed</span><span>focus an input for the accent</span></div>
+    </div>
+
+    <!-- paper-card -->
+    <h4 class="cl-h4">.paper-card — flat default, stacked-paper lift</h4>
+    <div class="cl-grid -4">
+      <article class="paper-card">
+        <div class="title">Flat</div>
+        <div class="body">The default. Content that sits in the page.</div>
+      </article>
+      <article class="paper-card -stack-1">
+        <div class="title">-stack-1</div>
+        <div class="body">"More behind this one" — a set, or a pinned item.</div>
+      </article>
+      <article class="paper-card -stack-2">
+        <div class="title">-stack-2</div>
+        <div class="body">The heavy pile: archive, draft stack, a dialog.</div>
+      </article>
+      <article class="paper-card -framed">
+        <div class="title">-framed</div>
+        <div class="body">Catalogue plate — a quiet doubled rule.</div>
+      </article>
+    </div>
+    <p class="cl-note">Elevation encodes how much is <em>behind</em> the surface,
+      never interactivity. Deeper sheets sit further into shadow. Use
+      <code>-stack-2</code> sparingly — never a whole grid of it.</p>
+
+    <!-- data-table + toc-row -->
+    <h4 class="cl-h4">.data-table &amp; .toc-row</h4>
+    <div class="cl-grid -2">
+      <div class="cl-spec"><div class="cl-stage -block" style="padding:var(--space-5)">
+        <table class="data-table -numeric">
+          <thead><tr><th>City</th><th>Index</th><th>Reading</th></tr></thead>
+          <tbody>
+            <tr><td>Reykjav&iacute;k</td><td>14</td><td>Good</td></tr>
+            <tr><td>Lisbon</td><td>38</td><td>Fair</td></tr>
+            <tr><td>Jakarta</td><td>171</td><td>Poor</td></tr>
+          </tbody>
+        </table>
+      </div><div class="cl-cap"><span>.data-table</span><span>softened head rule, tabular figures</span></div></div>
+      <div class="cl-spec"><div class="cl-stage -block" style="padding:var(--space-6)">
+        <div class="toc-row"><span>On the Composition of Small Apps</span><span class="leader"></span><span class="meta">3 min</span></div>
+        <div class="toc-row"><span>A Field Guide to Hairlines</span><span class="leader"></span><span class="meta">6 min</span></div>
+        <div class="toc-row"><span>On the Gemstone Palette</span><span class="leader"></span><span class="meta">4 min</span></div>
+      </div><div class="cl-cap"><span>.toc-row</span><span>article contents — reading time, not page &#8470;</span></div></div>
+    </div>
+
+    <!-- press-masthead -->
+    <h4 class="cl-h4">.press-masthead</h4>
+    <div class="cl-spec">
+      <div class="cl-stage -block" style="padding:var(--space-6)">
+        <header class="press-masthead">
+          <a class="title" href="#">tianlou press</a>
+          <nav class="nav">
+            <a href="#" aria-current="page">inventory</a>
+            <a href="#">compose</a>
+            <a href="#">archive</a>
+            <a href="#">account</a>
+          </nav>
+        </header>
+      </div>
+      <div class="cl-cap"><span>lowercase italic title · roman nav · accent dot on current</span><span>one hairline beneath</span></div>
+    </div>
+
+    <!-- cancel-stamp -->
+    <h4 class="cl-h4">.cancel-stamp — the only badge-like thing</h4>
+    <div class="cl-spec">
+      <div class="cl-stage -center" style="gap:var(--space-8)">
+        <span class="cancel-stamp">Cancelled</span>
+        <span class="cancel-stamp -tourmaline">Expired</span>
+        <span class="cancel-stamp -emerald">Paid</span>
+        <span class="cancel-stamp -amber">Draft</span>
+        <span class="cancel-stamp -postmark"><span class="top">MASTHEAD</span><span class="rule"></span><span class="bot">2026</span></span>
+        <span class="cancel-stamp -postmark -ruby"><span class="top">VOID</span><span class="rule"></span><span class="bot">&#8470; 4418</span></span>
+      </div>
+      <div class="cl-cap"><span>accent default · gem variants · -postmark (scales to text)</span><span>no strikethrough · ink-bled</span></div>
+    </div>
+    <p class="cl-note">A cluster shouldn't be uniform. The lean is the caller's
+      job — the <code>._tilt-*</code> helpers, not baked into the stamp:</p>
+    <div class="cl-row" style="margin-top:var(--space-4);gap:var(--space-3)">
+      <span class="cancel-stamp _tilt-1">Typography</span>
+      <span class="cancel-stamp _tilt-4">Letterpress</span>
+      <span class="cancel-stamp _tilt-2">Indie</span>
+      <span class="cancel-stamp _tilt-6">Botanical</span>
+      <span class="cancel-stamp _tilt-3">Catalogue</span>
+      <span class="cancel-stamp _tilt-5">Press</span>
+    </div>
+
+    <!-- text-link -->
+    <h4 class="cl-h4">.text-link</h4>
+    <div class="cl-spec">
+      <div class="cl-stage" style="gap:var(--space-8)">
+        <a class="text-link" href="#">a default link</a>
+        <a class="text-link -reference" href="#">the colophon</a>
+        <a class="text-link -runninghead" href="#" aria-current="page">Chapter II</a>
+      </div>
+      <div class="cl-cap"><span>default · -reference (matched underline) · -runninghead</span><span>flat, no shadow, focus-ringed</span></div>
+    </div>
+    <p class="cl-note">A running-head is for printed-page navigation cues — e.g. a
+      section pager:</p>
+    <div class="cl-row" style="margin-top:var(--space-4);gap:var(--space-6)">
+      <a class="text-link -runninghead" href="#">&#9666; Prologue</a>
+      <a class="text-link -runninghead" href="#" aria-current="page">Chapter II</a>
+      <a class="text-link -runninghead" href="#">Chapter III &#9656;</a>
+    </div>
+  </section>
+
+  <!-- ---------- THEME + ACCENT ---------- -->
+  <section class="cl-section">
+    <div class="cl-kicker"><span class="t-eyebrow">Part I · Plate 4</span><span class="cl-eyebrow-mono">data-theme · data-accent</span></div>
+    <h2 class="t-heading">Theme &amp; retint</h2>
+    <hr class="rule">
+    <div class="cl-dark" data-theme="dark">
+      <span class="t-eyebrow">data-theme="dark" — candlelit, not screen-lit</span>
+      <div class="cl-row" style="margin-top:var(--space-6)">
+        <button class="stamp-button -accent">Subscribe</button>
+        <button class="stamp-button -ghost">Read more</button>
+        <span class="cancel-stamp">Archived</span>
+        <a class="text-link -reference" href="#">a reference</a>
+      </div>
+      <article class="paper-card -stack-2" style="margin-top:var(--space-8);max-width:340px">
+        <div class="title">Night edition</div>
+        <div class="body">Accent lifts to a lighter step and the tint/deep ends
+          flip, so the gem glows by candle rather than screen.</div>
+      </article>
+    </div>
+    <p class="cl-note">Same components, one attribute. Below: one button, six
+      accents — <code>data-accent</code> only re-points hue &amp; chroma.</p>
+    <div class="cl-row" style="margin-top:var(--space-4)">
+      <span data-accent="ruby"><button class="stamp-button -accent">Ruby</button></span>
+      <span data-accent="peridot"><button class="stamp-button -accent">Peridot</button></span>
+      <span data-accent="emerald"><button class="stamp-button -accent">Emerald</button></span>
+      <span data-accent="lapis"><button class="stamp-button -accent">Lapis</button></span>
+      <span data-accent="amethyst"><button class="stamp-button -accent">Amethyst</button></span>
+      <span data-accent="tourmaline"><button class="stamp-button -accent">Tourmaline</button></span>
+    </div>
+  </section>
+
+  <!-- ---------- DEFERRED ---------- -->
+  <section class="cl-section">
+    <div class="cl-kicker"><span class="t-eyebrow">Part I · Plate 5</span><span class="cl-eyebrow-mono">documented · not built</span></div>
+    <h2 class="t-heading">Deferred</h2>
+    <hr class="rule">
+    <p class="cl-lead">Named and specified in DESIGN.md, intentionally unbuilt
+      until a real use-case needs them — the same discipline as <code>.prose</code>.</p>
+    <div class="cl-grid -3" style="margin-top:var(--space-6)">
+      <div class="cl-stub"><h4>.prose</h4><p>Opt-in long-form rhythm + measure. Caller owns it meanwhile.</p></div>
+      <div class="cl-stub"><h4>Drop cap</h4><p>Forward, per-article editorial choice — not a primitive.</p></div>
+      <div class="cl-stub"><h4>Instrument gauge</h4><p>Victorian readout: ruled box, label, tabular value, unit.</p></div>
+      <div class="cl-stub"><h4>Tabs · switch · kbd</h4><p>App-shell chrome; built when a shell needs them.</p></div>
+      <div class="cl-stub"><h4>text-link -folio · -manicule</h4><p>Leader-dot folio link; &#9758; manicule link.</p></div>
+      <div class="cl-stub"><h4>Press Ornaments tier</h4><p>Cartouche, ticket/perforation, vertical-type, serial, microtype.</p></div>
+    </div>
+  </section>
+
+  <!-- ================================================================ -->
+  <!-- PART 2 — USE-CASES                                                -->
+  <!-- ================================================================ -->
+  <section class="cl-section" id="cases">
+    <div class="cl-kicker"><span class="t-eyebrow">Part II</span><span class="cl-eyebrow-mono">core only · 3 accents</span></div>
+    <h2 class="t-heading">In use</h2>
+    <hr class="rule">
+    <p class="cl-lead">Three surfaces built from core v1 only. Each picks a
+      different accent to prove single-accent retinting. All layout is caller CSS.</p>
+
+    <!-- Devblog -->
+    <div class="cl-uc" data-accent="lapis" style="margin-top:var(--space-8)">
+      <div class="cl-uc-tag"><span>use-case · devblog</span><span>data-accent="lapis"</span></div>
+      <div class="cl-uc-body">
+        <header class="press-masthead">
+          <a class="title" href="#">hairline</a>
+          <nav class="nav">
+            <a href="#">archive</a>
+            <a href="#" aria-current="page">essay</a>
+            <a href="#">about</a>
+          </nav>
+        </header>
+        <article class="cl-prose">
+          <div class="cl-arthead">
+            <span class="t-eyebrow">Volume I · Field notes</span>
+            <h1 class="t-display" style="font-size:var(--display-1)">An inventory of forms</h1>
+            <span class="cancel-stamp _tilt-5">Draft</span>
+          </div>
+          <p>The trouble with most software is that it tries to be more than
+            three things. A press for the deliberately small assumes you ship on
+            Tuesdays — and that a 1px rule outperforms a 4px shadow.</p>
+          <nav class="cl-contents" aria-label="Contents">
+            <span class="t-eyebrow">Contents</span>
+            <div class="toc-row"><a class="text-link" href="#stacked">On stacked paper</a><span class="leader"></span><span class="meta">3 min</span></div>
+            <div class="toc-row"><a class="text-link" href="#">On the gemstone palette</a><span class="leader"></span><span class="meta">5 min</span></div>
+          </nav>
+          <p>EB Garamond at eighteen, weight 400, old-style figures in the running
+            text. The rhythm you are reading is supplied by the
+            <code class="t-mono">.cl-prose</code> caller layer — Masthead itself
+            ships none of this spacing, by design.</p>
+          <div class="fleuron-divider"><span class="mark">&#10087;</span></div>
+          <h2 id="stacked" class="t-heading" style="font-size:var(--text-30)">On stacked paper</h2>
+          <p>Elevation here is literal: sheets of paper offset behind a surface,
+            each deeper one further into shadow, no blur, no rotation. See the
+            <a class="text-link -reference" href="#">colophon</a> for the method.</p>
+          <div class="cl-pager">
+            <a class="text-link -runninghead" href="#">&#9666; Prologue</a>
+            <a class="text-link -runninghead" href="#">Next: The Palette &#9656;</a>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- Catalogue -->
+    <div class="cl-uc" data-accent="emerald">
+      <div class="cl-uc-tag"><span>use-case · catalogue / index</span><span>data-accent="emerald"</span></div>
+      <div class="cl-uc-body">
+        <div class="cl-catalogue">
+          <header class="press-masthead">
+            <a class="title" href="#">catalogue of forms</a>
+            <nav class="nav">
+              <a href="#" aria-current="page">all plates</a>
+              <a href="#">drafts</a>
+              <a href="#">published</a>
+              <a href="#">archived</a>
+            </nav>
+          </header>
+          <div class="cl-grid -2 cl-plates">
+            <article class="paper-card -framed">
+              <span class="t-eyebrow">Plate &#8470; 004</span>
+              <div class="title" style="margin-top:var(--space-2)">On Composition</div>
+              <div class="body">Why three things is the limit.</div>
+              <div class="foot"><span>L. van der Berg</span><a class="text-link -runninghead" href="#">Read</a></div>
+            </article>
+            <article class="paper-card -stack-1">
+              <span class="t-eyebrow">Plate &#8470; 005</span>
+              <div class="title" style="margin-top:var(--space-2)">Field Guide</div>
+              <div class="body">A 1px rule, since 1894.</div>
+              <div class="foot"><span>R. Okafor</span><a class="text-link -runninghead" href="#">Read</a></div>
+            </article>
+          </div>
+          <div class="cl-pager">
+            <a class="text-link -runninghead" href="#">&#9666; Volume I</a>
+            <a class="text-link -runninghead" href="#" aria-current="page">Typography</a>
+            <a class="text-link -runninghead" href="#">Ornaments &#9656;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subscription -->
+    <div class="cl-uc" data-accent="amber">
+      <div class="cl-uc-tag"><span>use-case · subscription panel</span><span>data-accent="amber"</span></div>
+      <div class="cl-uc-body">
+        <article class="cl-sub paper-card -stack-2">
+          <span class="t-eyebrow">The Press</span>
+          <h2 class="title" style="font-size:var(--text-30);margin-top:var(--space-2)">Subscribe by mail</h2>
+          <p class="body" style="margin-top:var(--space-3)">Twelve dispatches a year, on Sundays. Old-style figures included.</p>
+          <div style="margin-top:var(--space-8)">
+            <div class="form-field">
+              <label class="label" for="s1">Name</label>
+              <input class="input" id="s1" type="text" placeholder="As it should be set">
+            </div>
+            <div class="form-field -boxed">
+              <label class="label" for="s2">Email</label>
+              <input class="input" id="s2" type="email" placeholder="you@example.com">
+            </div>
+          </div>
+          <button class="stamp-button -accent -large" style="width:100%">Subscribe</button>
+          <div class="cl-sub-foot">
+            <span class="t-meta">Volume I</span>
+            <span class="cancel-stamp -emerald _tilt-3">Paid</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <p class="cl-foot">
+    Masthead · a specimen book set in EB&nbsp;Garamond, League&nbsp;Spartan and
+    IBM&nbsp;Plex&nbsp;Mono. Every flourish earns its place. &#10087;
+  </p>
+
+</div>
+</body>
+</html>

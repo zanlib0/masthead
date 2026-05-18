@@ -1,0 +1,63 @@
+/* ============================================================
+   .data-table — a catalogue table, and the .toc-row line.
+   width:100% lets the grid fill the caller's container (same
+   idea as an input filling its field); the container size and
+   placement remain the caller's.
+   ============================================================ */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-serif);
+  font-variant-numeric: tabular-nums oldstyle-nums;
+
+  > thead th {
+    font-family: var(--font-display);
+    font-weight: var(--weight-semibold);
+    font-size: var(--text-12);
+    letter-spacing: var(--track-eyebrow);
+    text-transform: uppercase;
+    color: var(--ink-2);
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--rule-strong);
+  }
+  > tbody td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--rule-soft);
+    font-size: var(--text-15);
+    color: var(--ink-2);
+  }
+  > tbody tr:hover td { background: var(--paper-sunk); }
+
+  &.-numeric > tbody td { font-variant-numeric: tabular-nums lining-nums; }
+}
+
+/* ---------- .toc-row — an article-contents line ----------
+   Websites have no page numbers, so this is NOT a print index.
+   It's the auto-generated "Contents" you put at the top of a long
+   article: section title · leader dots · a meta slot (an estimated
+   reading time, or a section anchor). grid arranges its own three
+   parts; the caller still owns where the list sits. */
+.toc-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: 6px 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-16);
+  color: var(--ink);
+
+  > .leader {
+    border-bottom: 1.5px dotted var(--rule);
+    transform: translateY(-3px);
+  }
+  > .meta {
+    font-family: var(--font-display);
+    font-size: var(--text-12);
+    letter-spacing: var(--track-eyebrow);
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  &:hover > .leader { border-bottom-color: var(--accent); }
+}

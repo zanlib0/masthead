@@ -1,0 +1,57 @@
+/* ============================================================
+   .form-field — a label stacked over an input.
+   The column + gap arrange the field's OWN parts (intrinsic).
+   The field's width and where it sits are the caller's.
+   ============================================================ */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  > .label {
+    font-family: var(--font-display);
+    font-weight: var(--weight-medium);
+    font-size: var(--text-12);
+    letter-spacing: var(--track-eyebrow);
+    text-transform: uppercase;
+    color: var(--ink-2);
+  }
+
+  /* Default: a ruled writing line, like a ledger entry. */
+  > .input {
+    width: 100%;                       /* fills the field, not the page */
+    font-family: var(--font-serif);
+    font-size: var(--text-16);
+    color: var(--ink);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--ink);
+    border-radius: 0;
+    padding: 8px 2px;
+    outline: 0;
+  }
+  > .input::placeholder { color: var(--ink-3); font-style: italic; }
+  > .input:focus {
+    border-bottom-width: 2px;
+    border-bottom-color: var(--accent);
+    padding-bottom: 7px;               /* hold the box steady on focus */
+  }
+  > .input:disabled {
+    color: var(--ink-3);
+    border-bottom-style: dashed;
+    cursor: not-allowed;
+  }
+
+  /* — Boxed: a mail-order entry box — */
+  &.-boxed > .input {
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    border-radius: var(--radius-1);
+    padding: 10px 12px;
+  }
+  &.-boxed > .input:focus {
+    border-width: 1px;
+    border-color: var(--accent);
+    padding: 10px 12px;
+  }
+}

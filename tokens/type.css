@@ -1,0 +1,59 @@
+/* ============================================================
+   MASTHEAD · tokens/type.css
+   Families, a FIXED rem scale (components read these), an opt-in
+   fluid --display-* tier (the caller reaches for it, like .prose),
+   plus leading / tracking / weight. Webfonts are @imported by the
+   masthead.css entrypoint (must precede all rules).
+   ============================================================ */
+:root {
+  /* Families */
+  --font-serif:   'EB Garamond', 'Hoefler Text', Garamond, Georgia, serif;
+  --font-display: 'League Spartan', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, Menlo, 'SF Mono', monospace;
+
+  /* OpenType features — the reason to use a real book face */
+  --feat-serif:   "onum", "kern", "liga", "calt";
+  --feat-tabular: "tnum", "lnum", "kern";
+
+  /* Fixed type scale — what components reference */
+  --text-12: 0.75rem;
+  --text-13: 0.8125rem;
+  --text-14: 0.875rem;
+  --text-15: 0.9375rem;
+  --text-16: 1rem;
+  --text-18: 1.125rem;
+  --text-20: 1.25rem;
+  --text-24: 1.5rem;
+  --text-30: 1.875rem;
+  --text-38: 2.375rem;
+  --text-48: 3rem;
+  --text-64: 4rem;
+  --text-84: 5.25rem;
+
+  /* Opt-in fluid display tier — NOT used by components. The caller
+     applies these where a hero must survive a phone. Viewport
+     coupling is the caller's choice, never the system's. */
+  --display-1: clamp(var(--text-38), 5vw + 1rem, var(--text-64));
+  --display-2: clamp(var(--text-48), 7vw + 1rem, var(--text-84));
+  --display-3: clamp(var(--text-30), 3.5vw + 0.75rem, var(--text-48));
+
+  /* Leading */
+  --leading-tight:  1.05;   /* mastheads */
+  --leading-snug:   1.18;   /* headings */
+  --leading-normal: 1.45;   /* UI */
+  --leading-prose:  1.55;   /* body prose */
+
+  /* Tracking */
+  --track-display: -0.01em;
+  --track-eyebrow:  0.18em;
+  --track-button:   0.08em;
+  --track-tabular:  0;
+
+  /* Weights — EB Garamond gets visually heavy fast, so the whole
+     scale is pulled DOWN. "Bold" here is a restrained 600, never
+     700+. Rely on the variable axis; never synthesise (see base). */
+  --weight-regular:  400;
+  --weight-medium:   460;
+  --weight-semibold: 520;
+  --weight-bold:     600;
+}

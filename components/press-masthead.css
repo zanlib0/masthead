@@ -1,0 +1,52 @@
+/* ============================================================
+   .press-masthead — the namesake, modelled on old/'s nav:
+   a lowercase italic serif title on the left, a row of
+   lowercase roman links on the right, an accent dot before the
+   current page, a single hairline rule beneath. No nameplate
+   grandeur, no heavy rules, no edition cells.
+   The flex row IS the masthead (intrinsic). It never sets its
+   own margin, width, or `position: sticky` — that is the page's.
+   ============================================================ */
+.press-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-8);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: var(--space-4);
+
+  > .title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: var(--weight-regular);
+    font-size: var(--text-30);
+    text-transform: lowercase;
+    letter-spacing: 0;
+    line-height: 1;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  > .nav {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+  }
+  > .nav a {
+    font-family: var(--font-serif);
+    font-size: var(--text-18);
+    text-transform: lowercase;
+    color: var(--ink-3);
+    text-decoration: none;
+    transition: color 120ms;
+  }
+  > .nav a:hover { color: var(--ink); }
+  > .nav a[aria-current="page"] { color: var(--ink); }
+  > .nav a[aria-current="page"]::before {
+    content: "\2022";                  /* • accent dot */
+    color: var(--accent);
+    margin-right: 0.4em;
+    font-size: 0.9em;
+  }
+}

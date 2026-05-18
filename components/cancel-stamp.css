@@ -1,0 +1,65 @@
+/* ============================================================
+   .cancel-stamp — the only badge-like thing in Masthead.
+   A librarian's rubber/postal impression: double-rule inkpad
+   outline, ink-bled (opacity), a small intrinsic tilt. NO
+   strikethrough. Colour follows --accent; gem variants just
+   re-point the accent hue/chroma so they stay theme-correct.
+   Flat — it is pressed INTO the page, never raised.
+   Cluster variety = caller's ._tilt-* helpers, not this file.
+   ============================================================ */
+.cancel-stamp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 3px 11px 4px;
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-12);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: transparent;
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-1);
+  box-shadow: 0 0 0 1px var(--accent);   /* the doubled inkpad edge */
+  opacity: 0.82;                          /* uneven ink coverage */
+  transform: rotate(-2.5deg);             /* never quite square */
+
+  /* Gem overrides — re-point the accent ramp; theme handles
+     which step resolves, so these read right in light AND dark. */
+  &.-ruby       { --accent-h: var(--gem-ruby-h);       --accent-c: var(--gem-ruby-c); }
+  &.-tourmaline { --accent-h: var(--gem-tourmaline-h); --accent-c: var(--gem-tourmaline-c); }
+  &.-emerald    { --accent-h: var(--gem-emerald-h);    --accent-c: var(--gem-emerald-c); }
+  &.-amber      { --accent-h: var(--gem-amber-h);      --accent-c: var(--gem-amber-c); }
+  &.-sapphire   { --accent-h: var(--gem-sapphire-h);   --accent-c: var(--gem-sapphire-c); }
+
+  /* — Postmark: one circular two-line seal. Use once. — */
+  /* Scales to its content and stays a true circle: aspect-ratio
+     keeps height == width, min-width sets the floor, so the text
+     can never overflow the ring. */
+  &.-postmark {
+    flex-direction: column;
+    gap: 2px;
+    width: auto;
+    min-width: 64px;
+    aspect-ratio: 1;
+    padding: 8px;
+    border-width: 1.5px;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.12em;
+    text-align: center;
+    transform: rotate(-12deg);
+    box-shadow: 0 0 0 3px var(--accent);
+  }
+  &.-postmark > .top { font-size: 8px; }
+  &.-postmark > .rule {
+    width: 60%;
+    height: 1.5px;
+    background: currentColor;
+  }
+  &.-postmark > .bot {
+    font-size: 9px;
+    font-variant-numeric: oldstyle-nums;
+  }
+}

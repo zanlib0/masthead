@@ -1,0 +1,112 @@
+/* ============================================================
+   .stamp-button — a matte solid object on the paper, not a
+   glossy web button. Its form is read from the cast shadow;
+   the surface is near-flat with only a whisper of top light.
+   Hover RELIGHTS it (no jump). Press settles it slightly into
+   the paper with a gentle, low-contrast change. The label is
+   engraved into the face.
+   Intrinsic only: no margin, no width, no placement.
+   ============================================================ */
+.stamp-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);                 /* icon <-> label, its own parts */
+  padding: 11px 21px;
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-13);
+  letter-spacing: var(--track-button);
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--btn-face), var(--btn-bg);
+  border: 1px solid oklch(from var(--ink) l c h / 0.10);
+  border-radius: var(--radius-2);
+  box-shadow: var(--btn-bevel), var(--cast-rest);
+  text-shadow: var(--btn-engrave);
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  transition:
+    transform 90ms ease-out,
+    box-shadow 110ms ease-out,
+    background 140ms ease,
+    filter 140ms ease;
+
+  > .icon {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    color: currentColor;
+  }
+
+  /* Hover = the light moves, the object doesn't. */
+  &:hover {
+    filter: brightness(1.045);
+    background: var(--btn-face-hover), var(--btn-bg);
+  }
+
+  /* Press = it settles a touch into the paper. Subtle: a hair of
+     travel, a gentle concave, the cast collapses. No colour leap. */
+  &:active,
+  &[aria-pressed="true"] {
+    transform: translateY(1px);
+    background: var(--btn-face-press), var(--btn-bg);
+    box-shadow: var(--btn-bevel-press), var(--cast-press);
+    text-shadow: none;
+  }
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    color: var(--ink-3);
+    background: var(--paper-sunk);
+    border-color: var(--rule);
+    box-shadow: none;
+    text-shadow: none;
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+    filter: none;
+  }
+
+  /* — Accent: a solid gem block. NO border. — */
+  &.-accent {
+    color: var(--accent-on);
+    background: var(--btn-face), var(--accent-solid);
+    border-color: transparent;
+    text-shadow: var(--btn-engrave-accent);
+  }
+  &.-accent:hover {
+    filter: brightness(1.05);
+    background: var(--btn-face-hover), var(--accent-solid);
+  }
+  &.-accent:active {
+    /* no colour shift — position + the cast collapsing carry it */
+    background: var(--btn-face-press), var(--accent-solid);
+  }
+
+  /* — Ghost: a flat token, no moulding, sits almost flush. — */
+  &.-ghost {
+    color: var(--ink);
+    background: transparent;
+    border-color: var(--rule-strong);
+    box-shadow: var(--cast-press);
+    text-shadow: none;
+  }
+  &.-ghost:hover {
+    filter: none;
+    background: var(--paper-sunk);
+    border-color: var(--ink-2);
+  }
+  &.-ghost:active {
+    transform: translateY(1px);
+    background: var(--paper-sunk);
+    box-shadow: var(--cast-press);
+  }
+
+  &.-small { padding: 7px 14px; font-size: var(--text-12); }
+  &.-small > .icon { width: 14px; height: 14px; }
+
+  &.-large { padding: 14px 28px; font-size: var(--text-15); }
+  &.-large > .icon { width: 20px; height: 20px; }
+}

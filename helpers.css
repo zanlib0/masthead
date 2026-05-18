@@ -1,0 +1,33 @@
+/* ============================================================
+   MASTHEAD · helpers.css
+   The ONLY file allowed !important. RSCSS underscore-prefixed
+   helpers: small, general-purpose, applied by the caller.
+   ============================================================ */
+
+/* ---------- Tilt ----------
+   So a cluster of cancel-stamps (a tag cloud) isn't uniform.
+   WHICH stamp gets WHICH lean is an arrangement decision — the
+   caller's, not the component's. Symmetric, both directions. */
+._tilt-1 { transform: rotate(-3.5deg) !important; }
+._tilt-2 { transform: rotate(-2deg)   !important; }
+._tilt-3 { transform: rotate(-0.75deg)!important; }
+._tilt-4 { transform: rotate(0.75deg) !important; }
+._tilt-5 { transform: rotate(2deg)    !important; }
+._tilt-6 { transform: rotate(3.5deg)  !important; }
+
+/* ---------- Screen-reader only ---------- */
+._sr-only {
+  position: absolute !important;
+  width: 1px !important; height: 1px !important;
+  padding: 0 !important; margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ---------- ._prose — DEFERRED (DESIGN.md §9) ----------
+   Not implemented in v1. When built it will live here and supply
+   ONLY long-form vertical rhythm + reading measure (the Evans
+   `._prose > * + *` lobotomised-owl pattern). Until then, callers
+   own long-form spacing themselves. Documented, not shipped. */

@@ -1,0 +1,330 @@
+/* ============================================================
+   MASTHEAD · tokens/colours.css
+   Layer 1 (immutable primitives) + Layer 2 (semantic aliases).
+   Everything OKLCH, purely formula-driven. Components read
+   ONLY the §5 semantic aliases — never a raw ramp step.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. SHARED RAMP SHAPE
+   One lightness scale + one chroma multiplier, applied to every
+   gem. Tints/shadows can't hold chroma, so the multiplier peaks
+   at 500 and tapers both ends. Retuning the system = editing
+   these twenty numbers.
+   ------------------------------------------------------------ */
+:root {
+  --ramp-l-50:  0.972;  --ramp-c-50:  0.07;
+  --ramp-l-100: 0.935;  --ramp-c-100: 0.18;
+  --ramp-l-200: 0.875;  --ramp-c-200: 0.36;
+  --ramp-l-300: 0.790;  --ramp-c-300: 0.60;
+  --ramp-l-400: 0.660;  --ramp-c-400: 0.86;
+  --ramp-l-500: 0.540;  --ramp-c-500: 1.00;
+  --ramp-l-600: 0.468;  --ramp-c-600: 0.95;
+  --ramp-l-700: 0.398;  --ramp-c-700: 0.82;
+  --ramp-l-800: 0.322;  --ramp-c-800: 0.62;
+  --ramp-l-900: 0.246;  --ramp-c-900: 0.42;
+}
+
+/* ------------------------------------------------------------
+   2. GEM PRIMITIVES — twelve hues spread around the wheel,
+   each visibly its own colour. {hue, peak chroma} per gem;
+   ramp step = oklch( L  calc(mult × peakC)  hue ).
+
+     ruby 25 · carnelian 47 · amber 70 · citrine 95 ·
+     peridot 128 · emerald 158 · malachite 185 ·
+     turquoise 213 · sapphire 250 · lapis 280 ·
+     amethyst 310 · tourmaline 350
+   ------------------------------------------------------------ */
+:root {
+  --gem-ruby-h:       25;  --gem-ruby-c:       0.190;
+  --gem-carnelian-h:  47;  --gem-carnelian-c:  0.150;
+  --gem-amber-h:      70;  --gem-amber-c:      0.150;
+  --gem-citrine-h:    95;  --gem-citrine-c:    0.150;
+  --gem-peridot-h:   128;  --gem-peridot-c:    0.150;
+  --gem-emerald-h:   158;  --gem-emerald-c:    0.140;
+  --gem-malachite-h: 185;  --gem-malachite-c:  0.110;
+  --gem-turquoise-h: 213;  --gem-turquoise-c:  0.105;
+  --gem-sapphire-h:  250;  --gem-sapphire-c:   0.155;
+  --gem-lapis-h:     280;  --gem-lapis-c:      0.180;
+  --gem-amethyst-h:  310;  --gem-amethyst-c:   0.160;
+  --gem-tourmaline-h:350;  --gem-tourmaline-c: 0.175;
+
+  /* ruby */
+  --gem-ruby-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--gem-ruby-c)) var(--gem-ruby-h));
+  --gem-ruby-100: oklch(var(--ramp-l-100) calc(var(--ramp-c-100) * var(--gem-ruby-c)) var(--gem-ruby-h));
+  --gem-ruby-200: oklch(var(--ramp-l-200) calc(var(--ramp-c-200) * var(--gem-ruby-c)) var(--gem-ruby-h));
+  --gem-ruby-300: oklch(var(--ramp-l-300) calc(var(--ramp-c-300) * var(--gem-ruby-c)) var(--gem-ruby-h));
+  --gem-ruby-400: oklch(var(--ramp-l-400) calc(var(--ramp-c-400) * var(--gem-ruby-c)) var(--gem-ruby-h));
+  --gem-ruby-500: oklch(var(--ramp-l-500) calc(var(--ramp-c-500) * var(--gem-ruby-c)) var(--gem-ruby-h));
+  --gem-ruby-600: oklch(var(--ramp-l-600) calc(var(--ramp-c-600) * var(--gem-ruby-c)) var(--gem-ruby-h));
+  --gem-ruby-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--gem-ruby-c)) var(--gem-ruby-h));
+  --gem-ruby-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--gem-ruby-c)) var(--gem-ruby-h));
+  --gem-ruby-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--gem-ruby-c)) var(--gem-ruby-h));
+
+  /* carnelian */
+  --gem-carnelian-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--gem-carnelian-c)) var(--gem-carnelian-h));
+  --gem-carnelian-100: oklch(var(--ramp-l-100) calc(var(--ramp-c-100) * var(--gem-carnelian-c)) var(--gem-carnelian-h));
+  --gem-carnelian-200: oklch(var(--ramp-l-200) calc(var(--ramp-c-200) * var(--gem-carnelian-c)) var(--gem-carnelian-h));
+  --gem-carnelian-300: oklch(var(--ramp-l-300) calc(var(--ramp-c-300) * var(--gem-carnelian-c)) var(--gem-carnelian-h));
+  --gem-carnelian-400: oklch(var(--ramp-l-400) calc(var(--ramp-c-400) * var(--gem-carnelian-c)) var(--gem-carnelian-h));
+  --gem-carnelian-500: oklch(var(--ramp-l-500) calc(var(--ramp-c-500) * var(--gem-carnelian-c)) var(--gem-carnelian-h));
+  --gem-carnelian-600: oklch(var(--ramp-l-600) calc(var(--ramp-c-600) * var(--gem-carnelian-c)) var(--gem-carnelian-h));
+  --gem-carnelian-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--gem-carnelian-c)) var(--gem-carnelian-h));
+  --gem-carnelian-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--gem-carnelian-c)) var(--gem-carnelian-h));
+  --gem-carnelian-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--gem-carnelian-c)) var(--gem-carnelian-h));
+
+  /* amber */
+  --gem-amber-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--gem-amber-c)) var(--gem-amber-h));
+  --gem-amber-100: oklch(var(--ramp-l-100) calc(var(--ramp-c-100) * var(--gem-amber-c)) var(--gem-amber-h));
+  --gem-amber-200: oklch(var(--ramp-l-200) calc(var(--ramp-c-200) * var(--gem-amber-c)) var(--gem-amber-h));
+  --gem-amber-300: oklch(var(--ramp-l-300) calc(var(--ramp-c-300) * var(--gem-amber-c)) var(--gem-amber-h));
+  --gem-amber-400: oklch(var(--ramp-l-400) calc(var(--ramp-c-400) * var(--gem-amber-c)) var(--gem-amber-h));
+  --gem-amber-500: oklch(var(--ramp-l-500) calc(var(--ramp-c-500) * var(--gem-amber-c)) var(--gem-amber-h));
+  --gem-amber-600: oklch(var(--ramp-l-600) calc(var(--ramp-c-600) * var(--gem-amber-c)) var(--gem-amber-h));
+  --gem-amber-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--gem-amber-c)) var(--gem-amber-h));
+  --gem-amber-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--gem-amber-c)) var(--gem-amber-h));
+  --gem-amber-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--gem-amber-c)) var(--gem-amber-h));
+
+  /* citrine */
+  --gem-citrine-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--gem-citrine-c)) var(--gem-citrine-h));
+  --gem-citrine-100: oklch(var(--ramp-l-100) calc(var(--ramp-c-100) * var(--gem-citrine-c)) var(--gem-citrine-h));
+  --gem-citrine-200: oklch(var(--ramp-l-200) calc(var(--ramp-c-200) * var(--gem-citrine-c)) var(--gem-citrine-h));
+  --gem-citrine-300: oklch(var(--ramp-l-300) calc(var(--ramp-c-300) * var(--gem-citrine-c)) var(--gem-citrine-h));
+  --gem-citrine-400: oklch(var(--ramp-l-400) calc(var(--ramp-c-400) * var(--gem-citrine-c)) var(--gem-citrine-h));
+  --gem-citrine-500: oklch(var(--ramp-l-500) calc(var(--ramp-c-500) * var(--gem-citrine-c)) var(--gem-citrine-h));
+  --gem-citrine-600: oklch(var(--ramp-l-600) calc(var(--ramp-c-600) * var(--gem-citrine-c)) var(--gem-citrine-h));
+  --gem-citrine-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--gem-citrine-c)) var(--gem-citrine-h));
+  --gem-citrine-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--gem-citrine-c)) var(--gem-citrine-h));
+  --gem-citrine-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--gem-citrine-c)) var(--gem-citrine-h));
+
+  /* peridot */
+  --gem-peridot-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--gem-peridot-c)) var(--gem-peridot-h));
+  --gem-peridot-100: oklch(var(--ramp-l-100) calc(var(--ramp-c-100) * var(--gem-peridot-c)) var(--gem-peridot-h));
+  --gem-peridot-200: oklch(var(--ramp-l-200) calc(var(--ramp-c-200) * var(--gem-peridot-c)) var(--gem-peridot-h));
+  --gem-peridot-300: oklch(var(--ramp-l-300) calc(var(--ramp-c-300) * var(--gem-peridot-c)) var(--gem-peridot-h));
+  --gem-peridot-400: oklch(var(--ramp-l-400) calc(var(--ramp-c-400) * var(--gem-peridot-c)) var(--gem-peridot-h));
+  --gem-peridot-500: oklch(var(--ramp-l-500) calc(var(--ramp-c-500) * var(--gem-peridot-c)) var(--gem-peridot-h));
+  --gem-peridot-600: oklch(var(--ramp-l-600) calc(var(--ramp-c-600) * var(--gem-peridot-c)) var(--gem-peridot-h));
+  --gem-peridot-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--gem-peridot-c)) var(--gem-peridot-h));
+  --gem-peridot-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--gem-peridot-c)) var(--gem-peridot-h));
+  --gem-peridot-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--gem-peridot-c)) var(--gem-peridot-h));
+
+  /* emerald */
+  --gem-emerald-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--gem-emerald-c)) var(--gem-emerald-h));
+  --gem-emerald-100: oklch(var(--ramp-l-100) calc(var(--ramp-c-100) * var(--gem-emerald-c)) var(--gem-emerald-h));
+  --gem-emerald-200: oklch(var(--ramp-l-200) calc(var(--ramp-c-200) * var(--gem-emerald-c)) var(--gem-emerald-h));
+  --gem-emerald-300: oklch(var(--ramp-l-300) calc(var(--ramp-c-300) * var(--gem-emerald-c)) var(--gem-emerald-h));
+  --gem-emerald-400: oklch(var(--ramp-l-400) calc(var(--ramp-c-400) * var(--gem-emerald-c)) var(--gem-emerald-h));
+  --gem-emerald-500: oklch(var(--ramp-l-500) calc(var(--ramp-c-500) * var(--gem-emerald-c)) var(--gem-emerald-h));
+  --gem-emerald-600: oklch(var(--ramp-l-600) calc(var(--ramp-c-600) * var(--gem-emerald-c)) var(--gem-emerald-h));
+  --gem-emerald-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--gem-emerald-c)) var(--gem-emerald-h));
+  --gem-emerald-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--gem-emerald-c)) var(--gem-emerald-h));
+  --gem-emerald-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--gem-emerald-c)) var(--gem-emerald-h));
+
+  /* malachite */
+  --gem-malachite-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--gem-malachite-c)) var(--gem-malachite-h));
+  --gem-malachite-100: oklch(var(--ramp-l-100) calc(var(--ramp-c-100) * var(--gem-malachite-c)) var(--gem-malachite-h));
+  --gem-malachite-200: oklch(var(--ramp-l-200) calc(var(--ramp-c-200) * var(--gem-malachite-c)) var(--gem-malachite-h));
+  --gem-malachite-300: oklch(var(--ramp-l-300) calc(var(--ramp-c-300) * var(--gem-malachite-c)) var(--gem-malachite-h));
+  --gem-malachite-400: oklch(var(--ramp-l-400) calc(var(--ramp-c-400) * var(--gem-malachite-c)) var(--gem-malachite-h));
+  --gem-malachite-500: oklch(var(--ramp-l-500) calc(var(--ramp-c-500) * var(--gem-malachite-c)) var(--gem-malachite-h));
+  --gem-malachite-600: oklch(var(--ramp-l-600) calc(var(--ramp-c-600) * var(--gem-malachite-c)) var(--gem-malachite-h));
+  --gem-malachite-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--gem-malachite-c)) var(--gem-malachite-h));
+  --gem-malachite-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--gem-malachite-c)) var(--gem-malachite-h));
+  --gem-malachite-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--gem-malachite-c)) var(--gem-malachite-h));
+
+  /* turquoise */
+  --gem-turquoise-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--gem-turquoise-c)) var(--gem-turquoise-h));
+  --gem-turquoise-100: oklch(var(--ramp-l-100) calc(var(--ramp-c-100) * var(--gem-turquoise-c)) var(--gem-turquoise-h));
+  --gem-turquoise-200: oklch(var(--ramp-l-200) calc(var(--ramp-c-200) * var(--gem-turquoise-c)) var(--gem-turquoise-h));
+  --gem-turquoise-300: oklch(var(--ramp-l-300) calc(var(--ramp-c-300) * var(--gem-turquoise-c)) var(--gem-turquoise-h));
+  --gem-turquoise-400: oklch(var(--ramp-l-400) calc(var(--ramp-c-400) * var(--gem-turquoise-c)) var(--gem-turquoise-h));
+  --gem-turquoise-500: oklch(var(--ramp-l-500) calc(var(--ramp-c-500) * var(--gem-turquoise-c)) var(--gem-turquoise-h));
+  --gem-turquoise-600: oklch(var(--ramp-l-600) calc(var(--ramp-c-600) * var(--gem-turquoise-c)) var(--gem-turquoise-h));
+  --gem-turquoise-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--gem-turquoise-c)) var(--gem-turquoise-h));
+  --gem-turquoise-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--gem-turquoise-c)) var(--gem-turquoise-h));
+  --gem-turquoise-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--gem-turquoise-c)) var(--gem-turquoise-h));
+
+  /* sapphire */
+  --gem-sapphire-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--gem-sapphire-c)) var(--gem-sapphire-h));
+  --gem-sapphire-100: oklch(var(--ramp-l-100) calc(var(--ramp-c-100) * var(--gem-sapphire-c)) var(--gem-sapphire-h));
+  --gem-sapphire-200: oklch(var(--ramp-l-200) calc(var(--ramp-c-200) * var(--gem-sapphire-c)) var(--gem-sapphire-h));
+  --gem-sapphire-300: oklch(var(--ramp-l-300) calc(var(--ramp-c-300) * var(--gem-sapphire-c)) var(--gem-sapphire-h));
+  --gem-sapphire-400: oklch(var(--ramp-l-400) calc(var(--ramp-c-400) * var(--gem-sapphire-c)) var(--gem-sapphire-h));
+  --gem-sapphire-500: oklch(var(--ramp-l-500) calc(var(--ramp-c-500) * var(--gem-sapphire-c)) var(--gem-sapphire-h));
+  --gem-sapphire-600: oklch(var(--ramp-l-600) calc(var(--ramp-c-600) * var(--gem-sapphire-c)) var(--gem-sapphire-h));
+  --gem-sapphire-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--gem-sapphire-c)) var(--gem-sapphire-h));
+  --gem-sapphire-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--gem-sapphire-c)) var(--gem-sapphire-h));
+  --gem-sapphire-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--gem-sapphire-c)) var(--gem-sapphire-h));
+
+  /* lapis */
+  --gem-lapis-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--gem-lapis-c)) var(--gem-lapis-h));
+  --gem-lapis-100: oklch(var(--ramp-l-100) calc(var(--ramp-c-100) * var(--gem-lapis-c)) var(--gem-lapis-h));
+  --gem-lapis-200: oklch(var(--ramp-l-200) calc(var(--ramp-c-200) * var(--gem-lapis-c)) var(--gem-lapis-h));
+  --gem-lapis-300: oklch(var(--ramp-l-300) calc(var(--ramp-c-300) * var(--gem-lapis-c)) var(--gem-lapis-h));
+  --gem-lapis-400: oklch(var(--ramp-l-400) calc(var(--ramp-c-400) * var(--gem-lapis-c)) var(--gem-lapis-h));
+  --gem-lapis-500: oklch(var(--ramp-l-500) calc(var(--ramp-c-500) * var(--gem-lapis-c)) var(--gem-lapis-h));
+  --gem-lapis-600: oklch(var(--ramp-l-600) calc(var(--ramp-c-600) * var(--gem-lapis-c)) var(--gem-lapis-h));
+  --gem-lapis-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--gem-lapis-c)) var(--gem-lapis-h));
+  --gem-lapis-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--gem-lapis-c)) var(--gem-lapis-h));
+  --gem-lapis-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--gem-lapis-c)) var(--gem-lapis-h));
+
+  /* amethyst */
+  --gem-amethyst-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--gem-amethyst-c)) var(--gem-amethyst-h));
+  --gem-amethyst-100: oklch(var(--ramp-l-100) calc(var(--ramp-c-100) * var(--gem-amethyst-c)) var(--gem-amethyst-h));
+  --gem-amethyst-200: oklch(var(--ramp-l-200) calc(var(--ramp-c-200) * var(--gem-amethyst-c)) var(--gem-amethyst-h));
+  --gem-amethyst-300: oklch(var(--ramp-l-300) calc(var(--ramp-c-300) * var(--gem-amethyst-c)) var(--gem-amethyst-h));
+  --gem-amethyst-400: oklch(var(--ramp-l-400) calc(var(--ramp-c-400) * var(--gem-amethyst-c)) var(--gem-amethyst-h));
+  --gem-amethyst-500: oklch(var(--ramp-l-500) calc(var(--ramp-c-500) * var(--gem-amethyst-c)) var(--gem-amethyst-h));
+  --gem-amethyst-600: oklch(var(--ramp-l-600) calc(var(--ramp-c-600) * var(--gem-amethyst-c)) var(--gem-amethyst-h));
+  --gem-amethyst-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--gem-amethyst-c)) var(--gem-amethyst-h));
+  --gem-amethyst-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--gem-amethyst-c)) var(--gem-amethyst-h));
+  --gem-amethyst-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--gem-amethyst-c)) var(--gem-amethyst-h));
+
+  /* tourmaline */
+  --gem-tourmaline-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--gem-tourmaline-c)) var(--gem-tourmaline-h));
+  --gem-tourmaline-100: oklch(var(--ramp-l-100) calc(var(--ramp-c-100) * var(--gem-tourmaline-c)) var(--gem-tourmaline-h));
+  --gem-tourmaline-200: oklch(var(--ramp-l-200) calc(var(--ramp-c-200) * var(--gem-tourmaline-c)) var(--gem-tourmaline-h));
+  --gem-tourmaline-300: oklch(var(--ramp-l-300) calc(var(--ramp-c-300) * var(--gem-tourmaline-c)) var(--gem-tourmaline-h));
+  --gem-tourmaline-400: oklch(var(--ramp-l-400) calc(var(--ramp-c-400) * var(--gem-tourmaline-c)) var(--gem-tourmaline-h));
+  --gem-tourmaline-500: oklch(var(--ramp-l-500) calc(var(--ramp-c-500) * var(--gem-tourmaline-c)) var(--gem-tourmaline-h));
+  --gem-tourmaline-600: oklch(var(--ramp-l-600) calc(var(--ramp-c-600) * var(--gem-tourmaline-c)) var(--gem-tourmaline-h));
+  --gem-tourmaline-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--gem-tourmaline-c)) var(--gem-tourmaline-h));
+  --gem-tourmaline-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--gem-tourmaline-c)) var(--gem-tourmaline-h));
+  --gem-tourmaline-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--gem-tourmaline-c)) var(--gem-tourmaline-h));
+}
+
+/* ------------------------------------------------------------
+   3. NEUTRAL PRIMITIVES — two separate ramps
+   Paper: cool blue-white family, never cream.
+   Ink:   blue-black family, never pure/OLED black.
+   ------------------------------------------------------------ */
+:root {
+  --paper-50:  oklch(0.985 0.003 250);
+  --paper-100: oklch(0.967 0.004 250);
+  --paper-200: oklch(0.940 0.004 250);
+  --paper-300: oklch(0.900 0.005 250);
+  --paper-400: oklch(0.850 0.005 250);
+  --paper-500: oklch(0.780 0.006 250);
+  --paper-600: oklch(0.700 0.006 250);
+  --paper-700: oklch(0.620 0.006 250);
+  --paper-800: oklch(0.540 0.006 250);
+  --paper-900: oklch(0.460 0.006 250);
+
+  --ink-50:  oklch(0.760 0.010 255);
+  --ink-100: oklch(0.680 0.012 255);
+  --ink-200: oklch(0.600 0.013 255);
+  --ink-300: oklch(0.520 0.014 255);
+  --ink-400: oklch(0.440 0.014 255);
+  --ink-500: oklch(0.370 0.014 255);
+  --ink-600: oklch(0.310 0.014 255);
+  --ink-700: oklch(0.260 0.014 255);
+  --ink-800: oklch(0.215 0.014 255);
+  --ink-900: oklch(0.175 0.013 255);
+}
+
+/* ------------------------------------------------------------
+   4. ACCENT RAMP  (default = sapphire)
+   data-accent only swaps {hue, peak chroma}; the ramp recomputes
+   itself at point of use through the var() chain.
+   ------------------------------------------------------------ */
+:root {
+  --accent-h: var(--gem-sapphire-h);
+  --accent-c: var(--gem-sapphire-c);
+  --accent-chroma: 1;   /* dark mode lowers this to mute the accent */
+
+  --accent-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-100: oklch(var(--ramp-l-100) calc(var(--ramp-c-100) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-200: oklch(var(--ramp-l-200) calc(var(--ramp-c-200) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-300: oklch(var(--ramp-l-300) calc(var(--ramp-c-300) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-400: oklch(var(--ramp-l-400) calc(var(--ramp-c-400) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-500: oklch(var(--ramp-l-500) calc(var(--ramp-c-500) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-600: oklch(var(--ramp-l-600) calc(var(--ramp-c-600) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+}
+[data-accent="ruby"]       { --accent-h: var(--gem-ruby-h);       --accent-c: var(--gem-ruby-c); }
+[data-accent="carnelian"]  { --accent-h: var(--gem-carnelian-h);  --accent-c: var(--gem-carnelian-c); }
+[data-accent="amber"]      { --accent-h: var(--gem-amber-h);      --accent-c: var(--gem-amber-c); }
+[data-accent="citrine"]    { --accent-h: var(--gem-citrine-h);    --accent-c: var(--gem-citrine-c); }
+[data-accent="peridot"]    { --accent-h: var(--gem-peridot-h);    --accent-c: var(--gem-peridot-c); }
+[data-accent="emerald"]    { --accent-h: var(--gem-emerald-h);    --accent-c: var(--gem-emerald-c); }
+[data-accent="malachite"]  { --accent-h: var(--gem-malachite-h);  --accent-c: var(--gem-malachite-c); }
+[data-accent="turquoise"]  { --accent-h: var(--gem-turquoise-h);  --accent-c: var(--gem-turquoise-c); }
+[data-accent="sapphire"]   { --accent-h: var(--gem-sapphire-h);   --accent-c: var(--gem-sapphire-c); }
+[data-accent="lapis"]      { --accent-h: var(--gem-lapis-h);      --accent-c: var(--gem-lapis-c); }
+[data-accent="amethyst"]   { --accent-h: var(--gem-amethyst-h);   --accent-c: var(--gem-amethyst-c); }
+[data-accent="tourmaline"] { --accent-h: var(--gem-tourmaline-h); --accent-c: var(--gem-tourmaline-c); }
+
+/* ------------------------------------------------------------
+   5. SEMANTIC ALIASES — the ONLY colour tokens components read.
+   Names are stable; values are remapped per data-theme.
+   ------------------------------------------------------------ */
+:root,
+[data-theme="light"] {
+  --paper:        var(--paper-50);
+  --paper-sunk:   var(--paper-100);
+  --paper-edge:   var(--paper-200);
+
+  --ink:          var(--ink-900);
+  --ink-2:        var(--ink-700);
+  --ink-3:        var(--ink-500);
+
+  --rule:         var(--paper-300);
+  --rule-soft:    var(--paper-200);
+  --rule-strong:  var(--ink-2);     /* the firmest stroke — NOT pure ink */
+
+  --accent:        var(--accent-500);
+  --accent-solid:  var(--accent-700);  /* filled controls — see note below */
+  --accent-soft:   var(--accent-200);
+  --accent-tint:   var(--accent-100);
+  --accent-deep:   var(--accent-800);
+  --accent-on:     var(--paper-50);
+
+  --ok:    var(--gem-emerald-500);   --ok-tint:   var(--gem-emerald-100);
+  --warn:  var(--gem-amber-500);     --warn-tint: var(--gem-amber-100);
+  --err:   var(--gem-ruby-500);      --err-tint:  var(--gem-ruby-100);
+  --info:  var(--gem-sapphire-500);  --info-tint: var(--gem-sapphire-100);
+
+  --selection-bg: var(--accent-100);
+  --selection-fg: var(--ink-900);
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --paper:        var(--ink-900);
+  --paper-sunk:   var(--ink-800);
+  --paper-edge:   var(--ink-700);
+
+  --ink:          var(--paper-100);
+  --ink-2:        var(--paper-300);
+  --ink-3:        var(--paper-500);
+
+  --rule:         var(--ink-600);
+  --rule-soft:    var(--ink-700);
+  --rule-strong:  var(--paper-400);
+
+  /* Candlelit, not screen-lit. Chroma is muted on the dark page so
+     the gem glows rather than glares, and the accent step is less
+     luminous than before. The filled control uses a lighter step
+     with dark --accent-on (AA holds — ramp lightness is hue-uniform). */
+  --accent-chroma: 0.78;
+  --accent:        var(--accent-500);
+  --accent-solid:  var(--accent-400);
+  --accent-soft:   var(--accent-600);
+  --accent-tint:   var(--accent-800);
+  --accent-deep:   var(--accent-300);
+  --accent-on:     var(--ink-900);
+
+  --ok:    var(--gem-emerald-500);   --ok-tint:   var(--gem-emerald-800);
+  --warn:  var(--gem-amber-500);     --warn-tint: var(--gem-amber-800);
+  --err:   var(--gem-ruby-500);      --err-tint:  var(--gem-ruby-800);
+  --info:  var(--gem-sapphire-500);  --info-tint: var(--gem-sapphire-800);
+
+  --selection-bg: var(--accent-800);
+  --selection-fg: var(--paper-100);
+
+  color-scheme: dark;
+}
