@@ -1,15 +1,26 @@
 /* ============================================================
    MASTHEAD · tokens/type.css
-   A FIXED scale expressed in POINTS — a foundry sells 12pt and
-   36pt, not pixels. 1pt = 4/3 px, so body (--text-18 = 18pt)
-   resolves to a true ~24px printed reading size, independent of
-   the root. Components read these directly. An opt-in fluid
-   --display-* tier (the caller reaches for it, like .prose)
-   plus leading / tracking / weight. Webfonts are @imported by
-   the masthead.css entrypoint (must precede all rules).
+   A semantic, REM-based scale. The narrative is still print —
+   a foundry sells 12pt and 36pt, body is the old 18pt reading
+   size — but the mechanism is rem so the reader's browser
+   font-size setting flows through (accessibility first).
+
+   The reference root is 24px (base.css sets html { font-size:
+   150% } → 1.5 × the browser's ~16px default). Every value
+   below is targetpx / 24 expressed in rem, so each step lands
+   on a WHOLE pixel at the reference size and still scales
+   proportionally when the reader enlarges text. px is used
+   only incidentally (hairlines); em only for sub-glyph nudges.
+
+   Components read these directly. An opt-in fluid --display-*
+   tier (the caller reaches for it, like .prose) plus leading /
+   tracking / weight. Webfonts are @imported by the masthead.css
+   entrypoint (must precede all rules).
    ============================================================ */
 :root {
-  /* Families */
+  /* Families. League Spartan is now rationed — only the two ink
+     stamps (.stamp-button, .cancel-stamp) and the last-resort
+     eyebrow (h6 / .t-eyebrow) use it. Everything else is serif. */
   --font-serif:   'EB Garamond', 'Hoefler Text', Garamond, Georgia, serif;
   --font-display: 'League Spartan', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --font-mono:    'IBM Plex Mono', ui-monospace, Menlo, 'SF Mono', monospace;
@@ -18,48 +29,55 @@
   --feat-serif:   "onum", "kern", "liga", "calt";
   --feat-tabular: "tnum", "lnum", "kern";
 
-  /* Fixed type scale, in points — what components reference.
-     The number IS the point size. body = --text-18 = 18pt. */
-  --text-12: 12pt;   /* ~16px — captions, eyebrows */
-  --text-13: 13pt;   /* ~17px — chrome labels, buttons */
-  --text-14: 14pt;   /* ~19px — small / meta */
-  --text-15: 15pt;   /* ~20px — secondary body */
-  --text-16: 16pt;   /* ~21px */
-  --text-18: 18pt;   /* ~24px — BODY */
-  --text-20: 20pt;   /* ~27px */
-  --text-24: 24pt;   /* ~32px — lede */
-  --text-30: 30pt;   /* ~40px — h3 */
-  --text-38: 38pt;   /* ~51px — h2 */
-  --text-48: 48pt;   /* ~64px — h1 */
-  --text-64: 64pt;   /* ~85px — masthead */
-  --text-84: 84pt;   /* ~112px — display */
+  /* Semantic rem scale. px shown is at the 24px reference root;
+     value = px / 24 rem. Named by role, not by size, so a
+     retune never lies and the unit never leaks into the name. */
+  --text-2xs:     0.458333rem;  /*  11px — .stamp-button.-small */
+  --text-xs:      0.541667rem;  /*  13px — h6/.t-eyebrow, table head, card foot,
+                                          toc meta, runninghead, cite, form label,
+                                          stamp/cancel labels */
+  --text-sm:      0.583333rem;  /*  14px — small, .t-meta, secondary */
+  --text-ms:      0.666667rem;  /*  16px — table/card body, form input, toc row */
+  --text-subhead: 0.833333rem;  /*  20px — h5, the accented serif-caps subtitle */
+  --text-base:    1rem;         /*  24px — BODY (the old 18pt reading size) */
+  --text-h4:      1.208333rem;  /*  29px — h4 */
+  --text-lede:    1.333333rem;  /*  32px — lede, card title */
+  --text-h3:      1.625rem;     /*  39px — h3, .press-masthead title */
+  --text-h2:      2.208333rem;  /*  53px — h2, .t-heading */
+  --text-display: 3rem;         /*  72px — h1, .t-display (the title voice) */
 
   /* Opt-in fluid display tier — NOT used by components. The caller
      applies these where a hero must survive a phone. Viewport
-     coupling is the caller's choice, never the system's. */
-  --display-1: clamp(var(--text-38), 6vw + var(--text-16), var(--text-64));
-  --display-2: clamp(var(--text-48), 8vw + var(--text-16), var(--text-84));
-  --display-3: clamp(var(--text-30), 4vw + var(--text-14), var(--text-48));
+     coupling is the caller's choice, never the system's. Each is
+     bounded by two steps of the fixed scale above. */
+  --display-1: clamp(var(--text-h2), 4vw + var(--text-base), var(--text-display));
+  --display-2: clamp(var(--text-h3), 3vw + var(--text-base), var(--text-h2));
+  --display-3: clamp(var(--text-h4), 2vw + var(--text-sm),   var(--text-h3));
 
-  /* Leading */
-  --leading-tight:  1.05;   /* mastheads */
+  /* Leading — loosens as the line lengthens */
+  --leading-tight:  1.05;   /* display / title voice */
   --leading-snug:   1.18;   /* headings */
   --leading-normal: 1.45;   /* UI */
   --leading-prose:  1.55;   /* body prose */
 
   /* Tracking */
-  --track-display: -0.01em;
-  --track-eyebrow:  0.18em;
+  --track-display: -0.01em; /* big serif headings tighten a hair */
+  --track-eyebrow:  0.18em; /* League Spartan all-caps eyebrow */
+  --track-subhead:  0.14em; /* serif all-caps — subtitle, table head,
+                               form label, runninghead, cite, card foot */
   --track-button:   0.08em;
 
   /* Underline decoration — one hairline recipe for every link, so
-     bare <a>, .text-link and its variants rule at the same offset. */
+     bare <a>, .text-link and its variants rule at the same offset.
+     Thickness stays px (a true hairline); offset is em so it
+     tracks the text size as the reader scales. */
   --underline-thickness: 0.6px;
-  --underline-offset:    3px;
+  --underline-offset:    0.13em;
 
   /* Weights — EB Garamond gets visually heavy fast, so the whole
      scale is pulled DOWN. "Bold" here is a restrained 600, never
-     700+. Rely on the variable axis; never synthesise (see base). */
+     700+. Rely on the variable axis; never synthesise (see base).
+     The lone 700 is the .stamp-button label on League Spartan. */
   --weight-regular:  400;
   --weight-medium:   460;
   --weight-semibold: 520;

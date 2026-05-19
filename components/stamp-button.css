@@ -29,14 +29,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;                            /* icon <-> label, its own parts */
+  gap: 0.5em;                          /* icon <-> label, its own parts */
   padding: var(--space-2) var(--space-4);
   font-family: var(--font-display);
   /* The one place display type goes to a true 700: a struck
      stamp is heavy ink. League Spartan carries it on its own
      variable axis — never synthesised (see base.css). */
   font-weight: 700;
-  font-size: 12px;                     /* chrome, not body — deliberately small */
+  font-size: var(--text-xs);           /* chrome, not body — deliberately small */
   line-height: 1;                      /* don't inherit the 1.55 prose leading */
   letter-spacing: 0.15em;              /* the stamp's own wide tracking */
   text-transform: uppercase;
@@ -70,7 +70,9 @@
     box-shadow   var(--strike-out),
     transform    var(--strike-out);
 
-  > .icon { flex: none; width: 14px; height: 14px; color: currentColor; }
+  /* Sized in em so it tracks the label across -small/-large with
+     no per-variant override. */
+  > .icon { flex: none; width: 1.15em; height: 1.15em; color: currentColor; }
 
   &:focus-visible {
     outline: 2px solid color-mix(in oklab, var(--strike-ink) 55%, transparent);
@@ -162,9 +164,6 @@
     box-shadow: var(--strike-bloom-none);
   }
 
-  &.-small { padding: var(--space-1) var(--space-3); font-size: 10px; }
-  &.-small > .icon { width: 12px; height: 12px; }
-
-  &.-large { padding: var(--space-3) var(--space-6); font-size: 16px; }
-  &.-large > .icon { width: 16px; height: 16px; }
+  &.-small { padding: var(--space-1) var(--space-3); font-size: var(--text-2xs); }
+  &.-large { padding: var(--space-3) var(--space-6); font-size: var(--text-ms); }
 }

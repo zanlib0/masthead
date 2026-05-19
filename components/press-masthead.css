@@ -17,13 +17,12 @@
 
   > .title {
     font-family: var(--font-serif);
-    font-style: italic;
     font-weight: var(--weight-regular);
-    font-size: var(--text-30);
+    font-size: var(--text-h3);
     text-transform: lowercase;
     letter-spacing: 0;
     line-height: 1;
-    color: var(--ink);
+    color: var(--accent);
     text-decoration: none;
   }
 
@@ -35,7 +34,7 @@
   }
   > .nav a {
     font-family: var(--font-serif);
-    font-size: var(--text-18);
+    font-size: var(--text-base);
     text-transform: lowercase;
     color: var(--ink-3);
     text-decoration: none;

@@ -35,35 +35,35 @@
 .cl-spec > .cl-stage.-block { display: block; }
 .cl-spec > .cl-cap {
   border-top: 1px solid var(--rule); padding: var(--space-2) var(--space-4);
-  font-family: var(--font-mono); font-size: var(--text-12); color: var(--ink-3);
+  font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-3);
   display: flex; justify-content: space-between; gap: var(--space-4);
 }
-.cl-note { font-family: var(--font-serif); font-style: italic; font-size: var(--text-14); color: var(--ink-3); margin-top: var(--space-3); max-width: 66ch; }
+.cl-note { font-family: var(--font-serif); font-style: italic; font-size: var(--text-sm); color: var(--ink-3); margin-top: var(--space-3); max-width: 66ch; }
 
 .cl-ramp { display: grid; grid-template-columns: repeat(10, 1fr); border: 1px solid var(--rule); border-radius: var(--radius-1); overflow: hidden; }
 .cl-ramp > div { height: 46px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 3px; font-family: var(--font-mono); font-size: 9px; color: oklch(0 0 0 / .42); }
-.cl-ramp-label { font-family: var(--font-mono); font-size: var(--text-12); color: var(--ink-3); margin: var(--space-4) 0 var(--space-1); }
+.cl-ramp-label { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-3); margin: var(--space-4) 0 var(--space-1); }
 .cl-chips { display: flex; flex-wrap: wrap; gap: var(--space-3); }
-.cl-chip { display: flex; flex-direction: column; gap: 4px; font-family: var(--font-mono); font-size: var(--text-12); color: var(--ink-3); }
+.cl-chip { display: flex; flex-direction: column; gap: 4px; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-3); }
 .cl-chip > i { display: block; width: 84px; height: 44px; border: 1px solid var(--rule); border-radius: var(--radius-1); }
 
 .cl-bar { background: var(--accent); height: 14px; border-radius: var(--radius-1); }
 .cl-radii { display: flex; gap: var(--space-5); flex-wrap: wrap; }
 .cl-radii > div { width: 80px; height: 64px; background: var(--paper-edge); border: 1px solid var(--ink-2); font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 4px; }
 
-.cl-type-row { display: grid; grid-template-columns: 5.5rem 1fr; gap: var(--space-5); align-items: baseline; padding: var(--space-2) 0; border-bottom: 1px solid var(--rule-soft); }
-.cl-type-row > code { font-family: var(--font-mono); font-size: var(--text-12); color: var(--ink-3); }
+.cl-type-row { display: grid; grid-template-columns: 9rem 1fr; gap: var(--space-5); align-items: baseline; padding: var(--space-2) 0; border-bottom: 1px solid var(--rule-soft); }
+.cl-type-row > code { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-3); }
 
 .cl-stub { border: 1px dashed var(--ink-3); border-radius: var(--radius-1); padding: var(--space-5); color: var(--ink-3); }
 .cl-stub h4 { color: var(--ink-2); margin-bottom: 4px; }
-.cl-stub p { font-size: var(--text-14); font-style: italic; }
+.cl-stub p { font-size: var(--text-sm); font-style: italic; }
 
 .cl-dark { background: var(--paper); color: var(--ink); border-radius: var(--radius-2); padding: var(--space-10) var(--space-8); }
 
 .cl-uc { border: 1px solid var(--rule); border-radius: var(--radius-2); overflow: hidden; }
 .cl-uc + .cl-uc { margin-top: var(--space-10); }
 .cl-uc-body { padding: var(--space-12) var(--space-10); }
-.cl-uc-tag { font-family: var(--font-mono); font-size: var(--text-12); color: var(--ink-3); padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; }
+.cl-uc-tag { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-3); padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--rule); display: flex; justify-content: space-between; }
 
 /* Devblog prose rhythm — DELIBERATELY caller-owned. The spacing
    Masthead refuses to ship until .prose exists (DESIGN §9). */
@@ -85,8 +85,8 @@
 .cl-sub .stamp-button { margin-top: var(--space-6); }
 .cl-sub-foot { display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-6); }
 
-.cl-foot { margin-top: var(--space-24); color: var(--ink-3); font-size: var(--text-14); font-style: italic; }
-.cl-eyebrow-mono { font-family: var(--font-mono); font-size: var(--text-12); color: var(--ink-3); }
+.cl-foot { margin-top: var(--space-24); color: var(--ink-3); font-size: var(--text-sm); font-style: italic; }
+.cl-eyebrow-mono { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-3); }
 .cl-lede { max-width: 60ch; margin-top: var(--space-6); }
 </style>
 </head>
@@ -174,9 +174,9 @@
 
     <h4 class="cl-h4">Caller surface — the reverse-type bar (<code class="t-mono">--accent-solid</code> / <code class="t-mono">--accent-on</code>)</h4>
     <div class="cl-row" style="margin-top:var(--space-4)">
-      <span style="display:inline-block;background:var(--accent-solid);color:var(--accent-on);font-family:var(--font-display);font-size:var(--text-13);letter-spacing:var(--track-button);text-transform:uppercase;text-box:trim-both cap alphabetic;padding:var(--space-2) var(--space-4);border-radius:var(--radius-0)">Default · ruby</span>
-      <span data-accent="emerald" style="display:inline-block;background:var(--accent-solid);color:var(--accent-on);font-family:var(--font-display);font-size:var(--text-13);letter-spacing:var(--track-button);text-transform:uppercase;text-box:trim-both cap alphabetic;padding:var(--space-2) var(--space-4);border-radius:var(--radius-0)">data-accent="emerald"</span>
-      <span data-accent="amethyst" style="display:inline-block;background:var(--accent-solid);color:var(--accent-on);font-family:var(--font-display);font-size:var(--text-13);letter-spacing:var(--track-button);text-transform:uppercase;text-box:trim-both cap alphabetic;padding:var(--space-2) var(--space-4);border-radius:var(--radius-0)">data-accent="amethyst"</span>
+      <span style="display:inline-block;background:var(--accent-solid);color:var(--accent-on);font-family:var(--font-display);font-size:var(--text-xs);letter-spacing:var(--track-button);text-transform:uppercase;text-box:trim-both cap alphabetic;padding:var(--space-2) var(--space-4);border-radius:var(--radius-0)">Default · ruby</span>
+      <span data-accent="emerald" style="display:inline-block;background:var(--accent-solid);color:var(--accent-on);font-family:var(--font-display);font-size:var(--text-xs);letter-spacing:var(--track-button);text-transform:uppercase;text-box:trim-both cap alphabetic;padding:var(--space-2) var(--space-4);border-radius:var(--radius-0)">data-accent="emerald"</span>
+      <span data-accent="amethyst" style="display:inline-block;background:var(--accent-solid);color:var(--accent-on);font-family:var(--font-display);font-size:var(--text-xs);letter-spacing:var(--track-button);text-transform:uppercase;text-box:trim-both cap alphabetic;padding:var(--space-2) var(--space-4);border-radius:var(--radius-0)">data-accent="amethyst"</span>
     </div>
     <p class="cl-note">These caller-facing tokens only resolve correctly because the
       accent surface recomputes per element — each bar reads its own
@@ -187,7 +187,7 @@
 
     <div class="cl-grid -2" style="margin-top:var(--space-10)">
       <div>
-        <h4>Spacing — the 4px ruler</h4>
+        <h4>Spacing — the rem ruler (6px @ 24)</h4>
         <div class="cl-stack" style="margin-top:var(--space-4)">
           <div class="cl-bar" style="width:var(--space-1)"></div>
           <div class="cl-bar" style="width:var(--space-2)"></div>
@@ -213,20 +213,27 @@
       </div>
     </div>
 
-    <h4 class="cl-h4">Type scale — fixed rem steps</h4>
+    <h4 class="cl-h4">Type scale — rem, whole-px at the 24px reference root</h4>
     <div style="margin-top:var(--space-4)">
-      <div class="cl-type-row"><code>--text-12</code><span style="font-size:var(--text-12)">The deliberate press of small apps</span></div>
-      <div class="cl-type-row"><code>--text-16</code><span style="font-size:var(--text-16)">The deliberate press of small apps</span></div>
-      <div class="cl-type-row"><code>--text-18</code><span style="font-size:var(--text-18)">The deliberate press of small apps</span></div>
-      <div class="cl-type-row"><code>--text-24</code><span style="font-size:var(--text-24)">The deliberate press of small apps</span></div>
-      <div class="cl-type-row"><code>--text-38</code><span style="font-size:var(--text-38)">Small apps</span></div>
-      <div class="cl-type-row"><code>--text-64</code><span style="font-size:var(--text-64);line-height:1.05">Press</span></div>
-      <div class="cl-type-row"><code>--display-2</code><span style="font-size:var(--display-2);line-height:1.02">Press</span></div>
-      <div class="cl-type-row"><code>--display-3</code><span style="font-size:var(--display-3);line-height:1.05">Small apps</span></div>
+      <div class="cl-type-row"><code>--text-2xs · 11</code><span style="font-size:var(--text-2xs)">The deliberate press of small apps</span></div>
+      <div class="cl-type-row"><code>--text-xs · 13</code><span style="font-size:var(--text-xs)">The deliberate press of small apps</span></div>
+      <div class="cl-type-row"><code>--text-sm · 14</code><span style="font-size:var(--text-sm)">The deliberate press of small apps</span></div>
+      <div class="cl-type-row"><code>--text-ms · 16</code><span style="font-size:var(--text-ms)">The deliberate press of small apps</span></div>
+      <div class="cl-type-row"><code>--text-subhead · 20</code><span style="font-size:var(--text-subhead)">The deliberate press</span></div>
+      <div class="cl-type-row"><code>--text-base · 24</code><span style="font-size:var(--text-base)">The deliberate press of small apps</span></div>
+      <div class="cl-type-row"><code>--text-h4 · 29</code><span style="font-size:var(--text-h4)">The deliberate press</span></div>
+      <div class="cl-type-row"><code>--text-lede · 32</code><span style="font-size:var(--text-lede)">The deliberate press</span></div>
+      <div class="cl-type-row"><code>--text-h3 · 39</code><span style="font-size:var(--text-h3);line-height:1.18">Small apps</span></div>
+      <div class="cl-type-row"><code>--text-h2 · 53</code><span style="font-size:var(--text-h2);line-height:1.18">Small apps</span></div>
+      <div class="cl-type-row"><code>--text-display · 72</code><span style="font-size:var(--text-display);line-height:1.05">Press</span></div>
+      <div class="cl-type-row"><code>--display-1</code><span style="font-size:var(--display-1);line-height:1.05">Press</span></div>
     </div>
-    <p class="cl-note">The last row is an opt-in fluid <code>--display-*</code> token,
-      applied by the caller (resize the window) — exactly like <code>.prose</code>.
-      Components themselves only use the fixed steps.</p>
+    <p class="cl-note">Every step is <code class="t-mono">targetpx&nbsp;⁄&nbsp;24</code>
+      expressed in rem — whole pixels at the 24px reference root
+      (<code class="t-mono">html { font-size: 150% }</code>) and it scales with the
+      reader's browser font-size. The last row is the opt-in fluid
+      <code class="t-mono">--display-1</code> (resize the window) — exactly like
+      <code class="t-mono">.prose</code>; components use only the fixed steps.</p>
   </section>
 
   <!-- ---------- PRIMITIVES ---------- -->
@@ -237,15 +244,16 @@
     <div class="cl-grid -2">
       <div class="cl-spec">
         <div class="cl-stage" style="flex-direction:column;align-items:stretch;gap:var(--space-4)">
-          <span class="t-display" style="font-size:var(--text-38)">Display</span>
+          <span class="t-display" style="font-size:var(--text-h2)">Display</span>
           <span class="t-heading">Heading</span>
+          <span class="t-subhead">Serif caps subhead</span>
           <span class="t-lede">A lede, set in italic serif.</span>
-          <span class="t-body">Body — EB Garamond at eighteen, weight 400.</span>
+          <span class="t-body">Body — EB Garamond at twenty-four, weight 400.</span>
           <span class="t-eyebrow">Eyebrow label</span>
           <span class="t-mono">mono · 0027</span>
           <span class="t-meta">metadata, italic</span>
         </div>
-        <div class="cl-cap"><span>type roles</span><span>.t-display … .t-meta</span></div>
+        <div class="cl-cap"><span>type roles</span><span>.t-display … .t-subhead … .t-meta</span></div>
       </div>
       <div class="cl-spec">
         <div class="cl-stage" style="flex-direction:column;align-items:stretch;gap:var(--space-5)">
@@ -254,10 +262,23 @@
           <hr class="rule-thick">
           <div class="rule-double"></div>
           <div class="fleuron-divider"><span class="mark">&#10086;</span></div>
-          <span class="ornament" style="font-size:var(--text-24)">&#10087; &#10086; &#9670; &#167; &#182; &#8470;</span>
+          <span class="ornament" style="font-size:var(--text-lede)">&#10087; &#10086; &#9670; &#167; &#182; &#8470;</span>
         </div>
         <div class="cl-cap"><span>weight · marks · rules</span><span>.rule · .fleuron-divider · .ornament</span></div>
       </div>
+    </div>
+    <div class="cl-spec" style="margin-top:var(--space-6)">
+      <div class="cl-stage -block" style="padding:var(--space-10) var(--space-8)">
+        <span class="t-display" style="font-size:var(--text-h2)">Margaret Beaumont</span>
+        <div class="t-subhead" style="color:var(--accent);margin-top:var(--space-2)">Master Typesetter</div>
+        <hr class="rule" style="margin:var(--space-4) 0">
+        <p class="t-body" style="max-width:52ch">The accented serif all-caps
+          subtitle — a foundry-specimen device, not League&nbsp;Spartan. The
+          accent pairing (<code class="t-mono">color: var(--accent)</code>) is the
+          caller's, one per surface; <code class="t-mono">.t-subhead</code> itself
+          defaults to <code class="t-mono">--ink-2</code>.</p>
+      </div>
+      <div class="cl-cap"><span>.t-subhead — accented serif subtitle (h5)</span><span>caller pairs the accent</span></div>
     </div>
     <p class="cl-note">No drop cap: it is a forward, per-article editorial decision,
       not a system primitive (DESIGN&nbsp;§7).</p>
@@ -512,8 +533,13 @@
             text. The rhythm you are reading is supplied by the
             <code class="t-mono">.cl-prose</code> caller layer — Masthead itself
             ships none of this spacing, by design.</p>
+
+          <blockquote>
+            "Typography is the craft of endowing human language with a durable visual form."
+            <cite>Robert Bringhurst</cite>
+          </blockquote>
           <div class="fleuron-divider"><span class="mark">&#10087;</span></div>
-          <h2 id="stacked" class="t-heading" style="font-size:var(--text-30)">On stacked paper</h2>
+          <h2 id="stacked" class="t-heading" style="font-size:var(--text-h3)">On stacked paper</h2>
           <p>Elevation here is literal: sheets of paper offset behind a surface,
             each deeper one further into shadow, no blur, no rotation. See the
             <a class="text-link -reference" href="#">colophon</a> for the method.</p>
@@ -568,7 +594,7 @@
       <div class="cl-uc-body">
         <article class="cl-sub paper-card -stack-2">
           <span class="t-eyebrow">The Press</span>
-          <h2 class="title" style="font-size:var(--text-30);margin-top:var(--space-2)">Subscribe by mail</h2>
+          <h2 class="title" style="font-size:var(--text-h3);margin-top:var(--space-2)">Subscribe by mail</h2>
           <p class="body" style="margin-top:var(--space-3)">Twelve dispatches a year, on Sundays. Old-style figures included.</p>
           <div style="margin-top:var(--space-8)">
             <div class="form-field">

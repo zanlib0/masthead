@@ -35,13 +35,13 @@
   > .title {
     font-family: var(--font-serif);
     font-weight: var(--weight-medium);
-    font-size: var(--text-24);
+    font-size: var(--text-lede);
     line-height: var(--leading-snug);
     color: var(--ink);
   }
   > .body {
     font-family: var(--font-serif);
-    font-size: var(--text-16);
+    font-size: var(--text-ms);
     line-height: var(--leading-prose);
     color: var(--ink-2);
   }
@@ -50,9 +50,10 @@
     justify-content: space-between;
     align-items: baseline;
     gap: var(--space-4);
-    font-family: var(--font-display);
-    font-size: var(--text-12);
-    letter-spacing: var(--track-eyebrow);
+    font-family: var(--font-serif);
+    font-weight: var(--weight-medium);
+    font-size: var(--text-xs);
+    letter-spacing: var(--track-subhead);
     text-transform: uppercase;
     color: var(--ink-3);
     border-top: 1px solid var(--rule);

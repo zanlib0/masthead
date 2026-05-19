@@ -6,14 +6,13 @@
 .form-field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: var(--space-1);
 
   > .label {
-    font-family: var(--font-display);
+    font-family: var(--font-serif);       /* a printed entry label, not a sans tag */
     font-weight: var(--weight-medium);
-    font-size: var(--text-12);
-    letter-spacing: var(--track-eyebrow);
-    text-transform: uppercase;
+    font-style: italic;
+    font-size: var(--text-xs);
     /* Cap-trim — keep the uppercase label optically centred
        (DESIGN.md §3); ignored where unsupported. */
     text-box: trim-both cap alphabetic;
@@ -26,10 +25,10 @@
   > .input {
     width: 100%;                       /* fills the field, not the page */
     font-family: var(--font-serif);
-    font-size: var(--text-16);
+    font-size: var(--text-ms);
     color: var(--ink);
   }
-  > .input::placeholder { color: var(--ink-3); font-style: italic; }
+  > .input::placeholder { color: var(--ink-3); opacity: 0.7; }
   > .input:disabled { color: var(--ink-3); cursor: not-allowed; }
 
   /* Default: a ruled writing line, like a ledger entry. Scoped
@@ -40,16 +39,14 @@
     border: 0;
     border-bottom: 1px solid var(--ink);
     border-radius: var(--radius-0);
-    padding: 8px 2px;
   }
   &:not(.-boxed) > .input:disabled { border-bottom-style: dashed; }
   /* On top of the shared ring, the ruled line itself thickens
      1px→2px and goes accent — a non-colour cue doubling the
      affordance. Driven by :focus-visible to match the ring. */
   &:not(.-boxed) > .input:focus-visible {
-    border-bottom-width: 2px;
+    outline: none; 
     border-bottom-color: var(--accent);
-    padding-bottom: 7px;               /* hold the box steady (border +1px) */
   }
 
   /* — Boxed: a mail-order entry box. Focus is just the shared
@@ -58,6 +55,11 @@
     border: 1px solid var(--rule);
     background: var(--paper);
     border-radius: var(--radius-1);
-    padding: 10px 12px;
+    padding: var(--space-1) var(--space-2);
+  }
+
+  &.-boxed > .input:focus-visible {
+    outline: none;
+    border-color: var(--accent);
   }
 }

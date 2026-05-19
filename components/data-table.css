@@ -16,21 +16,20 @@
   font-feature-settings: "tnum", "onum", "kern";
 
   > thead th {
-    font-family: var(--font-display);
-    font-weight: var(--weight-semibold);
-    font-size: var(--text-12);
-    letter-spacing: var(--track-eyebrow);
-    text-transform: uppercase;
+    font-family: var(--font-serif);       /* a ledger head, not a sans label */
+    font-style: italic;
+    font-weight: var(--weight-medium);
+    font-size: var(--text-xs);
     text-box: trim-both cap alphabetic;   /* cap-trim — see DESIGN.md §3 */
     color: var(--ink-2);
     text-align: left;
-    padding: 8px 12px;
+    padding: var(--space-1) var(--space-2);
     border-bottom: 1px solid var(--rule-strong);
   }
   > tbody td {
-    padding: 10px 12px;
+    padding: var(--space-2);
     border-bottom: 1px solid var(--rule-soft);
-    font-size: var(--text-15);
+    font-size: var(--text-ms);
     color: var(--ink-2);
   }
   > tbody tr:hover td { background: var(--paper-sunk); }
@@ -53,19 +52,20 @@
   grid-template-columns: auto 1fr auto;
   align-items: baseline;
   gap: var(--space-2);
-  padding: 6px 0;
+  padding: var(--space-1) 0;
   font-family: var(--font-serif);
-  font-size: var(--text-16);
+  font-size: var(--text-ms);
   color: var(--ink);
 
   > .leader {
     border-bottom: 1.5px dotted var(--rule);
-    transform: translateY(-3px);
+    transform: translateY(-0.13em);
   }
   > .meta {
-    font-family: var(--font-display);
-    font-size: var(--text-12);
-    letter-spacing: var(--track-eyebrow);
+    font-family: var(--font-serif);
+    font-weight: var(--weight-medium);
+    font-size: var(--text-xs);
+    letter-spacing: var(--track-subhead);
     text-transform: uppercase;
     color: var(--ink-3);
   }

@@ -167,49 +167,82 @@ Three families, loaded from Google Fonts CDN:
 
 | Family | Role |
 |---|---|
-| **EB Garamond** (serif) | body, prose, headings; old‑style figures by default |
-| **League Spartan** (display) | eyebrows, labels, chrome, button labels (UPPERCASE, tracked) |
+| **EB Garamond** (serif) | body, prose, the whole heading ladder, the serif all‑caps subtitle, *and* the catalogue/table/form/footer labels; old‑style figures by default |
+| **League Spartan** (display) | **rationed** — only the two ink stamps (`.stamp-button`, `.cancel-stamp`) and the last‑resort eyebrow (`h6` / `.t-eyebrow`: captions, footers, smallest chrome). Nothing else. |
 | **IBM Plex Mono** (mono) | code, tabular data, serials |
 
-**The scale is in POINTS** — a foundry sells 12pt and 36pt, not pixels. The number
-in each token *is* the point size; points are absolute (1pt = 4⁄3 px) so the scale
-never reflows with the root. **Body is 18pt** — an unmistakably *printed* reading
-size, not a screen‑UI 16px.
+**The scale is REM; the *story* is still print.** A foundry sells 12pt and 36pt,
+the body is the old 18pt reading size — that narrative stands. But the
+*mechanism* is rem, so the reader's browser font‑size setting flows through
+(accessibility first). The reference root is **24px** (`base.css` sets `html {
+font-size: 150% }` → 1.5 × the browser's ~16px default). Every token below is
+`targetpx ⁄ 24` in rem, so each step lands on a **whole pixel at the reference
+size** *and* scales proportionally when the reader enlarges text — the old
+absolute‑points root deliberately did neither. px is used only incidentally
+(hairlines); `em` only for sub‑glyph nudges.
 
-| Token | Size | Role | Leading |
-|---|---|---|---|
-| `--text-12` | 12pt ≈16px | caption, eyebrow | — |
-| `--text-13` | 13pt ≈17px | chrome label, **button** | — |
-| `--text-14` | 14pt ≈19px | small, meta | — |
-| `--text-18` | **18pt ≈24px** | **body** | `--leading-prose` 1.55 |
-| `--text-24` | 24pt ≈32px | lede | 1.45 |
-| `--text-30` | 30pt ≈40px | h3 | `--leading-snug` 1.18 |
-| `--text-38` | 38pt ≈51px | h2 | 1.18 |
-| `--text-48` | 48pt ≈64px | h1 | 1.18 |
-| `--text-84` | 84pt ≈112px | display | `--leading-tight` 1.05 |
+Tokens are named by **role, not size** — a retune never makes the name lie, and
+the unit never leaks in. `h1`'s default *is* the display/title voice (Markdown
+`#` → article title, no class). Heading **level** is document structure;
+**size** is the `.t-*` visual role — decoupled on purpose (see Rules).
 
-Rules: leading loosens as the line lengthens. Weights are pulled **down** (Garamond
+| Token | rem | ≈px @24 | Role | Leading |
+|---|---|---|---|---|
+| `--text-2xs` | `0.458333rem` | 11 | `.stamp-button.-small` | — |
+| `--text-xs` | `0.541667rem` | 13 | `h6`/`.t-eyebrow`, table head, card foot, toc meta, runninghead, cite, form label, stamp/cancel labels | — |
+| `--text-sm` | `0.583333rem` | 14 | small, `.t-meta`, secondary | — |
+| `--text-ms` | `0.666667rem` | 16 | table/card body, form input, toc row | `--leading-prose` |
+| `--text-subhead` | `0.833333rem` | 20 | `h5` — the accented serif all‑caps subtitle | — |
+| `--text-base` | `1rem` | **24** | **body** (the old 18pt reading size) | `--leading-prose` 1.55 |
+| `--text-h4` | `1.208333rem` | 29 | `h4` | `--leading-snug` 1.18 |
+| `--text-lede` | `1.333333rem` | 32 | lede, card title | `--leading-normal` 1.45 |
+| `--text-h3` | `1.625rem` | 39 | `h3`, `.press-masthead` title | 1.18 |
+| `--text-h2` | `2.208333rem` | 53 | `h2`, `.t-heading` | 1.18 |
+| `--text-display` | `3rem` | 72 | `h1`, `.t-display` (the title voice) | `--leading-tight` 1.05 |
+
+**The heading ladder.** `h1`–`h4` are **serif, sentence case**, descending the
+scale (`--text-display` → `--text-h4`) at a ~1.35 ratio; `h1` is light
+(`--weight-regular` — the title voice is quiet, not loud), `h2`–`h4` medium.
+Only the bottom two rungs are *labels, not headings*, and both sit **below**
+body size: `h5` is the **accented serif all‑caps subtitle** (`--text-subhead`,
+`--track-subhead`, `text-box` cap‑trim) and `h6` is the **last‑resort League
+Spartan eyebrow** (`--text-xs`, `--track-eyebrow`). Same treatments are
+detachable as `.t-display` / `.t-heading` / `.t-subhead` / `.t-eyebrow` — apply
+where **tag ≠ size**: a hero line that is semantically an `h2`, or an app `h1`
+that must stay restrained. The subtitle defaults to `--ink-2`; pairing it with
+`color: var(--accent)` (the red‑subtitle look) is the **caller's** call —
+one accent per surface (§7).
+
+Leading loosens as the line lengthens. Weights are pulled **down** (Garamond
 goes heavy fast): regular 400 / medium 460 / semibold 520 / bold 600 — and
 `font-synthesis: none` (never fake a weight). The lone exception is the
 `.stamp-button` label: a struck stamp is heavy ink, so it takes display **700**
 on League Spartan's real axis. Headings `text-wrap: balance`, body
-`text-wrap: pretty`. Sentence case for prose/headlines; UPPERCASE + `0.18em` for
-eyebrows/labels (the stamp button tracks its own caps a touch tighter, `0.15em`). Old‑style figures in prose, lining/tabular in tables.
-Em dashes, curly quotes, Oxford comma. **No emoji** — Unicode ornaments only
-(`❦ ❧ ✦ § ¶ №`). Responsiveness is opt‑in: `--display-1/2/3` `clamp()` tokens the
-caller may reach for (never baked into components).
+`text-wrap: pretty`. Sentence case for prose/headlines. Tracking:
+`--track-display -0.01em` (big serif tightens a hair), `--track-subhead 0.14em`
+(every serif all‑caps context — subtitle, table head, form label, runninghead,
+cite, card foot), `--track-eyebrow 0.18em` (the League Spartan eyebrow), the
+stamp button its own `0.15em`. Old‑style figures in prose, lining/tabular in
+tables. Em dashes, curly quotes, Oxford comma. **No emoji** — Unicode ornaments
+only (`❦ ❧ ✦ § ¶ №`). Responsiveness is opt‑in: `--display-1/2/3` `clamp()`
+tokens (each bounded by two fixed steps) the caller may reach for (never baked
+into components).
 
-**Cap‑trim (system rule).** Every UPPERCASE display‑face context — `h4/h5/h6`,
-`.t-eyebrow`, and the `.stamp-button` / `.cancel-stamp` /
-`.form-field` label / `.data-table` head — applies
-`text-box: trim-both cap alphabetic`. League Spartan's caps otherwise ride low in
-a `line-height:1` box (the unused descender band sits below the baseline); the
-trim removes that band so **symmetric, ruler‑based padding** centres the caps —
-this is what the old per‑component asymmetric *magic padding* was secretly doing.
-Horizontal and vertical padding both move onto the `--space-*` ruler; chrome
-*font‑size* stays deliberately off‑scale (it's chrome, not body), but *padding*
-does not. Browsers without `text-box` (Firefox, early 2026) ignore the
-declaration and fall back to the prior, un‑trimmed rendering — non‑breaking.
+**Cap‑trim (system rule).** Every UPPERCASE context — **serif or display‑face**
+— applies `text-box: trim-both cap alphabetic`: `h5` / `h6`, `.t-eyebrow` /
+`.t-subhead`, and the `.stamp-button` / `.cancel-stamp` / `.form-field` label /
+`.data-table` head. (`h4` left the set — it is serif **sentence case** now, and
+cap‑trimming mixed case clips ascenders and descenders. The inline
+`.text-link.-runninghead`, `.toc-row` meta, `.paper-card` foot and `blockquote
+cite` are deliberately *not* trimmed — they were never in the set and an inline
+box trims unpredictably.) An all‑caps line otherwise carries a band the caps
+never use (the descender space below the baseline); the trim removes it so
+**symmetric, ruler‑based padding** centres the caps — this is what the old
+per‑component asymmetric *magic padding* was secretly doing. Horizontal and
+vertical padding both move onto the `--space-*` ruler; chrome *font‑size* stays
+deliberately off‑scale (it's chrome, not body), but *padding* does not.
+Browsers without `text-box` (Firefox, early 2026) ignore the declaration and
+fall back to the prior, un‑trimmed rendering — non‑breaking.
 
 **Numeric features (system rule).** Anything that sets `font-variant-numeric`
 must also set `font-feature-settings` explicitly. The body's inherited
@@ -248,16 +281,17 @@ same ink gone faint, no bloom, left permanently crooked.
   zero-state `--strike-bloom-none` keeps rest→hover a list→list tween. No
   gloss, no bevel, no `@keyframes`. The 2px radius ceiling is relaxed for the
   stamp's deliberately uneven hand-cut edge only.
-- **Compact by design.** The label is chrome, not body — ~11px (not the 18pt
-  body scale), `line-height: 1`, smaller than the page text on purpose.
+- **Compact by design.** The label is chrome, not body — `--text-xs`
+  (`--text-2xs` when `.-small`), `line-height: 1`, smaller than the page text on
+  purpose.
 - `.-small` / `.-large` retune padding and font-size only; `> .icon`
   (currentColor). The caller adds hit-area padding where touch matters. The
   global `prefers-reduced-motion` block collapses every transition; the strike
   changes state without travel.
 
 ### `.form-field` — label stacked over input
-`> .label` (display, uppercase, tracked) · `> .input` (serif, ruled underline that
-thickens to `--accent` on focus). `.-boxed` = a mail‑order entry box.
+`> .label` (**serif** all‑caps, tracked, cap‑trimmed) · `> .input` (serif, ruled
+underline that thickens to `--accent` on focus). `.-boxed` = a mail‑order entry box.
 
 ### `.paper-card` — a sheet of paper, flat by default
 `> .title` `> .body` `> .foot`. Elevation = literal stacked sheets behind it,
@@ -267,8 +301,9 @@ behind this" (a set, a pinned item); **`.-stack-2`** = a heavy pile / lifted dia
 (sparingly, never a whole grid); **`.-framed`** = a quiet doubled‑rule plate.
 
 ### `.data-table` & `.toc-row`
-Catalogue table: display‑face heads, softened `--rule-strong` underline, tabular
-figures, hairline rows. `.toc-row` (`> .leader` dots + `> .meta`) is an
+Catalogue table: **serif all‑caps** heads (cap‑trimmed), softened
+`--rule-strong` underline, tabular figures, hairline rows. `.toc-row`
+(`> .leader` dots + `> .meta`, the meta also serif all‑caps) is an
 **article‑contents line** — section title + reading‑time, *not* page numbers.
 
 ### `.press-masthead` — the namesake
@@ -289,11 +324,11 @@ surface recomputes per element, so it reads right in light AND dark).
 
 ### `.text-link` — marginalia, flat, always affordant
 default (ink underline, accent on hover) · `.-reference` (italic + ↗, underline
-matched to default exactly) · `.-runninghead` (small‑caps tracked nav: section
-pagers, footers, in‑page jumps).
+matched to default exactly) · `.-runninghead` (**serif** all‑caps tracked nav:
+section pagers, footers, in‑page jumps).
 
 ### Primitives & helpers
-Type roles `.t-display/-heading/-body/-lede/-eyebrow/-mono/-meta/-tabular`;
+Type roles `.t-display/-heading/-subhead/-body/-lede/-eyebrow/-mono/-meta/-tabular`;
 `.rule` / `.rule-thick` / `.rule-double`; `.fleuron-divider`; `.ornament`.
 Helpers: `._sr-only` (the only helper; `!important` allowed here alone).
 
@@ -310,8 +345,10 @@ ticket/perforation, vertical‑type, serial, microtype).
 **Layout is not the system's job (§1).** The system never emits `margin`, never
 caps width, never positions itself.
 
-- **Spacing:** a 4px ruler, `--space-1: 4px … --space-24: 96px`. Used **only** for
-  a component's intrinsic padding and its *own* internal `gap`. Never margin.
+- **Spacing:** a **rem ruler**, `--space-1: 0.25rem … --space-24: 6rem` — a
+  **6px step** at the 24px reference root (`6px … 144px`), and it scales with
+  the reader's font‑size setting exactly as the type does. Used **only** for a
+  component's intrinsic padding and its *own* internal `gap`. Never margin.
 - **Radii:** almost none. `--radius-1: 1px`, `--radius-2: 2px` is the ceiling for
   cards and inputs. Two sanctioned exceptions, both in-component: the
   `.stamp-button`'s deliberately uneven hand-cut edge, and the `.cancel-stamp`
@@ -374,6 +411,11 @@ is rationed to those three cues and earned by a physical metaphor each time.
 - ❌ Faked font weights (`font-synthesis`); Garamond above 600 (the
   `.stamp-button` label's display **700** is the one sanctioned bold — League
   Spartan's real axis, not synthetic).
+- ❌ League Spartan outside its ration (`.stamp-button`, `.cancel-stamp`,
+  `h6`/`.t-eyebrow`) — every other label is serif. Faux small‑caps; uppercase
+  cap‑trimmed serif is the device.
+- ❌ Hard‑coded `px`/`pt` font sizes or spacing — read the rem `--text-*` /
+  `--space-*` tokens. px is for hairlines only; `em` for sub‑glyph nudges.
 - ❌ Decoration that doesn't earn its place (no Victorian cosplay).
 
 ---
@@ -383,9 +425,11 @@ is rationed to those three cues and earned by a physical metaphor each time.
 Responsiveness is **the caller's job by design**, not the system's — components
 have no breakpoints and never reflow themselves.
 
-- **Type** is a fixed point scale. For heroes that must survive a phone the caller
-  opts into `--display-1/2/3` (`clamp()`); the system never bakes viewport
-  coupling into a component.
+- **Type** is a fixed **rem** scale on a 24px reference root (`html { font-size:
+  150% }`) — it does *not* reflow with the viewport, but it *does* honour the
+  reader's browser font‑size setting (and the `--space-*` ruler scales with it).
+  For heroes that must survive a phone the caller opts into `--display-1/2/3`
+  (`clamp()`); the system never bakes viewport coupling into a component.
 - **Touch targets.** Controls are **compact chrome by design** — the
   `.stamp-button` runs roughly 28–45px tall across `.-small`→`.-large` (it is
   *smaller* than body type on purpose; the askew strike enlarges its *perceived*
