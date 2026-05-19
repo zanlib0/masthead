@@ -19,11 +19,12 @@
   --space-20: 80px;
   --space-24: 96px;
 
-  /* Radii — print has none. 2px is the ceiling. */
+  /* Radii — print has almost none. 2px is the ceiling for cards
+     and inputs; the .cancel-stamp seal is the one sanctioned
+     exception (a stuck-on label, softly rounded in-component). */
   --radius-0: 0;
   --radius-1: 1px;
-  --radius-2: 2px;       /* MAX for anything rectangular */
-  --radius-pill: 9999px; /* the postmark only */
+  --radius-2: 2px;
 
   /* Rule weights — hairlines do the structural work */
   --rule-1: 1px;

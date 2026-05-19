@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light" data-accent="sapphire">
+<html lang="en" data-theme="light" data-accent="tourmaline">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -104,8 +104,9 @@
   </header>
   <p class="t-lede cl-lede">
     A letterpress design system. Cool rag paper, blue&#8209;black ink, twelve
-    gemstone accents, hairline rules. The page is flat; only buttons lift off it;
-    only the cancellation stamp is allowed to be crooked.
+    gemstone accents, hairline rules. Print has relief: the button is a rubber
+    stamp struck askew into the sheet, the badge is a seal affixed a hair proud
+    of it &mdash; everything else stays flat.
   </p>
   <p class="cl-note">
     Everything the system draws is layout&#8209;free. The
@@ -192,9 +193,10 @@
           <div style="border-radius:var(--radius-0)">0</div>
           <div style="border-radius:var(--radius-1)">1px</div>
           <div style="border-radius:var(--radius-2)">2px max</div>
-          <div style="border-radius:var(--radius-pill)">pill*</div>
         </div>
-        <p class="cl-note">*pill is reserved for the postmark alone.</p>
+        <p class="cl-note">2px ceils cards &amp; inputs. The only exceptions are
+          in-component: the stamp-button&rsquo;s uneven hand-cut edge and the
+          cancel-stamp seal&rsquo;s softly rounded ~6px corners.</p>
       </div>
     </div>
 
@@ -257,7 +259,7 @@
       padding are caller chrome; the component brings only itself.</p>
 
     <!-- stamp-button -->
-    <h4 class="cl-h4">.stamp-button — a desk paperweight</h4>
+    <h4 class="cl-h4">.stamp-button — an inked strike</h4>
     <div class="cl-spec">
       <div class="cl-stage">
         <button class="stamp-button">Subscribe</button>
@@ -270,13 +272,15 @@
         <button class="stamp-button -small">Export</button>
         <button class="stamp-button -large -accent">Get started</button>
       </div>
-      <div class="cl-cap"><span>default · -accent · -ghost · :disabled · -small · -large</span><span>hover &amp; press are live — try them</span></div>
+      <div class="cl-cap"><span>default · -accent · -ghost · :disabled · -small · -large</span><span>hover &amp; press are live — the strike</span></div>
     </div>
-    <p class="cl-note">A matte solid lit from the upper-left: a key-light pool at
-      that corner, the face curving into its own shade opposite, and a cast thrown
-      down-right onto the paper. Hover brightens the light (no jump); pressing
-      settles it in. The label is engraved. <code>-ghost</code> is the flat
-      exception.</p>
+    <p class="cl-note">Print's call-to-action is a rubber stamp brought down by
+      hand — a keyline impression set slightly askew, its ink held back until
+      contact. The neutral strike is blue-black ink (secondary), the coloured
+      strike is gem ink (primary), the bare struck label has no frame (tertiary).
+      Hover vivifies the ink and squares the lean a touch; press snaps in fast,
+      bites down in scale and blooms a ring of bled ink, then eases weightily
+      back off. Disabled is a spent impression, settled at the pressed lean.</p>
 
     <!-- form-field -->
     <h4 class="cl-h4">.form-field</h4>
@@ -356,28 +360,24 @@
     </div>
 
     <!-- cancel-stamp -->
-    <h4 class="cl-h4">.cancel-stamp — the only badge-like thing</h4>
+    <h4 class="cl-h4">.cancel-stamp — an affixed seal</h4>
     <div class="cl-spec">
       <div class="cl-stage -center" style="gap:var(--space-8)">
         <span class="cancel-stamp">Cancelled</span>
         <span class="cancel-stamp -tourmaline">Expired</span>
         <span class="cancel-stamp -emerald">Paid</span>
         <span class="cancel-stamp -amber">Draft</span>
-        <span class="cancel-stamp -postmark"><span class="top">MASTHEAD</span><span class="rule"></span><span class="bot">2026</span></span>
-        <span class="cancel-stamp -postmark -ruby"><span class="top">VOID</span><span class="rule"></span><span class="bot">&#8470; 4418</span></span>
+        <span class="cancel-stamp -ruby">Void</span>
+        <span class="cancel-stamp -sapphire">Filed</span>
       </div>
-      <div class="cl-cap"><span>accent default · gem variants · -postmark (scales to text)</span><span>no strikethrough · ink-bled</span></div>
+      <div class="cl-cap"><span>accent default · gem variants</span><span>square-set · softly rounded · subtly raised</span></div>
     </div>
-    <p class="cl-note">A cluster shouldn't be uniform. The lean is the caller's
-      job — the <code>._tilt-*</code> helpers, not baked into the stamp:</p>
-    <div class="cl-row" style="margin-top:var(--space-4);gap:var(--space-3)">
-      <span class="cancel-stamp _tilt-1">Typography</span>
-      <span class="cancel-stamp _tilt-4">Letterpress</span>
-      <span class="cancel-stamp _tilt-2">Indie</span>
-      <span class="cancel-stamp _tilt-6">Botanical</span>
-      <span class="cancel-stamp _tilt-3">Catalogue</span>
-      <span class="cancel-stamp _tilt-5">Press</span>
-    </div>
+    <p class="cl-note">No longer a rubber impression — the
+      <code>.stamp-button</code> took the ink and the lean. The seal is a small
+      printed plate <em>applied</em> to the page: crisp, square-set, sitting a
+      hair proud (a hard ink edge under the lower-right + a short soft drop, the
+      lamp from upper-left). Softly rounded corners, square-set, no lean — it is
+      the only thing that lifts off the page on its own.</p>
 
     <!-- text-link -->
     <h4 class="cl-h4">.text-link</h4>
@@ -472,7 +472,7 @@
           <div class="cl-arthead">
             <span class="t-eyebrow">Volume I · Field notes</span>
             <h1 class="t-display" style="font-size:var(--display-1)">An inventory of forms</h1>
-            <span class="cancel-stamp _tilt-5">Draft</span>
+            <span class="cancel-stamp">Draft</span>
           </div>
           <p>The trouble with most software is that it tries to be more than
             three things. A press for the deliberately small assumes you ship on
@@ -557,7 +557,7 @@
           <button class="stamp-button -accent -large" style="width:100%">Subscribe</button>
           <div class="cl-sub-foot">
             <span class="t-meta">Volume I</span>
-            <span class="cancel-stamp -emerald _tilt-3">Paid</span>
+            <span class="cancel-stamp -emerald">Paid</span>
           </div>
         </article>
       </div>

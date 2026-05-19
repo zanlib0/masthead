@@ -229,8 +229,8 @@
    itself at point of use through the var() chain.
    ------------------------------------------------------------ */
 :root {
-  --accent-h: var(--gem-sapphire-h);
-  --accent-c: var(--gem-sapphire-c);
+  --accent-h: var(--gem-ruby-h);
+  --accent-c: var(--gem-ruby-c);
   --accent-chroma: 1;   /* dark mode lowers this to mute the accent */
 
   --accent-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
@@ -276,7 +276,7 @@
   --rule-strong:  var(--ink-2);     /* the firmest stroke — NOT pure ink */
 
   --accent:        var(--accent-500);
-  --accent-solid:  var(--accent-700);  /* filled controls — see note below */
+  --accent-solid:  var(--accent-600);  /* reverse-type bar — AA with --accent-on */
   --accent-soft:   var(--accent-200);
   --accent-tint:   var(--accent-100);
   --accent-deep:   var(--accent-800);
@@ -312,11 +312,11 @@
      with dark --accent-on (AA holds — ramp lightness is hue-uniform). */
   --accent-chroma: 0.78;
   --accent:        var(--accent-500);
-  --accent-solid:  var(--accent-400);
-  --accent-soft:   var(--accent-600);
+  --accent-solid:  var(--accent-600);  /* same step as light — themes now agree */
+  --accent-soft:   var(--accent-700);
   --accent-tint:   var(--accent-800);
   --accent-deep:   var(--accent-300);
-  --accent-on:     var(--ink-900);
+  --accent-on:     var(--paper-100);   /* light label knocked out of the block */
 
   --ok:    var(--gem-emerald-500);   --ok-tint:   var(--gem-emerald-800);
   --warn:  var(--gem-amber-500);     --warn-tint: var(--gem-amber-800);

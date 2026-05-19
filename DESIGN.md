@@ -1,424 +1,349 @@
-# Masthead
+# Masthead — DESIGN.md
 
-> A small, opinionated, letterpress design system. Cool rag paper, blue‑black ink,
-> twelve gemstone accents, hairline rules. The page is flat; only buttons lift off it;
-> only the cancellation stamp is allowed to be crooked.
-
-Masthead is built from two earlier sketches (`tianlou/`, `old/`) plus two method
-references — [RSCSS](https://ricostacruz.com/rscss/) and Julia Evans'
-[*Moving away from Tailwind*](https://jvns.ca/blog/2026/05/15/moving-away-from-tailwind--and-learning-to-structure-my-css-/).
-This document is the contract. The CSS implements it; the showcase proves it.
+> A small, opinionated **letterpress** design system for things one person ships
+> on a Tuesday. Cool rag paper, blue‑black ink, twelve gemstone accents, hairline
+> rules. Print has relief: the button is a rubber stamp struck askew into the
+> sheet, the badge is a seal affixed a hair proud of it — everything else flat.
+>
+> Format follows the [DESIGN.md convention](https://getdesign.md). Visual catalog:
+> `showcase.html` (light + dark, every token and component, three use‑cases).
+> Source is split CSS behind one entrypoint, `masthead.css`.
 
 ---
 
-## 1. The one rule
+## 1. Visual Theme & Atmosphere
 
-**A component is a sealed box. It owns how it looks and how its own parts are
-arranged inside it. It never owns where it sits.**
+**Mood.** An 1890s pattern book / mail‑order catalogue, modernised. Typographically
+literate, restrained, quietly ornamented — *Edward Tufte meets a foundry specimen*.
+Print is the governing metaphor: if print wouldn't do it, neither do we.
 
-| The system owns (intrinsic) | The caller owns (extrinsic) |
+**Density.** Generous. Whitespace has weight; hairline rules do the structural work
+that boxes and shadows do elsewhere.
+
+**The one philosophy that explains everything else — the boundary.**
+A component is a **sealed box**. It owns how it looks and how its *own* parts are
+arranged inside it. It never owns *where it sits*.
+
+| System owns (intrinsic) | Caller owns (extrinsic) |
 | --- | --- |
-| `padding`, `border`, `border-radius` | `margin` |
-| `height` / `min-height`, intrinsic `min-width` | `width` / `max-width` as a layout constraint |
-| `color`, `background`, `box-shadow` | `position`, `top/left/right/bottom` |
-| `font`, `letter-spacing`, `line-height` | `flex` / `grid` placement *of the component itself* |
-| `display`/`gap`/`align` to arrange the component's **own** named sub‑elements | `gap` between sibling components |
-| `:hover` / `:active` / `:focus-visible` / `:disabled` state | responsive breakpoints, page rhythm |
-| `transition`, `transform` that is part of the component's identity | the decision of *which* tilt a stamp gets in a cluster |
+| padding, border, radius, own height | margin, position in parent |
+| colour, background, type, state | width / max‑width as a layout constraint |
+| `display`/`gap` arranging its **own** sub‑elements | `gap` between sibling components |
+| `:hover` `:active` `:focus-visible` `:disabled` | grid/flex placement, breakpoints, page rhythm |
 
-A `.press-masthead` may set its own three‑region internal grid — that grid *is* the
-masthead. It may **not** set its own `margin`, become `position: sticky`, or cap its
-own width. Those are the page's decisions, not the component's.
+*Why:* the costliest design‑system bug is a component that looked right in the kit
+and wrong in the product because it carried its demo's margins. Refuse layout and
+every component is trustworthy everywhere; spacing bugs are never component bugs.
 
-**Why this exists.** The most expensive failure mode of a design system is a
-component that looks right in the kit and wrong in the product because it carried
-its demo's margins with it. By refusing layout entirely, every component is
-trustworthy in every context, and the same boundary tells you exactly which file a
-change belongs in. Spacing bugs are never component bugs.
-
-Long‑form vertical rhythm (a blog post) is therefore **not** the system's job. It is
-the caller's, until a dedicated, opt‑in `.prose` scope is built (see §9).
+**Methodology.** [RSCSS](https://ricostacruz.com/rscss/), strictly: two‑word
+component names (`.stamp-button`), single‑word `>` child elements, `-`‑prefixed
+variants (`.-accent`), `_`‑prefixed helpers (`._sr-only`, `!important` allowed),
+one component per file, shallow selectors. Theming is two‑layered: immutable
+primitive ramps → semantic aliases the theme remaps. Components read **only**
+semantic aliases.
 
 ---
 
-## 2. Methodology — RSCSS
+## 2. Color Palette & Roles
 
-We follow [RSCSS](https://ricostacruz.com/rscss/) without compromise.
+All colour is **OKLCH, computed from one formula** — no hand‑picked hexes.
 
-- **Components** are named with **two words**, dash‑separated: `.stamp-button`,
-  `.paper-card`, `.press-masthead`, `.cancel-stamp`, `.text-link`, `.form-field`,
-  `.data-table`. Two words guarantee no collision with generic/utility names.
-- **Elements** are single‑word child classes selected with the **child combinator**:
-  `.paper-card > .title`. Avoid bare tag selectors inside components.
-- **Variants** are **dash‑prefixed** and nested under the component:
-  `.stamp-button.-accent`, `.-ghost`, `.-small`. A variant only ever changes the
-  component's own appearance.
-- **Helpers** are **underscore‑prefixed** (`._tilt-2`, `._sr-only`), live in one
-  file, and may use `!important` — that is their entire reason to exist.
-- **One component per file.** Selector depth stays shallow
-  (`.component > .element`, occasionally one more). One selector per line.
-  `!important` appears *only* in `helpers.css`.
+### Gem primitives
 
-Per Evans: minimal reset, bottom‑up base styles, design values centralised as
-custom properties, native `@import` + nesting, no utility soup. Components never
-override other components.
+Twelve gems, hues deliberately spread so none reads alike. Each is a full **50–900
+tonal ramp** generated by one shared lightness scale × one chroma multiplier
+(peaks at 500, tapers both ends) × the gem's `{hue, peak‑chroma}`:
 
----
-
-## 3. Token architecture
-
-Two layers. Components only ever read layer 2.
-
-1. **Primitives — immutable.** Raw scales. Never themed, never overridden by a
-   component. The gem ramps, the paper ramp, the ink ramp, spacing, type, radii.
-2. **Semantic aliases — remapped.** `--paper`, `--ink`, `--rule`, `--accent`,
-   `--accent-deep`, … Their *values* change with `data-theme` and `data-accent`;
-   their *names* never change. Components read these and nothing else.
-
-```html
-<html data-theme="light" data-accent="lapis">
+```
+--gem-<name>-<step>: oklch(L  calc(mult × peakC × --accent-chroma)  hue)
 ```
 
-`data-theme` ∈ `light | dark`. `data-accent` ∈ the twelve gem names. Either can be
-re‑declared on any subtree to retint a region.
+| Gem | Hue | Gem | Hue | Gem | Hue |
+|---|---|---|---|---|---|
+| ruby | 25° | peridot | 128° | lapis | 280° |
+| carnelian | 47° | emerald | 158° | amethyst | 310° |
+| amber | 70° | malachite | 185° | tourmaline | 350° |
+| citrine | 95° | turquoise | 213° | | |
+| | | sapphire | 250° | | |
 
-Token names are **explicit**, not terse: `--space-4`, `--text-18`, `--radius-1`,
-`--leading-prose`, `--track-eyebrow`, `--gem-ruby-500`, `--paper-50`, `--ink-900`.
+Adding/retuning a gem = two numbers. `tint/base/deep` ≈ steps `100/500/800`.
 
-### 3.1 Colour — OKLCH, computed
+### Neutral primitives
 
-Everything is OKLCH and purely formula‑driven. Hand‑nudging individual channels is
-*allowed later* but nothing is hand‑nudged in v1.
+Two separate OKLCH ramps, 50–900: **`--paper-*`** (cool blue‑white, *never cream*)
+and **`--ink-*`** (blue‑black, *never pure/OLED black*).
 
-**Twelve gems**, each a full **50–900 tonal ramp** (ten steps). The hues are
-deliberately spread around the wheel so no two read as the same colour:
+### Semantic aliases — the only colour tokens components may use
 
-> ruby 25° · carnelian 47° · amber 70° · citrine 95° · peridot 128° ·
-> emerald 158° · malachite 185° · turquoise 213° · sapphire 250° ·
-> lapis 280° · amethyst 310° · tourmaline 350°
+Names are stable; values remap by `data-theme`. `data-accent="<gem>"` re‑points the
+accent ramp's hue/chroma; the chain recomputes at point of use.
 
-The ramp is one shared shape applied to every gem:
-
-- A shared **lightness scale** `--ramp-l-50 … --ramp-l-900` (≈ 0.972 → 0.246).
-- A shared **chroma multiplier** `--ramp-c-50 … --ramp-c-900`, peaking at 500 and
-  tapering at both ends (tints and shadows can't hold chroma).
-- Per gem: one **hue** and one **peak chroma**. The ramp is
-  `oklch(L  calc(mult × peakC)  hue)`.
-
-So `--gem-ruby-500` is the gem; `--gem-ruby-100` ≈ a paper wash of it;
-`--gem-ruby-800` ≈ it dragged toward ink. `tint`, `base`, `deep` are just readable
-aliases onto 100 / 500 / 800. Adding or retuning a gem is **two numbers**.
-
-**Neutrals are two separate ramps**, same 50–900 shape:
-
-- `--paper-50 … --paper-900` — a cool blue‑white family (chroma ≈ 0, faint 250° cast). *Never cream.*
-- `--ink-50 … --ink-900` — a blue‑black family (250–255° cast). *Never pure black, never OLED.*
-
-### 3.2 Semantic colour mapping
-
-| Alias | Light | Dark |
-| --- | --- | --- |
-| `--paper` | `paper-50` | `ink-900` |
-| `--paper-sunk` | `paper-100` | `ink-800` |
-| `--paper-edge` | `paper-200` | `ink-700` |
-| `--ink` | `ink-900` | `paper-100` |
-| `--ink-2` | `ink-700` | `paper-300` |
-| `--ink-3` | `ink-500` | `paper-500` |
-| `--rule` | `paper-300` | `ink-600` |
-| `--rule-soft` | `paper-200` | `ink-700` |
-| `--rule-strong` | `ink-2` | `paper-400` *(the firmest stroke — never pure ink)* |
-| `--accent` (text / marks / edges) | `accent-500` | `accent-500` |
-| `--accent-solid` (filled controls) | `accent-700` | `accent-400` |
-| `--accent-soft` | `accent-200` | `accent-600` |
-| `--accent-tint` | `accent-100` | `accent-800` |
-| `--accent-deep` | `accent-800` | `accent-300` |
-| `--accent-on` (text on `--accent-solid`) | `paper-50` | `ink-900` |
-| `--accent-chroma` (ramp chroma ×) | `1` | `0.78` *(muted — candlelit, not glaring)* |
-
-`data-accent="<gem>"` points the `--accent-*` ramp at that gem's hue/chroma; the
-theme then chooses which steps the aliases resolve to.
+| Token | Role | Light | Dark |
+|---|---|---|---|
+| `--paper` / `-sunk` / `-edge` | surfaces, recessed→raised | `paper-50/100/200` | `ink-900/800/700` |
+| `--ink` / `--ink-2` / `--ink-3` | text: primary / secondary / faint | `ink-900/700/500` | `paper-100/300/500` |
+| `--rule` / `--rule-soft` | hairlines | `paper-300/200` | `ink-600/700` |
+| `--rule-strong` | firmest stroke — **never pure ink** | `ink-2` | `paper-400` |
+| `--accent` | accent for text / marks / edges | `accent-500` | `accent-500` |
+| `--accent-solid` | the **reverse-type bar** (filled controls) | `accent-600` | `accent-600` |
+| `--accent-on` | label knocked out of `--accent-solid` | `paper-50` | `paper-100` |
+| `--accent-tint` / `-soft` / `-deep` | wash / hover / edge | `100/200/800` | `800/700/300` |
+| `--accent-chroma` | ramp chroma × (dark muting) | `1` | `0.78` |
+| `--ok` `--warn` `--err` `--info` | status — *gems with intent* | emerald·amber·ruby·sapphire 500 | same, muted |
 
 **`--accent` vs `--accent-solid`.** A single mid gem can't be both a legible mark
-*and* a filled background under text. So `--accent` is the colour for text, marks
-and edges on paper; `--accent-solid` is the one for filled controls (the accent
-button). Because the ramp's **lightness is hue‑uniform** (every gem shares
-`--ramp-l-*`), a fixed step is guaranteed to clear WCAG AA against `--accent-on`
-for *all twelve* gems at once: light uses `accent-700` + white text (~5.9:1); dark
-uses `accent-400` + ink text (~5:1). One rule, no per‑gem tuning.
+*and* a fill under text, so they're split. Because the ramp's lightness is
+**hue‑uniform**, the fixed `accent-600` clears WCAG **AA** against `--accent-on`
+for all twelve gems at once — no per‑gem tuning. Dark mode mutes via
+`--accent-chroma: 0.78` (a candle, not a screen), not by changing steps.
 
-**Dark muting.** Rather than a brighter step, dark mode keeps a mid step and lowers
-`--accent-chroma` to `0.78`, scaling chroma across the whole accent ramp at the
-formula level. The gem reads *lit by a candle*, never *lit by a screen* — and
-nothing else in the architecture has to change.
-
-Semantic status, when ever needed, borrows gems with intent (success = emerald,
-warning = amber, danger = ruby, info = sapphire). There are **no generic
-blue/red/green** and **no status‑badge component** (see §6).
-
-### 3.3 Type
-
-- **Serif — EB Garamond.** Body, prose, headings. Old‑style figures by default
-  (`onum`), real italics, small caps.
-- **Display — League Spartan.** Eyebrows, labels, chrome, masthead nav.
-  Geometric; takes uppercase + tracking without shouting.
-- **Mono — IBM Plex Mono.** Code, tabular data, serials.
-- Loaded from the Google Fonts CDN via `@import` (chosen for zero font management;
-  the trade‑off is the showcase needs the network).
-
-The scale is **fixed rem steps** the components reference directly
-(`--text-12 … --text-84`). Responsiveness is the caller's job (§1), so fluid type is
-**opt‑in**: a tiny set of `--display-1/2/3` `clamp()` tokens the caller may reach for
-on hero/masthead moments — exactly the same shape as the deferred `.prose` decision.
-A foundry sells 12pt and 36pt, not "clamp"; the system ships the specimen, the caller
-decides the room.
-
-**Base size & rhythm.** The root is left at the reader's default
-(`html { font-size: 100% }` ≈ 16px) and the rem scale is authored against that, so
-`--text-18` resolves to a true **18px** body — the best‑practice long‑form reading
-size — without hard‑pinning the root or inflating every other token. Line‑height
-follows length: prose `--leading-prose` 1.55, headings `--leading-snug` 1.18,
-display `--leading-tight` 1.05 (the longer the line, the looser the leading).
-Headings get `text-wrap: balance`, body gets `text-wrap: pretty`.
-
-**Contrast.** Body ink on paper is ~16:1; the faintest text token (`--ink-3`) still
-clears AA on paper, and dark‑mode text is deliberately paper‑100 (not pure white) to
-hold AA while avoiding halation. Filled accent controls clear AA via `--accent-solid`
-(above). Contrast is a system guarantee, not a per‑screen afterthought.
-
-### 3.4 Space, radii, rules
-
-- Spacing: a 4px ruler, `--space-1: 4px … --space-24: 96px`. Used **only** for
-  intrinsic padding and a component's own internal `gap`. Never emitted as `margin`.
-- Radii: almost none. `--radius-0: 0`, `--radius-1: 1px`, `--radius-2: 2px` (max),
-  `--radius-pill` exists for the postmark only. *Print has no radii.*
-- Rule weights: `--rule-1: 1px` (hairline — does most structural work),
-  `--rule-2: 2px`, `--rule-3: 3px`. The firmest a stroke ever gets in *colour*
-  is `--rule-strong` (≈`ink-2`), **never pure ink** — jet‑black 2–3px strokes
-  read as harsh, so table heads, framed plates and heavy rules use the softened
-  value at 1px.
+**No generic blue/red/green. No status‑badge component.** Colour is rationed.
 
 ---
 
-## 4. Elevation — the page is flat
+## 3. Typography Rules
 
-The defining decision. Most of the system has **no shadow at all**. Three exceptions,
-each physically motivated.
+Three families, loaded from Google Fonts CDN:
 
-### 4.1 Surfaces — stacked paper, no blur
+| Family | Role |
+|---|---|
+| **EB Garamond** (serif) | body, prose, headings; old‑style figures by default |
+| **League Spartan** (display) | eyebrows, labels, chrome, button labels (UPPERCASE, tracked) |
+| **IBM Plex Mono** (mono) | code, tabular data, serials |
 
-A `.paper-card` is flat by default. When lifted (`.-stack-1`, `.-stack-2`), elevation
-is **literal duplicate sheets of paper** offset behind it: a hairline `--rule`
-border, translated down‑and‑right, **no blur, no rotation**. Each deeper sheet sits
-further into shadow — `--sheet-1` darker than the page, `--sheet-2` darker still
-(in dark mode they are rim‑lit a touch *lighter*, since you can't go darker than a
-near‑black page). The look is carried over from `old/`.
+**The scale is in POINTS** — a foundry sells 12pt and 36pt, not pixels. The number
+in each token *is* the point size; points are absolute (1pt = 4⁄3 px) so the scale
+never reflows with the root. **Body is 18pt** — an unmistakably *printed* reading
+size, not a screen‑UI 16px.
 
-**When to use which** — elevation encodes *how much is behind the surface*, never
-interactivity (pressing is the button's job, never a card's):
+| Token | Size | Role | Leading |
+|---|---|---|---|
+| `--text-12` | 12pt ≈16px | caption, eyebrow | — |
+| `--text-13` | 13pt ≈17px | chrome label, **button** | — |
+| `--text-14` | 14pt ≈19px | small, meta | — |
+| `--text-18` | **18pt ≈24px** | **body** | `--leading-prose` 1.55 |
+| `--text-24` | 24pt ≈32px | lede | 1.45 |
+| `--text-30` | 30pt ≈40px | h3 | `--leading-snug` 1.18 |
+| `--text-38` | 38pt ≈51px | h2 | 1.18 |
+| `--text-48` | 48pt ≈64px | h1 | 1.18 |
+| `--text-84` | 84pt ≈112px | display | `--leading-tight` 1.05 |
 
-- **flat** (default) — the resting state of almost everything: list rows, form
-  panels, peers in a grid. If unsure, flat.
-- **`-stack-1`** (one sheet) — "there is more behind this one": a card standing
-  for a set (a thread, an album, a folder), or a single item promoted above its
-  peers (featured / pinned).
-- **`-stack-2`** (two sheets) — the heavy pile: a deep archive, a draft stack, one
-  hero object, or a lifted dialog. Sparingly; never a whole grid of them.
-
-### 4.2 Buttons — the only thing on top of the paper
-
-A button is a **matte solid object** on the paper — *not* a glossy web button.
-Loud gradient + bright bevel + border is the dated Aqua/Bootstrap‑2 tell; we avoid
-it deliberately. The form is read from the **cast shadow**, not from shine:
-
-1. **A face modelled by one light.** `--btn-face` is two radial layers, not a
-   linear fill: a key‑light pool at the **upper‑left** (where the light lands) and
-   the surface curving into its own **shade at the lower‑right**. That diagonal
-   value range is what stops it reading as a flat UI fill and makes it look like a
-   solid catching light from one side. A minimal `--btn-bevel` only crisps the
-   edge. The accent button has **no border** at all.
-2. **A real cast shadow** — two ink‑tinted layers under that same upper‑left
-   light, thrown down‑and‑right onto the paper (`--cast-rest`). The face‑shade and
-   the cast share one light direction, so the object reads as genuinely lit, and
-   sits clearly off the page.
-3. **State is light, not motion.** Hover *brightens the source* — `brightness`↑
-   and a stronger key pool (`--btn-face-hover`) — the object does **not** jump.
-   Press lets it *settle*: ~1px of travel, the cast collapsing (`--cast-press`),
-   and the *same* face with a touch less light reaching it (`--btn-face-press` +
-   a gentle `--btn-bevel-press`). **No brightness filter, no colour shift** — the
-   position drop and the shadow collapse carry the press entirely. The accent
-   button fills with `--accent-solid` and that colour does not change on press.
-4. **An engraved label** — `--btn-engrave` sets a 1px lit lip under the glyphs so
-   the type reads as cut into the face (a dark‑walled variant on accent fills).
-
-All moulding alphas are pure black/white over the colour, so any gem works and
-both themes stay coherent. `.-ghost` is the deliberate exception: a flat token,
-no moulding, sitting almost flush.
-
-### 4.3 Links — flat
-
-Links cast nothing. They are marginalia, not objects. Affordance is carried by a
-visible ink underline, an accent shift on hover, and a real `:focus-visible` ring —
-accessibility is non‑negotiable even though the link is flat.
-
-### 4.4 The cancellation stamp — pressed in, not raised
-
-See §6. It has no elevation; it is ink driven *into* the page by a librarian.
+Rules: leading loosens as the line lengthens. Weights are pulled **down** (Garamond
+goes heavy fast): regular 400 / medium 460 / semibold 520 / bold 600 — and
+`font-synthesis: none` (never fake a weight). The lone exception is the
+`.stamp-button` label: a struck stamp is heavy ink, so it takes display **700**
+on League Spartan's real axis. Headings `text-wrap: balance`, body
+`text-wrap: pretty`. Sentence case for prose/headlines; UPPERCASE + `0.18em` for
+eyebrows/labels (the stamp button tracks its own caps a touch tighter, `0.15em`). Old‑style figures in prose, lining/tabular in tables.
+Em dashes, curly quotes, Oxford comma. **No emoji** — Unicode ornaments only
+(`❦ ❧ ✦ § ¶ №`). Responsiveness is opt‑in: `--display-1/2/3` `clamp()` tokens the
+caller may reach for (never baked into components).
 
 ---
 
-## 5. Motion
+## 4. Component Stylings
 
-Restrained, mechanical, honest. Default transition ≈ 120ms; the button press is
-~70ms ease‑out. No bounce, no spring, no scale‑up‑on‑hover, no parallax.
-`@media (prefers-reduced-motion: reduce)` collapses all of it globally.
-Focus ring: `2px solid var(--accent)` at `2px` offset, everywhere, always.
+RSCSS, one file each under `components/`. **No component sets margin, width, or
+position.** States shown are `:hover` / `:active` / `:focus-visible` / `:disabled`.
+Focus is always a `2px solid var(--accent)` ring at `2px` offset.
 
----
+### `.stamp-button` — an inked strike (print's CTA is a rubber stamp)
+A keyline impression set slightly askew — a stamp never lands square. Its ink is
+held back until contact. **Hover** vivifies the ink and squares the lean a touch.
+**Press is the strike**: it snaps in fast (60ms ease-in), bites down a step in
+scale, floods to full ink and blooms a ring of bled ink around the edge — then
+eases weightily back off on release (220ms). **Disabled** is a spent impression:
+same ink gone faint, no bloom, left permanently crooked.
+- **default / secondary:** the neutral blue-black strike — `--ink` keyline +
+  label on transparent paper, no ground. The everyday rubber stamp.
+- **`.-accent` (primary):** the same impression in gem ink (`--strike-ink:
+  var(--accent)`); every `data-accent` / gem flows through it. The retired
+  reverse-type bar's tokens (`--accent-solid` / `--accent-on`) stay defined for
+  callers but the primary is no longer a filled block — it is the coloured strike.
+- **`.-ghost`:** the struck label with no frame — `--ink-2`, warming to
+  `--accent`. No box ⇒ no bloom; the lean and the ink are the whole affordance.
+- **The press is real relief, not a performance:** `transform` (rotate + scale)
+  plus a `box-shadow` bloom keyed off the tier's `--strike-ink` (so each tier
+  haloes in its own ink). Bloom is `--strike-bloom` / `--strike-bloom-press` from
+  `tokens/shadows.css` — colours are `color-mix` of the tier's `--strike-ink`
+  (concrete, so every transition interpolates fluidly, never snaps), and a
+  zero-state `--strike-bloom-none` keeps rest→hover a list→list tween. No
+  gloss, no bevel, no `@keyframes`. The 2px radius ceiling is relaxed for the
+  stamp's deliberately uneven hand-cut edge only.
+- **Compact by design.** The label is chrome, not body — ~11px (not the 18pt
+  body scale), `line-height: 1`, smaller than the page text on purpose.
+- `.-small` / `.-large` retune padding and font-size only; `> .icon`
+  (currentColor). The caller adds hit-area padding where touch matters. The
+  global `prefers-reduced-motion` block collapses every transition; the strike
+  changes state without travel.
 
-## 6. The cancellation stamp
+### `.form-field` — label stacked over input
+`> .label` (display, uppercase, tracked) · `> .input` (serif, ruled underline that
+thickens to `--accent` on focus). `.-boxed` = a mail‑order entry box.
 
-There are **no status badges** in Masthead. The only badge‑like component is the
-**cancellation stamp** — a rubber/postal impression a librarian thumped onto the
-page for *Cancelled · Void · Expired · Archived · Paid · Draft*.
+### `.paper-card` — a sheet of paper, flat by default
+`> .title` `> .body` `> .foot`. Elevation = literal stacked sheets behind it,
+**no blur, no rotation**, each deeper sheet darker (`--sheet-1`, `--sheet-2`).
+*Use which:* **flat** = the default (content in the page); **`.-stack-1`** = "more
+behind this" (a set, a pinned item); **`.-stack-2`** = a heavy pile / lifted dialog
+(sparingly, never a whole grid); **`.-framed`** = a quiet doubled‑rule plate.
 
-`.cancel-stamp`
+### `.data-table` & `.toc-row`
+Catalogue table: display‑face heads, softened `--rule-strong` underline, tabular
+figures, hairline rows. `.toc-row` (`> .leader` dots + `> .meta`) is an
+**article‑contents line** — section title + reading‑time, *not* page numbers.
 
-- Rectangular. Uppercase, heavily tracked display type.
-- A **double‑rule inkpad outline**: a `2px` border plus a `box-shadow` ring just
-  outside it — the doubled edge real stamps leave.
-- **Ink‑bled** via reduced `opacity` (≈ .82) — uneven coverage, not crisp print.
-- A small **intrinsic tilt** (it is part of the stamp's identity that it is never
-  perfectly square to the page).
-- **No strikethrough.** The v4 diagonal slash is removed.
-- Colour follows **`--accent`** by default; explicit gem variants override
-  (`.-ruby`, `.-tourmaline`, `.-emerald`, `.-amber`, `.-sapphire`). The variant
-  just re‑points the accent hue/chroma, so it stays theme‑correct.
+### `.press-masthead` — the namesake
+A lowercase **italic serif** title left, lowercase roman links right, an **accent
+dot** before `a[aria-current="page"]`, one hairline beneath. No nameplate grandeur,
+no heavy rules.
 
-`.cancel-stamp.-postmark` — the one variant: a circular, two‑line postmark with a
-concentric ring. It **scales to its own text** (`aspect-ratio:1` + a `min-width`
-floor) so it stays a true circle and can never overflow. Use once, deliberately
-(a single PAID/VOID seal), never in clusters.
+### `.cancel-stamp` — an affixed seal (the only badge; no status badges)
+No longer a rubber impression — the `.stamp-button` took the ink and the lean.
+This is a small printed plate **applied** to the sheet: crisp, square-set, and
+sitting a hair proud — a hard ink edge under the lower-right plus a short soft
+drop (`--plate-lift`, the desk lamp from upper-left). It is the only thing that
+lifts off the page on its own. Its corners are **softly rounded** (a stuck-on
+label, the one component allowed past the 2px radius ceiling); no circular /
+postmark variant, no intrinsic lean. Colour follows `--accent`; gem variants
+(`.-ruby` `.-tourmaline` `.-emerald` `.-amber` `.-sapphire`) just re‑point
+hue/chroma — the theme decides which step resolves, right in light AND dark.
 
-**Tilt variety** for clusters (a tag cloud of stamps) is *not* the component's job —
-which stamp leans which way is a caller/arrangement concern. It is delivered as
-generic helpers `._tilt-1 … ._tilt-6` (symmetric, both directions, `!important`).
-The caller applies them; the component keeps only its single default tilt.
+### `.text-link` — marginalia, flat, always affordant
+default (ink underline, accent on hover) · `.-reference` (italic + ↗, underline
+matched to default exactly) · `.-runninghead` (small‑caps tracked nav: section
+pagers, footers, in‑page jumps).
 
----
+### Primitives & helpers
+Type roles `.t-display/-heading/-body/-lede/-eyebrow/-label/-mono/-meta/-tabular`;
+`.rule` / `.rule-thick` / `.rule-double`; `.fleuron-divider`; `.ornament`.
+Helpers: `._sr-only` (the only helper; `!important` allowed here alone).
 
-## 7. Inventory
-
-### Core (built in v1)
-
-| Component | Variants / elements |
-| --- | --- |
-| `.stamp-button` | `.-accent` `.-ghost` `.-small` `.-large`, `:disabled`, `> .icon` |
-| `.form-field` | `> .label` `> .input`; `.-boxed` (mail‑order box) vs default underline |
-| `.paper-card` | `.-stack-1` `.-stack-2` `.-framed`; `> .title` `> .body` `> .foot` |
-| `.data-table` | `> thead/tbody` styling; `.toc-row` (`> .leader` `> .meta`) |
-| `.press-masthead` | `> .title` (lowercase italic) `> .nav` (`a[aria-current]` gets the accent dot) |
-| `.cancel-stamp` | `.-postmark`, gem overrides `.-ruby` `.-tourmaline` `.-emerald` `.-amber` `.-sapphire` |
-| `.text-link` | `.-reference` (↗) `.-runninghead` (small‑caps nav) |
-
-**Primitives:** type roles (`.t-display`, `.t-heading`, `.t-body`, `.t-lede`,
-`.t-eyebrow`, `.t-label`, `.t-mono`, `.t-meta`, `.t-tabular`), hairline rule
-(`.rule`, `.rule-thick`, `.rule-double`), `.fleuron-divider`, `.ornament`.
-
-`.text-link.-runninghead` is for printed‑page‑style navigation cues: a section
-pager (`◂ Prologue · Chapter II · Chapter III ▸`), an article footer "next" link,
-in‑page section jumps, or a quiet running header — anywhere a small‑caps tracked
-cross‑reference reads better than a button.
-
-**Helpers:** `._tilt-1…6`, `._sr-only`. (`._prose` — see §9.)
-
-### Deferred — documented, not built in v1
-
-Treated exactly like `.prose`: named, scoped, *not* implemented until a real
-use‑case needs it.
-
-- Components: instrument gauge, tabs, switch, kbd, `.text-link.-folio` (leader
-  dots), `.text-link.-manicule` (☞).
-- **Drop cap** — intentionally not a primitive. A drop cap is a forward,
-  per‑article editorial decision (which letter, how many lines, hung or sunk),
-  not a system default. Build it at the caller/`.prose` layer if a publication
-  wants one.
-- **Press Ornaments tier** (own file when built, "use rarely, deliberately"):
-  cartouche frame, ticket / perforation, vertical‑type, serial number, microtype.
-- `._prose` scope (§9).
-
-The showcase renders deferred items as documented stubs, not working code.
-
----
-
-## 8. Files
-
-Authoring is split (RSCSS one‑component‑per‑file + Evans' per‑component structure).
-`masthead.css` is the only thing a consumer links; it `@import`s the rest in
-cascade order.
-
-```
-masthead.css                 entrypoint — @import in order:
-  tokens/colours.css           gem ramps, paper/ink ramps, semantic aliases, theming
-  tokens/type.css              families, fixed scale, opt-in --display-*, leading, tracking
-  tokens/space.css             spacing, radii, rule weights
-  tokens/shadows.css           --lift-*, --cast-* (paper stack, button cast)
-  base.css                     thin reset + bare-tag APPEARANCE ONLY (zero spacing)
-  components/stamp-button.css
-  components/form-field.css
-  components/paper-card.css
-  components/data-table.css
-  components/press-masthead.css
-  components/cancel-stamp.css
-  components/text-link.css
-  helpers.css                  ._tilt-*, ._sr-only  (the only !important)
-DESIGN.md
-showcase.html                  single file, HTML+CSS only, <link> masthead.css
-old/  tianlou/                 source sketches (reference only)
-```
+### Deferred — documented, intentionally not built (same discipline as `.prose`)
+`.prose` (long‑form rhythm + measure); **drop cap** (a forward, per‑article
+editorial choice, never a primitive); instrument gauge; tabs / switch / kbd;
+`.text-link.-folio` / `.-manicule`; the **Press Ornaments** tier (cartouche,
+ticket/perforation, vertical‑type, serial, microtype).
 
 ---
 
-## 9. `.prose` (deferred)
+## 5. Layout Principles
 
-**Job:** wrap long‑form content and supply *only* the vertical rhythm and reading
-measure the system deliberately refuses to put on bare tags — the Evans
-`._prose > * + *` lobotomised‑owl pattern, plus an optional `max-width` measure.
+**Layout is not the system's job (§1).** The system never emits `margin`, never
+caps width, never positions itself.
 
-**Status:** documented, **not in core**. Until it ships, long‑form rhythm is the
-caller's responsibility. The showcase's devblog use‑case demonstrates this honestly:
-its prose rhythm lives in **showcase‑only (caller) CSS**, explicitly labelled "this
-spacing belongs to the caller, not Masthead."
-
----
-
-## 10. Showcase
-
-One HTML file, HTML + CSS only, no JavaScript, linking `masthead.css`. Any layout in
-it lives in a clearly separated `caller-layer` `<style>` block — the showcase is a
-consumer and proves the boundary by obeying it.
-
-1. **Isolation gallery** — every token (gem ramps, paper/ink, spacing, type
-   specimen, radii, shadows), every primitive, every core component with all
-   variants and states (`:hover`/`:active`/`:focus`/`:disabled` shown statically),
-   helpers, light **and** dark, a couple of `data-accent` retints. Deferred items
-   appear as labelled stubs.
-2. **Three use‑cases** (core‑only), each a different accent to prove single‑accent
-   retinting:
-   - **Devblog article** — `data-accent="lapis"`: press‑masthead, display type, an
-     auto‑style "Contents" (`.toc-row` with reading‑time meta) at the top, fleuron
-     dividers, a `DRAFT` cancel‑stamp, reference links, and `.prose` rhythm
-     supplied at the caller layer.
-   - **Catalogue / index** — `data-accent="emerald"`: press‑masthead, paper‑card
-     "plates", running‑head links, a section pager.
-   - **Subscription panel** — `data-accent="amber"`: form‑field, every button
-     state, paper‑card elevation, a `PAID` cancel‑stamp.
+- **Spacing:** a 4px ruler, `--space-1: 4px … --space-24: 96px`. Used **only** for
+  a component's intrinsic padding and its *own* internal `gap`. Never margin.
+- **Radii:** almost none. `--radius-1: 1px`, `--radius-2: 2px` is the ceiling for
+  cards and inputs. Two sanctioned exceptions, both in-component: the
+  `.stamp-button`'s deliberately uneven hand-cut edge, and the `.cancel-stamp`
+  seal's softly rounded ~6px corners (a stuck-on label). No pill, no token above 2px.
+- **Rules:** `--rule-1/2/3` weights; the firmest *colour* is `--rule-strong`
+  (≈`ink-2`), never jet‑black.
+- **Files:** `masthead.css` `@import`s `tokens/{colours,type,space,shadows}.css`
+  → `base.css` (reset + bare‑tag appearance only, zero spacing) → `components/*`
+  → `helpers.css` (the only `!important`). One link for a consumer.
+- **Long‑form rhythm** is the caller's until `.prose` ships. The showcase proves
+  this: its prose spacing lives in clearly‑fenced caller CSS.
 
 ---
 
-## 11. Voice (inherited, unchanged)
+## 6. Depth & Elevation
 
-Restrained, typographically literate, professional. Title Case headings; UPPERCASE
-tracked (0.18em) eyebrows/labels; sentence case body. Em dashes, curly quotes,
-Oxford comma, old‑style figures in prose / lining figures in tables. **No emoji** in
-chrome — Unicode ornaments (`❦ ❧ ✦ § ¶ №`) instead. Every flourish earns its place;
-no Victorian cosplay.
+**Print has relief; screens have gloss. We take the relief and refuse the
+gloss.** The lamp is fixed at the upper-left, so every cast falls
+down‑and‑right. Exactly three physical depth cues, all in `tokens/shadows.css`:
+
+1. **Stacked‑paper card lift** — `.paper-card.-stack-1/-2` set literal duplicate
+   sheets behind the card (`--sheet-1`, `--sheet-2`), offset down‑and‑right by
+   `--stack-shift`, **no blur, no rotation**. Each deeper sheet sits further into
+   shadow (in dark mode rim‑lit slightly *lighter*, since nothing beats a
+   near‑black page). Encodes *how much is behind the surface*, never interactivity.
+2. **Inked‑strike bloom** — the `.stamp-button` holds its ink until contact, then
+   `:hover` / `:active` bloom `--strike-bloom` / `--strike-bloom-press`: a
+   hairline inset of bled ink + a soft press halo, `color-mix`ed from the tier's
+   `--strike-ink` (concrete colour ⇒ fluid interpolation, never a snap; a
+   zero-state `--strike-bloom-none` keeps rest→hover a list→list tween). Paired
+   with a real `transform` (rotate + scale) — the strike *is* the relief.
+3. **Affixed‑plate lift** — the `.cancel-stamp` carries `--plate-lift` (a hard
+   ink edge + short soft drop): a seal a hair proud of the page, not a
+   card‑sized float.
+
+Still categorically refused: glassmorphism, Material elevation tiers, gloss/sheen
+gradients, bevels, ambient soft floats, drop shadows on flat type or rules. Depth
+is rationed to those three cues and earned by a physical metaphor each time.
+
+---
+
+## 7. Do's and Don'ts
+
+**Do**
+- Read only semantic aliases; theme via `data-theme` / `data-accent`.
+- Keep components layout‑free; let the caller place them.
+- One accent per surface; let status borrow gems with intent.
+- Hairlines and ink first; let whitespace carry structure.
+- Sentence case prose; UPPERCASE tracked chrome; old‑style figures.
+
+**Don't**
+- ❌ `margin` / `width` / `position` inside a component.
+- ❌ Gloss/sheen gradients, bevels, glassmorphism, Material elevation, ambient
+  soft floats — depth only via the three §6 cues, never invented elsewhere.
+- ❌ Generic blue/red/green; status badges; hard‑coded hex.
+- ❌ Emoji as icons; drop caps as a system feature; pill buttons.
+- ❌ Cream backgrounds, pure/OLED black, jet‑black 2–3px strokes.
+- ❌ Faked font weights (`font-synthesis`); Garamond above 600 (the
+  `.stamp-button` label's display **700** is the one sanctioned bold — League
+  Spartan's real axis, not synthetic).
+- ❌ Decoration that doesn't earn its place (no Victorian cosplay).
+
+---
+
+## 8. Responsive Behavior
+
+Responsiveness is **the caller's job by design**, not the system's — components
+have no breakpoints and never reflow themselves.
+
+- **Type** is a fixed point scale. For heroes that must survive a phone the caller
+  opts into `--display-1/2/3` (`clamp()`); the system never bakes viewport
+  coupling into a component.
+- **Touch targets** stay ≥ 44px on interactive components even at `.-small`.
+- **Collapsing / grids / breakpoints** belong to the consuming page (or the
+  future `.prose` scope), expressed in its own caller‑layer CSS — never shipped.
+- **Reduced motion:** all transitions collapse under
+  `@media (prefers-reduced-motion: reduce)`.
+- **Theme:** `data-theme` may be re‑declared on any subtree; dark mode lowers
+  text contrast deliberately (paper‑100, not pure white) to avoid halation while
+  holding AA.
+
+---
+
+## 9. Agent Prompt Guide
+
+**Setup.** Link `masthead.css`. Set the root: `<html data-theme="light"
+data-accent="lapis">`. Either attribute can be re‑declared on any subtree.
+
+**Quick reference**
+- Accents (`data-accent`): ruby · carnelian · amber · citrine · peridot · emerald ·
+  malachite · turquoise · sapphire · lapis · amethyst · tourmaline. Default sapphire.
+- Surfaces: `--paper`; text `--ink`/`--ink-2`/`--ink-3`; lines `--rule`/`--rule-strong`.
+- Primary action = `<button class="stamp-button -accent">`; secondary = bare
+  `.stamp-button`; quiet = `.-ghost`.
+- Status = a `.cancel-stamp` or text, never a badge.
+- Spacing/margins/grids are **yours (the caller's)**, in your own CSS — the system
+  ships none.
+
+**Ready‑to‑use prompts**
+- *"Build a devblog article: `.press-masthead`, an `.t-display` title with a
+  `DRAFT` `.cancel-stamp` seal, a `.toc-row` contents list with reading
+  times, body in `.t-body`, fleuron dividers, `.text-link.-reference` citations.
+  Put all spacing in a caller `.prose`‑style block."*
+- *"Build a settings panel: `.paper-card` (flat), `.form-field` rows, a primary
+  `.stamp-button.-accent` and a `.-ghost` cancel. No card elevation; it sits in
+  the page."*
+- *"Re‑skin this surface to emerald: add `data-accent="emerald"` on the wrapper —
+  change nothing else."*
+
+**Hard rules for any generation:** never add `margin`/`width`/`position` to a
+Masthead component; never invent depth outside the three §6 cues (no gloss,
+bevel, glass, or Material elevation); never introduce a non‑gem colour; never
+use emoji; everything but the struck button and the affixed seal stays flat.

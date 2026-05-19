@@ -1,112 +1,142 @@
 /* ============================================================
-   .stamp-button — a matte solid object on the paper, not a
-   glossy web button. Its form is read from the cast shadow;
-   the surface is near-flat with only a whisper of top light.
-   Hover RELIGHTS it (no jump). Press settles it slightly into
-   the paper with a gentle, low-contrast change. The label is
-   engraved into the face.
-   Intrinsic only: no margin, no width, no placement.
+   .stamp-button — an INKED STRIKE. Print's call-to-action is a
+   rubber stamp brought down by hand: a keyline impression set
+   slightly askew (a stamp never lands square to the page), its
+   ink held back until contact. Hover vivifies the ink and
+   squares the lean a touch. Press is the strike — it snaps in
+   fast (60ms), bites down a step in scale, floods to full ink
+   and blooms a ring of bled ink around the edge — then eases
+   weightily back off on release (220ms). Disabled is a spent
+   impression: same ink gone faint, no bloom, settled at the
+   pressed lean.
+
+     default  → ink keyline strike              (secondary)
+     .-accent → the coloured / vermillion strike (primary)
+     .-ghost  → struck label, no frame           (tertiary)
+
+   Colour follows the current ink — --ink for the neutral strike,
+   --accent for the primary, every gem through --accent. Alphas
+   are color-mix (concrete colour) so every transition is fluid.
+   Light/dark is automatic. Compact by design: smaller than body
+   type. Intrinsic only: no margin / width / placement.
    ============================================================ */
 .stamp-button {
+  --strike-ink: var(--ink);            /* secondary: the blue-black pad */
+  /* Weighted return by default; the snap-in is set on :active. */
+  --strike-out: 220ms ease;
+  --strike-in:  60ms ease-in;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2);                 /* icon <-> label, its own parts */
-  padding: 11px 21px;
+  gap: 7px;                            /* icon <-> label, its own parts */
+  padding: 10px 20px;
   font-family: var(--font-display);
-  font-weight: var(--weight-semibold);
-  font-size: var(--text-13);
-  letter-spacing: var(--track-button);
+  /* The one place display type goes to a true 700: a struck
+     stamp is heavy ink. League Spartan carries it on its own
+     variable axis — never synthesised (see base.css). */
+  font-weight: 700;
+  font-size: 12px;                     /* chrome, not body — deliberately small */
+  line-height: 1;                      /* don't inherit the 1.55 prose leading */
+  letter-spacing: 0.15em;              /* the stamp's own wide tracking */
   text-transform: uppercase;
-  color: var(--ink);
-  background: var(--btn-face), var(--btn-bg);
-  border: 1px solid oklch(from var(--ink) l c h / 0.10);
-  border-radius: var(--radius-2);
-  box-shadow: var(--btn-bevel), var(--cast-rest);
-  text-shadow: var(--btn-engrave);
+
+  color: color-mix(in oklab, var(--strike-ink) 80%, transparent);
+  background: transparent;
+  border: 2px solid color-mix(in oklab, var(--strike-ink) 55%, transparent);
+  box-shadow: var(--strike-bloom-none);
+
+  /* Every corner fractionally its own — a stamp is hand-cut and
+     never lands square. (The 2px radius ceiling is about killing
+     gloss; an uneven sub-2px edge is the opposite of gloss.) */
+  border-radius: 2px 1px 3px 1px / 1px 3px 1px 2px;
+
+  transform: rotate(-0.8deg);
   cursor: pointer;
   user-select: none;
   text-decoration: none;
+  appearance: none;
+  -webkit-appearance: none;
+
   transition:
-    transform 90ms ease-out,
-    box-shadow 110ms ease-out,
-    background 140ms ease,
-    filter 140ms ease;
+    color        var(--strike-out),
+    border-color var(--strike-out),
+    box-shadow   var(--strike-out),
+    transform    var(--strike-out);
 
-  > .icon {
-    flex: none;
-    width: 18px;
-    height: 18px;
-    color: currentColor;
+  > .icon { flex: none; width: 14px; height: 14px; color: currentColor; }
+
+  &:focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--strike-ink) 55%, transparent);
+    outline-offset: 4px;               /* nothing clips it */
+    border-radius: var(--radius-2);
   }
 
-  /* Hover = the light moves, the object doesn't. */
+  /* Hover — the ink vivifies and the stamp squares up a touch. */
   &:hover {
-    filter: brightness(1.045);
-    background: var(--btn-face-hover), var(--btn-bg);
+    color: color-mix(in oklab, var(--strike-ink) 95%, transparent);
+    border-color: color-mix(in oklab, var(--strike-ink) 80%, transparent);
+    box-shadow: var(--strike-bloom);
+    transform: scale(1.02) rotate(-0.4deg);
   }
 
-  /* Press = it settles a touch into the paper. Subtle: a hair of
-     travel, a gentle concave, the cast collapses. No colour leap. */
+  /* Press — the strike. Snaps in fast, bites down, floods to
+     full ink with a heavier bloom; eases weightily back out. */
   &:active,
   &[aria-pressed="true"] {
-    transform: translateY(1px);
-    background: var(--btn-face-press), var(--btn-bg);
-    box-shadow: var(--btn-bevel-press), var(--cast-press);
-    text-shadow: none;
+    color: var(--strike-ink);
+    border-color: color-mix(in oklab, var(--strike-ink) 98%, transparent);
+    box-shadow: var(--strike-bloom-press);
+    transform: scale(0.95);
+    transition:
+      color        var(--strike-in),
+      border-color var(--strike-in),
+      box-shadow   var(--strike-in),
+      transform    var(--strike-in);
   }
 
+  /* Disabled — a spent impression. Same ink gone faint, no
+     bloom, settled at the pressed lean (matches :active). */
   &:disabled,
   &[aria-disabled="true"] {
-    color: var(--ink-3);
-    background: var(--paper-sunk);
-    border-color: var(--rule);
-    box-shadow: none;
-    text-shadow: none;
-    opacity: 0.7;
+    color: color-mix(in oklab, var(--strike-ink) 72%, transparent);
+    border-color: color-mix(in oklab, var(--strike-ink) 54%, transparent);
+    box-shadow: var(--strike-bloom-none);
+    transform: scale(0.95);
     cursor: not-allowed;
-    transform: none;
-    filter: none;
+    pointer-events: none;
   }
 
-  /* — Accent: a solid gem block. NO border. — */
-  &.-accent {
-    color: var(--accent-on);
-    background: var(--btn-face), var(--accent-solid);
-    border-color: transparent;
-    text-shadow: var(--btn-engrave-accent);
-  }
-  &.-accent:hover {
-    filter: brightness(1.05);
-    background: var(--btn-face-hover), var(--accent-solid);
-  }
-  &.-accent:active {
-    /* no colour shift — position + the cast collapsing carry it */
-    background: var(--btn-face-press), var(--accent-solid);
-  }
+  /* — Primary: the coloured strike. Same impression in gem ink;
+       every data-accent / gem flows through --accent here. — */
+  &.-accent { --strike-ink: var(--accent); }
 
-  /* — Ghost: a flat token, no moulding, sits almost flush. — */
+  /* — Tertiary: the struck label with no frame. The lean and
+       the ink are the whole affordance; no box ⇒ no bloom. — */
   &.-ghost {
-    color: var(--ink);
-    background: transparent;
-    border-color: var(--rule-strong);
-    box-shadow: var(--cast-press);
-    text-shadow: none;
+    --strike-ink: var(--ink-2);
+    border-color: transparent;
   }
   &.-ghost:hover {
-    filter: none;
-    background: var(--paper-sunk);
-    border-color: var(--ink-2);
+    color: color-mix(in oklab, var(--accent) 95%, transparent);
+    border-color: transparent;
+    box-shadow: var(--strike-bloom-none);
   }
-  &.-ghost:active {
-    transform: translateY(1px);
-    background: var(--paper-sunk);
-    box-shadow: var(--cast-press);
+  &.-ghost:active,
+  &.-ghost[aria-pressed="true"] {
+    color: var(--accent);
+    border-color: transparent;
+    box-shadow: var(--strike-bloom-none);
+  }
+  &.-ghost:disabled,
+  &.-ghost[aria-disabled="true"] {
+    border-color: transparent;
+    box-shadow: var(--strike-bloom-none);
   }
 
-  &.-small { padding: 7px 14px; font-size: var(--text-12); }
-  &.-small > .icon { width: 14px; height: 14px; }
+  &.-small { padding: 7px 14px; font-size: 10px; }
+  &.-small > .icon { width: 12px; height: 12px; }
 
-  &.-large { padding: 14px 28px; font-size: var(--text-15); }
-  &.-large > .icon { width: 20px; height: 20px; }
+  &.-large { padding: 13px 26px; font-size: 13px; }
+  &.-large > .icon { width: 16px; height: 16px; }
 }

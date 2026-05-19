@@ -1,132 +1,71 @@
 /* ============================================================
    MASTHEAD · tokens/shadows.css
-   The page is flat. Two physically-motivated exceptions:
-   (a) paper-card lift = literal stacked sheets — each deeper
-       sheet sits further into shadow (darker in light; rim-lit
-       in dark, since you can't go darker than a near-black page).
-   (b) the button = a matte solid lit from ONE upper-left source.
-       Its face is modelled with radial layers: a key-light pool
-       at the upper-left + the surface curving into its own shade
-       at the lower-right, then a real cast onto the paper. No
-       gloss, no border on the accent. Hover brightens the light;
-       press settles it in.
-   Links and stamps cast nothing.
+   Print has relief — just not screen relief. A rubber stamp
+   bites the sheet and blooms a ring of ink on contact; a seal
+   affixed to the page stands a hair proud and catches the desk
+   lamp along one edge; a pile of paper throws a real cast. Those
+   are the three — and only three — depth cues. Still refused:
+   gloss, glass, Material elevation, soft ambient float, bevels.
+
+   The lamp is fixed at the upper-left, so every cast falls
+   down-and-right.
+
+   (a) stacked-paper card lift  — literal sheets behind a card.
+   (b) inked-strike bloom       — the .stamp-button's ink halo,
+       seen only on contact. Colours are color-mix() of that
+       tier's --strike-ink, NOT relative-colour/currentColor:
+       color-mix resolves to a concrete colour, so box-shadow
+       interpolates fluidly instead of snapping on/off.
+   (c) affixed-plate lift       — the .cancel-stamp sits subtly
+       off the page: a short hard ink edge + a soft drop.
    ============================================================ */
 :root {
   /* (a) Stacked-paper geometry — per-sheet offset, down & right. */
   --stack-shift: 5px;
 
-  /* (b) Cast onto the paper — opposite the light, down & right.
-     A little deeper now so the object clears the page. */
-  --cast-ink: oklch(0.20 0.012 255);
-  --cast-rest:
-    0 1px 2px  -0.5px oklch(from var(--cast-ink) l c h / 0.34),
-    2px 5px 11px -2px oklch(from var(--cast-ink) l c h / 0.22);
-  --cast-press:
-    0 0.5px 1px -0.5px oklch(from var(--cast-ink) l c h / 0.34);
+  /* (b) Inked-strike bloom. --strike-bloom-none is the SAME shadow
+     structure at zero/transparent, used at rest so every state
+     change is a list→list interpolation (no none↔list snap). The
+     visible blooms key off --strike-ink (set per tier on the
+     button), so secondary, primary and every gem halo in their
+     own ink with no duplication. */
+  --strike-bloom-none:
+    inset 0 0 0 0 transparent,
+    0 0 0 0 transparent;
+  --strike-bloom:
+    inset 0 0 0 1px color-mix(in oklab, var(--strike-ink) 10%, transparent),
+    2px 3px 10px   color-mix(in oklab, var(--strike-ink) 20%, transparent);
+  --strike-bloom-press:
+    inset 0 0 0 1px color-mix(in oklab, var(--strike-ink) 10%, transparent),
+    3px 4px 12px   color-mix(in oklab, var(--strike-ink) 28%, transparent);
 }
 
-/* ---- Light-mode surfaces & button moulding ---- */
+/* ---- Light surfaces ---- */
 :root,
 [data-theme="light"] {
+  /* (a) Sheets: each step deeper = darker (more in shadow). */
   --sheet-1: var(--paper-200);
   --sheet-2: var(--paper-400);
 
-  --btn-bg: var(--paper-200);
-
-  /* Face = key-light pool (upper-left) + self-shade (lower-right).
-     The two together make a flat fill read as a solid catching
-     light from one side. Alphas kept low — satin, not plastic. */
-  --btn-face:
-    radial-gradient(135% 125% at 18% 10%,
-      oklch(1 0 0 / 0.26) 0%,
-      oklch(1 0 0 / 0.07) 28%,
-      transparent 58%),
-    radial-gradient(130% 130% at 88% 94%,
-      oklch(0 0 0 / 0.13) 0%,
-      oklch(0 0 0 / 0.04) 32%,
-      transparent 64%);
-  --btn-face-hover:
-    radial-gradient(135% 125% at 18% 10%,
-      oklch(1 0 0 / 0.36) 0%,
-      oklch(1 0 0 / 0.10) 30%,
-      transparent 60%),
-    radial-gradient(130% 130% at 88% 94%,
-      oklch(0 0 0 / 0.11) 0%,
-      oklch(0 0 0 / 0.03) 32%,
-      transparent 64%);
-  /* Press = the SAME face, just slightly less light reaching it as
-     it sinks. No dark band, no colour leap — position + the cast
-     collapsing carry the press. */
-  --btn-face-press:
-    radial-gradient(135% 125% at 18% 10%,
-      oklch(1 0 0 / 0.12) 0%,
-      oklch(1 0 0 / 0.03) 30%,
-      transparent 60%),
-    radial-gradient(130% 130% at 88% 94%,
-      oklch(0 0 0 / 0.10) 0%,
-      oklch(0 0 0 / 0.03) 32%,
-      transparent 64%);
-
-  /* Edge only — a faint top light, faint bottom shade. The radial
-     does the modelling now, so this is minimal. */
-  --btn-bevel:
-    inset 0  1px 0 oklch(1 0 0 / 0.22),
-    inset 0 -1px 0 oklch(0 0 0 / 0.08);
-  --btn-bevel-press:
-    inset 0 1px 2px oklch(0 0 0 / 0.10);
-
-  --btn-engrave:        0 1px 0 oklch(1 0 0 / 0.55);
-  --btn-engrave-accent: 0 -1px 0 oklch(0 0 0 / 0.16), 0 1px 1px oklch(0 0 0 / 0.30);
+  /* (c) Plate lift — a hard ink edge under the lower-right plus a
+     short soft drop. Deep ink, low alpha: a seal lifted a hair
+     off the page, never a card-sized float. */
+  --plate-lift:
+    1px 1px 0          oklch(from var(--ink) l c h / 0.22),
+    1.5px 3px 5px -2px oklch(from var(--ink) l c h / 0.20);
 }
 
-/* ---- Dark-mode surfaces & button moulding ---- */
+/* ---- Dark surfaces ---- */
 [data-theme="dark"] {
+  /* Can't go darker than a near-black page, so deeper sheets are
+     rim-lit a touch lighter to keep their edges legible. */
   --sheet-1: var(--ink-800);
   --sheet-2: var(--ink-700);
 
-  --btn-bg: var(--ink-700);
-
-  --btn-face:
-    radial-gradient(135% 125% at 18% 10%,
-      oklch(1 0 0 / 0.12) 0%,
-      oklch(1 0 0 / 0.03) 28%,
-      transparent 58%),
-    radial-gradient(130% 130% at 88% 94%,
-      oklch(0 0 0 / 0.30) 0%,
-      oklch(0 0 0 / 0.10) 32%,
-      transparent 64%);
-  --btn-face-hover:
-    radial-gradient(135% 125% at 18% 10%,
-      oklch(1 0 0 / 0.18) 0%,
-      oklch(1 0 0 / 0.05) 30%,
-      transparent 60%),
-    radial-gradient(130% 130% at 88% 94%,
-      oklch(0 0 0 / 0.26) 0%,
-      oklch(0 0 0 / 0.08) 32%,
-      transparent 64%);
-  --btn-face-press:
-    radial-gradient(135% 125% at 18% 10%,
-      oklch(1 0 0 / 0.05) 0%,
-      oklch(1 0 0 / 0.01) 30%,
-      transparent 60%),
-    radial-gradient(130% 130% at 88% 94%,
-      oklch(0 0 0 / 0.30) 0%,
-      oklch(0 0 0 / 0.10) 32%,
-      transparent 64%);
-
-  --btn-bevel:
-    inset 0  1px 0 oklch(1 0 0 / 0.05),
-    inset 0 -1px 0 oklch(0 0 0 / 0.28);
-  --btn-bevel-press:
-    inset 0 1px 2px oklch(0 0 0 / 0.28);
-
-  --btn-engrave:        0 1px 1px oklch(0 0 0 / 0.40);
-  --btn-engrave-accent: 0 -1px 0 oklch(0 0 0 / 0.20), 0 1px 1px oklch(0 0 0 / 0.32);
-
-  --cast-rest:
-    0 1px 2px  -0.5px oklch(0 0 0 / 0.58),
-    2px 5px 11px -2px oklch(0 0 0 / 0.46);
-  --cast-press:
-    0 0.5px 1px -0.5px oklch(0 0 0 / 0.58);
+  /* Same lamp, deeper terminus. The cast stays a true near-black
+     (not the parchment --ink) so a lifted seal never haloes
+     white against the dark page. */
+  --plate-lift:
+    1px 1px 0          oklch(0 0 0 / 0.55),
+    1.5px 3px 5px -2px oklch(0 0 0 / 0.50);
 }

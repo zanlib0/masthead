@@ -14,10 +14,10 @@ img, svg, video { display: block; max-width: 100%; }
 button, input, select, textarea { font: inherit; color: inherit; }
 
 /* ---------- Body ---------- */
-/* Root stays at the reader's default (≈16px). The fixed rem scale
-   is authored against that, so --text-18 resolves to a true 18px
-   reading size — the best-practice long-form body size — without
-   inflating every other token. Never hard-pin the root in px. */
+/* The type scale is in points (tokens/type.css) — absolute and
+   independent of the root, as a printed page's point size is. Root
+   stays at the reader's default for the few relative bits (icons,
+   list indents, the --display-* vw term). */
 html { font-size: 100%; }
 body {
   font-family: var(--font-serif);
