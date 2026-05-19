@@ -26,6 +26,7 @@
   --strike-out: 220ms ease;
   --strike-in:  60ms ease-in;
 
+  will-change: transform;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -57,7 +58,7 @@
      gloss; an uneven sub-2px edge is the opposite of gloss.) */
   border-radius: 2px 1px 3px 1px / 1px 3px 1px 2px;
 
-  transform: rotate(-0.8deg);
+  transform: rotate(-1.2deg);
   cursor: pointer;
   user-select: none;
   text-decoration: none;
@@ -85,7 +86,7 @@
     color: color-mix(in oklab, var(--strike-ink) 95%, transparent);
     border-color: color-mix(in oklab, var(--strike-ink) 80%, transparent);
     box-shadow: var(--strike-bloom);
-    transform: scale(1.02) rotate(-0.4deg);
+    transform: scale(1.02) rotate(0deg);
   }
 
   /* Press — the transient strike. A momentary gesture, not a
