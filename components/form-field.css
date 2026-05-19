@@ -14,44 +14,50 @@
     font-size: var(--text-12);
     letter-spacing: var(--track-eyebrow);
     text-transform: uppercase;
+    /* Cap-trim — keep the uppercase label optically centred
+       (DESIGN.md §3); ignored where unsupported. */
+    text-box: trim-both cap alphabetic;
     color: var(--ink-2);
   }
 
-  /* Default: a ruled writing line, like a ledger entry. */
+  /* Shared input chrome (both variants). No outline:0 — focus is
+     the system-wide :focus-visible ring from base.css, so the
+     keyboard cue is consistent with every other control. */
   > .input {
     width: 100%;                       /* fills the field, not the page */
     font-family: var(--font-serif);
     font-size: var(--text-16);
     color: var(--ink);
+  }
+  > .input::placeholder { color: var(--ink-3); font-style: italic; }
+  > .input:disabled { color: var(--ink-3); cursor: not-allowed; }
+
+  /* Default: a ruled writing line, like a ledger entry. Scoped
+     :not(.-boxed) so the underline mechanics never reach the
+     boxed variant (a different field entirely). */
+  &:not(.-boxed) > .input {
     background: transparent;
     border: 0;
     border-bottom: 1px solid var(--ink);
-    border-radius: 0;
+    border-radius: var(--radius-0);
     padding: 8px 2px;
-    outline: 0;
   }
-  > .input::placeholder { color: var(--ink-3); font-style: italic; }
-  > .input:focus {
+  &:not(.-boxed) > .input:disabled { border-bottom-style: dashed; }
+  /* On top of the shared ring, the ruled line itself thickens
+     1px→2px and goes accent — a non-colour cue doubling the
+     affordance. Driven by :focus-visible to match the ring. */
+  &:not(.-boxed) > .input:focus-visible {
     border-bottom-width: 2px;
     border-bottom-color: var(--accent);
-    padding-bottom: 7px;               /* hold the box steady on focus */
-  }
-  > .input:disabled {
-    color: var(--ink-3);
-    border-bottom-style: dashed;
-    cursor: not-allowed;
+    padding-bottom: 7px;               /* hold the box steady (border +1px) */
   }
 
-  /* — Boxed: a mail-order entry box — */
+  /* — Boxed: a mail-order entry box. Focus is just the shared
+       :focus-visible ring, like every other control. — */
   &.-boxed > .input {
     border: 1px solid var(--rule);
     background: var(--paper);
     border-radius: var(--radius-1);
-    padding: 10px 12px;
-  }
-  &.-boxed > .input:focus {
-    border-width: 1px;
-    border-color: var(--accent);
     padding: 10px 12px;
   }
 }

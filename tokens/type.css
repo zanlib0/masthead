@@ -51,7 +51,11 @@
   --track-display: -0.01em;
   --track-eyebrow:  0.18em;
   --track-button:   0.08em;
-  --track-tabular:  0;
+
+  /* Underline decoration — one hairline recipe for every link, so
+     bare <a>, .text-link and its variants rule at the same offset. */
+  --underline-thickness: 0.6px;
+  --underline-offset:    3px;
 
   /* Weights — EB Garamond gets visually heavy fast, so the whole
      scale is pulled DOWN. "Bold" here is a restrained 600, never

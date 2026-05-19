@@ -39,7 +39,7 @@
     text-transform: lowercase;
     color: var(--ink-3);
     text-decoration: none;
-    transition: color 120ms;
+    transition: color var(--duration-1);
   }
   > .nav a:hover { color: var(--ink); }
   > .nav a[aria-current="page"] { color: var(--ink); }

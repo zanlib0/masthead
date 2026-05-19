@@ -30,7 +30,7 @@
   align-items: center;
   justify-content: center;
   gap: 7px;                            /* icon <-> label, its own parts */
-  padding: 10px 20px;
+  padding: var(--space-2) var(--space-4);
   font-family: var(--font-display);
   /* The one place display type goes to a true 700: a struck
      stamp is heavy ink. League Spartan carries it on its own
@@ -40,10 +40,16 @@
   line-height: 1;                      /* don't inherit the 1.55 prose leading */
   letter-spacing: 0.15em;              /* the stamp's own wide tracking */
   text-transform: uppercase;
+  /* Trim the line box to the caps so the all-caps label sits
+     optically centred on the symmetric ruler padding instead of
+     riding low — the conventional fix for the old magic asymmetric
+     padding (DESIGN.md §3). Unsupported browsers ignore it and fall
+     back to the prior, un-trimmed rendering. */
+  text-box: trim-both cap alphabetic;
 
   color: color-mix(in oklab, var(--strike-ink) 80%, transparent);
   background: transparent;
-  border: 2px solid color-mix(in oklab, var(--strike-ink) 55%, transparent);
+  border: var(--rule-2) solid color-mix(in oklab, var(--strike-ink) 55%, transparent);
   box-shadow: var(--strike-bloom-none);
 
   /* Every corner fractionally its own — a stamp is hand-cut and
@@ -80,10 +86,10 @@
     transform: scale(1.02) rotate(-0.4deg);
   }
 
-  /* Press — the strike. Snaps in fast, bites down, floods to
-     full ink with a heavier bloom; eases weightily back out. */
-  &:active,
-  &[aria-pressed="true"] {
+  /* Press — the transient strike. A momentary gesture, not a
+     state: snaps in fast, bites down a step in scale, floods to
+     full ink with the heavier bloom; eases weightily back off. */
+  &:active {
     color: var(--strike-ink);
     border-color: color-mix(in oklab, var(--strike-ink) 98%, transparent);
     box-shadow: var(--strike-bloom-press);
@@ -95,8 +101,30 @@
       transform    var(--strike-in);
   }
 
-  /* Disabled — a spent impression. Same ink gone faint, no
-     bloom, settled at the pressed lean (matches :active). */
+  /* Toggle ON — a STABLE state, not a frozen press. Full ink and a
+     persistent resting bloom, but NO snap and NO depressed scale:
+     a stamp left inked, not a button held down. It eases on the
+     default weighted transition as it toggles on/off. */
+  &[aria-pressed="true"] {
+    color: var(--strike-ink);
+    border-color: color-mix(in oklab, var(--strike-ink) 98%, transparent);
+    box-shadow: var(--strike-bloom);
+  }
+  /* Pressing a toggle still strikes — the transient press reads on
+     top of the stable on-state while the pointer is down. */
+  &[aria-pressed="true"]:active {
+    box-shadow: var(--strike-bloom-press);
+    transform: scale(0.95);
+  }
+
+  /* Disabled — a spent impression: same ink gone faint, no bloom,
+     settled at the pressed lean. Two forms, deliberately different:
+       :disabled            — inert; removed from the pointer (and,
+                              natively, the tab order).
+       [aria-disabled=true] — the ARIA-only form for when the
+                              control must stay FOCUSABLE so AT
+                              still reaches and announces it; it
+                              keeps pointer-events on purpose. */
   &:disabled,
   &[aria-disabled="true"] {
     color: color-mix(in oklab, var(--strike-ink) 72%, transparent);
@@ -104,8 +132,8 @@
     box-shadow: var(--strike-bloom-none);
     transform: scale(0.95);
     cursor: not-allowed;
-    pointer-events: none;
   }
+  &:disabled { pointer-events: none; }
 
   /* — Primary: the coloured strike. Same impression in gem ink;
        every data-accent / gem flows through --accent here. — */
@@ -134,9 +162,9 @@
     box-shadow: var(--strike-bloom-none);
   }
 
-  &.-small { padding: 7px 14px; font-size: 10px; }
+  &.-small { padding: var(--space-1) var(--space-3); font-size: 10px; }
   &.-small > .icon { width: 12px; height: 12px; }
 
-  &.-large { padding: 13px 26px; font-size: 13px; }
+  &.-large { padding: var(--space-3) var(--space-6); font-size: 16px; }
   &.-large > .icon { width: 16px; height: 16px; }
 }

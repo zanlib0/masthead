@@ -4,7 +4,10 @@
    hairline edge, NO blur, NO rotation. Each deeper sheet sits
    further into shadow (--sheet-1 darker, --sheet-2 darkest).
    `position: relative` here is internal decoration scaffolding,
-   not placement of the card in the page.
+   not placement of the card in the page. Caveat: the negative-z
+   under-sheets assume the card is not nested inside an opaque,
+   stacking-context-forming ancestor (rare; the honest tradeoff
+   of the negative-z "sheets behind" technique).
    -framed and -stack-* are mutually exclusive (both use ::before).
 
    WHEN TO USE WHICH (elevation = how much is behind the surface,
@@ -67,16 +70,14 @@
     border-radius: var(--radius-1);
     z-index: -1;
   }
-  /* One sheet beneath — already a step into shadow. */
-  &.-stack-1::before {
-    background: var(--sheet-1);
-    transform: translate(var(--stack-shift), var(--stack-shift));
-  }
-  /* Two sheets — the deeper one is darker still (no rotation). */
+  /* First sheet beneath — one step into shadow. Shared by both
+     -stack-1 and the front sheet of -stack-2 (identical). */
+  &.-stack-1::before,
   &.-stack-2::before {
     background: var(--sheet-1);
     transform: translate(var(--stack-shift), var(--stack-shift));
   }
+  /* Second sheet — the deeper one is darker still (no rotation). */
   &.-stack-2::after {
     background: var(--sheet-2);
     transform: translate(

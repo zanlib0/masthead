@@ -6,10 +6,10 @@
 .text-link {
   color: var(--ink);
   text-decoration: underline;
-  text-decoration-thickness: 0.6px;
+  text-decoration-thickness: var(--underline-thickness);
   text-decoration-color: var(--rule);
-  text-underline-offset: 3px;
-  transition: color 120ms, text-decoration-color 120ms;
+  text-underline-offset: var(--underline-offset);
+  transition: color var(--duration-1), text-decoration-color var(--duration-1);
 
   &:hover {
     color: var(--accent-deep);
@@ -17,16 +17,13 @@
   }
 
   /* — Inline reference, with a discreet ↗ —
-     Uses the SAME underline mechanics as the default link so the
-     rule sits at exactly the same offset. The arrow is an atomic
-     inline (display:inline-block) so the underline stays clear
-     of it instead of striking through the glyph. */
+     It is also a .text-link, so it inherits that rule's underline
+     mechanics directly — the rule sits at exactly the same offset
+     with no re-declaration. The arrow is an atomic inline
+     (display:inline-block) so the underline stays clear of it
+     instead of striking through the glyph. */
   &.-reference {
     font-style: italic;
-    text-decoration: underline;
-    text-decoration-thickness: 0.6px;
-    text-decoration-color: var(--rule);
-    text-underline-offset: 3px;
   }
   &.-reference::after {
     content: "\2197";
@@ -36,7 +33,7 @@
     font-size: 0.85em;
     color: var(--ink-3);
     text-decoration: none;
-    transition: color 120ms;
+    transition: color var(--duration-1);
   }
   &.-reference:hover { color: var(--accent-deep); text-decoration-color: var(--accent); }
   &.-reference:hover::after { color: var(--accent); }
@@ -51,7 +48,7 @@
     color: var(--ink-3);
     border-bottom: 1px solid transparent;
     padding-bottom: 2px;
-    transition: color 120ms, border-color 120ms;
+    transition: color var(--duration-1), border-color var(--duration-1);
   }
   &.-runninghead:hover,
   &.-runninghead[aria-current="page"] {

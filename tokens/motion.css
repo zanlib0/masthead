@@ -1,0 +1,12 @@
+/* ============================================================
+   MASTHEAD · tokens/motion.css
+   The one UI-transition primitive. A quiet cross-fade for
+   colour/decoration changes (links, nav, hovers) — print doesn't
+   animate, so motion is rationed to this single short duration.
+   The .stamp-button's strike (snap-in / weighted-out) keeps its
+   own timings: it is a physical press, not a UI transition.
+   The prefers-reduced-motion block in base.css collapses both.
+   ============================================================ */
+:root {
+  --duration-1: 120ms;
+}

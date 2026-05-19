@@ -18,7 +18,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
    independent of the root, as a printed page's point size is. Root
    stays at the reader's default for the few relative bits (icons,
    list indents, the --display-* vw term). */
-html { font-size: 100%; }
+html { font-size: var(--text-18); }
 body {
   font-family: var(--font-serif);
   font-feature-settings: var(--feat-serif);
@@ -51,11 +51,23 @@ h1, h2, h3 {
 h1 { font-size: var(--text-48); }
 h2 { font-size: var(--text-38); }
 h3 { font-size: var(--text-30); }
+/* Display-face = League Spartan, UPPERCASE, line-height ~1. Its
+   caps ride low in the line box (the unused descender space sits
+   below the baseline), which is what the old per-component magic
+   asymmetric padding was secretly compensating for. `text-box`
+   trims the box to the cap band so symmetric, ruler-based padding
+   centres the caps correctly. Applied to every uppercase
+   display-face context (here + .t-eyebrow, and the
+   .stamp-button / .cancel-stamp / .form-field label / .data-table
+   head in components/). Unsupported browsers (Firefox, early 2026)
+   ignore the declaration and fall back to the prior rendering —
+   non-breaking. (DESIGN.md §3.) */
 h4, h5, h6 {
   font-family: var(--font-display);
   font-weight: var(--weight-semibold);
   text-transform: uppercase;
   letter-spacing: var(--track-button);
+  text-box: trim-both cap alphabetic;
   color: var(--ink);
 }
 h4 { font-size: var(--text-20); }
@@ -71,7 +83,7 @@ blockquote {
   font-family: var(--font-serif);
   font-style: italic;
   font-size: var(--text-24);
-  line-height: 1.45;
+  line-height: var(--leading-normal);
   color: var(--ink);
 }
 blockquote cite {
@@ -85,7 +97,7 @@ blockquote cite {
 }
 
 code, kbd, samp { font-family: var(--font-mono); font-size: 0.9em; }
-pre { font-family: var(--font-mono); font-size: var(--text-14); line-height: 1.55; }
+pre { font-family: var(--font-mono); font-size: var(--text-14); line-height: var(--leading-prose); }
 pre code { font-size: inherit; }
 
 ul, ol { padding-left: 1.3em; }
@@ -96,10 +108,10 @@ li::marker { color: var(--ink-3); }
 a {
   color: var(--ink);
   text-decoration: underline;
-  text-decoration-thickness: 0.6px;
+  text-decoration-thickness: var(--underline-thickness);
   text-decoration-color: var(--rule);
-  text-underline-offset: 3px;
-  transition: text-decoration-color 120ms, color 120ms;
+  text-underline-offset: var(--underline-offset);
+  transition: text-decoration-color var(--duration-1), color var(--duration-1);
 }
 a:hover { color: var(--accent-deep); text-decoration-color: var(--accent); }
 
@@ -114,10 +126,10 @@ a:hover { color: var(--accent-deep); text-decoration-color: var(--accent); }
 .t-display  { font-family: var(--font-serif); font-weight: var(--weight-regular); font-size: var(--text-84); line-height: var(--leading-tight); letter-spacing: -0.018em; text-wrap: balance; }
 .t-heading  { font-family: var(--font-serif); font-weight: var(--weight-medium); font-size: var(--text-38); line-height: var(--leading-snug); text-wrap: balance; }
 .t-body     { font-family: var(--font-serif); font-size: var(--text-18); line-height: var(--leading-prose); text-wrap: pretty; }
-.t-lede     { font-family: var(--font-serif); font-style: italic; font-size: var(--text-24); line-height: 1.45; color: var(--ink-2); text-wrap: pretty; }
-.t-eyebrow  { font-family: var(--font-display); font-weight: var(--weight-semibold); font-size: var(--text-12); letter-spacing: var(--track-eyebrow); text-transform: uppercase; color: var(--ink-3); }
-.t-label    { font-family: var(--font-display); font-weight: var(--weight-medium); font-size: var(--text-13); letter-spacing: 0.04em; text-transform: uppercase; }
-.t-mono     { font-family: var(--font-mono); font-size: var(--text-14); }
+.t-lede     { font-family: var(--font-serif); font-style: italic; font-size: var(--text-24); line-height: var(--leading-normal); color: var(--ink-2); text-wrap: pretty; }
+.t-eyebrow  { font-family: var(--font-display); font-weight: var(--weight-semibold); font-size: var(--text-12); letter-spacing: var(--track-eyebrow); text-transform: uppercase; text-box: trim-both cap alphabetic; color: var(--ink-3); }
+/* Relative (not a fixed pt size): inline mono tracks & optically matches its host text — IBM Plex Mono runs large at equal size. */
+.t-mono     { font-family: var(--font-mono); font-size: 0.83em; }
 .t-meta     { font-family: var(--font-serif); font-style: italic; font-size: var(--text-14); color: var(--ink-3); }
 .t-tabular  { font-variant-numeric: tabular-nums lining-nums; font-feature-settings: var(--feat-tabular); }
 /* Drop caps are intentionally NOT a system primitive — they are a

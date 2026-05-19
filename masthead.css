@@ -14,6 +14,7 @@
 @import url('tokens/type.css');
 @import url('tokens/space.css');
 @import url('tokens/shadows.css');
+@import url('tokens/motion.css');
 
 /* 2 — Base: reset + bare-tag appearance + primitives. */
 @import url('base.css');

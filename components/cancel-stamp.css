@@ -8,32 +8,37 @@
    lamp from upper-left). Crisp, square-set, subtly dimensional,
    with softly rounded corners (a stuck-on label, deliberately
    past the 2px radius ceiling — the one sanctioned exception).
-   Colour follows --accent; gem variants only re-point hue/chroma
-   so they read right in light AND dark.
+   Colour follows --accent: retint with data-accent on the stamp
+   or any ancestor (the accent surface recomputes per element, so
+   it reads right in light AND dark — no per-gem class needed).
    ============================================================ */
 .cancel-stamp {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
-  padding: 5px 9px 2px 9px;
+  /* Documented optical exception to the --space ruler (DESIGN.md §3
+     sanctions these): text-box trims to the cap band, but League
+     Spartan's cap metric leaves a residual in Chrome so the seal
+     reads ~1-2px high on symmetric padding. Top-heavier vertical
+     padding nudges the caps back to optical centre; horizontal
+     stays on the ruler. Tune the 5/3 split in 1px steps (Chrome,
+     light + dark) if it ever drifts. */
+  padding: 5px var(--space-2) 3px;
   font-family: var(--font-display);
   font-weight: var(--weight-bold);
   font-size: 11px;                   /* chrome, not body — deliberately small */
   line-height: 1;                    /* don't inherit the 1.55 prose leading */
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  /* Cap-trim to the cap band so padding can centre the all-caps
+     seal; it gets most of the way, the small Chrome residual is
+     the documented 5/3 padding nudge above (DESIGN.md §3). Ignored
+     where unsupported — falls back to the prior rendering. */
+  text-box: trim-both cap alphabetic;
   color: var(--accent-deep);
   background: var(--accent-tint);
   border: 1px solid var(--accent);
   border-radius: 6px;                /* softly rounded — a stuck-on label */
   box-shadow: var(--plate-lift);     /* the subtle proud-of-page lift */
-
-  /* Gem overrides — re-point the accent ramp; the theme decides
-     which step resolves, so these read right in light AND dark. */
-  &.-ruby       { --accent-h: var(--gem-ruby-h);       --accent-c: var(--gem-ruby-c); }
-  &.-tourmaline { --accent-h: var(--gem-tourmaline-h); --accent-c: var(--gem-tourmaline-c); }
-  &.-emerald    { --accent-h: var(--gem-emerald-h);    --accent-c: var(--gem-emerald-c); }
-  &.-amber      { --accent-h: var(--gem-amber-h);      --accent-c: var(--gem-amber-c); }
-  &.-sapphire   { --accent-h: var(--gem-sapphire-h);   --accent-c: var(--gem-sapphire-c); }
 }

@@ -224,25 +224,21 @@
 }
 
 /* ------------------------------------------------------------
-   4. ACCENT RAMP  (default = sapphire)
-   data-accent only swaps {hue, peak chroma}; the ramp recomputes
-   itself at point of use through the var() chain.
+   4. ACCENT INPUTS  (default = ruby)
+   data-accent only swaps {hue, peak chroma}. The accent SURFACE
+   (ramp + soft/tint/deep/solid) is NOT built here — it is
+   recomputed per element under the universal selector in §5.
+   Why: a custom property's var() chain is substituted at the
+   element where the property is declared, and descendants inherit
+   the already-resolved value. Declaring the ramp only on :root
+   would freeze it to the root's hue, so a data-accent set lower
+   in the tree would do nothing. A universal-selector declaration
+   re-resolves it for every element, so data-accent retints any
+   subtree (and the caller-facing --accent-solid/-on finally work).
    ------------------------------------------------------------ */
 :root {
   --accent-h: var(--gem-ruby-h);
   --accent-c: var(--gem-ruby-c);
-  --accent-chroma: 1;   /* dark mode lowers this to mute the accent */
-
-  --accent-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
-  --accent-100: oklch(var(--ramp-l-100) calc(var(--ramp-c-100) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
-  --accent-200: oklch(var(--ramp-l-200) calc(var(--ramp-c-200) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
-  --accent-300: oklch(var(--ramp-l-300) calc(var(--ramp-c-300) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
-  --accent-400: oklch(var(--ramp-l-400) calc(var(--ramp-c-400) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
-  --accent-500: oklch(var(--ramp-l-500) calc(var(--ramp-c-500) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
-  --accent-600: oklch(var(--ramp-l-600) calc(var(--ramp-c-600) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
-  --accent-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
-  --accent-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
-  --accent-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
 }
 [data-accent="ruby"]       { --accent-h: var(--gem-ruby-h);       --accent-c: var(--gem-ruby-c); }
 [data-accent="carnelian"]  { --accent-h: var(--gem-carnelian-h);  --accent-c: var(--gem-carnelian-c); }
@@ -260,6 +256,14 @@
 /* ------------------------------------------------------------
    5. SEMANTIC ALIASES — the ONLY colour tokens components read.
    Names are stable; values are remapped per data-theme.
+
+   The theme blocks supply only SCALARS: --accent-chroma, which
+   ramp step each accent role resolves to (--accent-*-l / -*-c),
+   and the knock-out label (--accent-on, paper-based and constant,
+   so it inherits fine). The accent SURFACE is built once on the
+   universal selector at the end of this section, recomputed per
+   element from the locally-cascaded --accent-h/-c so a data-accent
+   on any subtree retints it.
    ------------------------------------------------------------ */
 :root,
 [data-theme="light"] {
@@ -275,12 +279,15 @@
   --rule-soft:    var(--paper-200);
   --rule-strong:  var(--ink-2);     /* the firmest stroke — NOT pure ink */
 
-  --accent:        var(--accent-500);
-  --accent-solid:  var(--accent-600);  /* reverse-type bar — AA with --accent-on */
-  --accent-soft:   var(--accent-200);
-  --accent-tint:   var(--accent-100);
-  --accent-deep:   var(--accent-800);
-  --accent-on:     var(--paper-50);
+  /* Accent scalars — which ramp step each role maps to. The surface
+     is computed on * below; --accent (step 500) is theme-independent
+     and lives there too. */
+  --accent-chroma:  1;
+  --accent-tint-l:  var(--ramp-l-100);  --accent-tint-c:  var(--ramp-c-100);
+  --accent-soft-l:  var(--ramp-l-200);  --accent-soft-c:  var(--ramp-c-200);
+  --accent-deep-l:  var(--ramp-l-800);  --accent-deep-c:  var(--ramp-c-800);
+  --accent-solid-l: var(--ramp-l-600);  --accent-solid-c: var(--ramp-c-600);  /* reverse-type bar — AA with --accent-on */
+  --accent-on:      var(--paper-50);
 
   --ok:    var(--gem-emerald-500);   --ok-tint:   var(--gem-emerald-100);
   --warn:  var(--gem-amber-500);     --warn-tint: var(--gem-amber-100);
@@ -307,16 +314,16 @@
   --rule-strong:  var(--paper-400);
 
   /* Candlelit, not screen-lit. Chroma is muted on the dark page so
-     the gem glows rather than glares, and the accent step is less
-     luminous than before. The filled control uses a lighter step
-     with dark --accent-on (AA holds — ramp lightness is hue-uniform). */
-  --accent-chroma: 0.78;
-  --accent:        var(--accent-500);
-  --accent-solid:  var(--accent-600);  /* same step as light — themes now agree */
-  --accent-soft:   var(--accent-700);
-  --accent-tint:   var(--accent-800);
-  --accent-deep:   var(--accent-300);
-  --accent-on:     var(--paper-100);   /* light label knocked out of the block */
+     the gem glows rather than glares, and the soft/tint/deep ends
+     flip so the accent reads against near-black. --accent-solid
+     keeps step 600 both themes (AA holds — ramp lightness is
+     hue-uniform); --accent-on knocks the label out of that block. */
+  --accent-chroma:  0.78;
+  --accent-tint-l:  var(--ramp-l-800);  --accent-tint-c:  var(--ramp-c-800);
+  --accent-soft-l:  var(--ramp-l-700);  --accent-soft-c:  var(--ramp-c-700);
+  --accent-deep-l:  var(--ramp-l-300);  --accent-deep-c:  var(--ramp-c-300);
+  --accent-solid-l: var(--ramp-l-600);  --accent-solid-c: var(--ramp-c-600);
+  --accent-on:      var(--paper-100);
 
   --ok:    var(--gem-emerald-500);   --ok-tint:   var(--gem-emerald-800);
   --warn:  var(--gem-amber-500);     --warn-tint: var(--gem-amber-800);
@@ -327,4 +334,29 @@
   --selection-fg: var(--paper-100);
 
   color-scheme: dark;
+}
+
+/* The accent SURFACE — recomputed on every element so a data-accent
+   on any subtree retints it (this is the fix for per-subtree accent
+   and the reason --accent-solid/-on work for callers). Components
+   read only the semantic names; the raw --accent-50..900 are kept
+   here too so callers may build on the ramp directly (DESIGN.md §2). */
+*, *::before, *::after {
+  --accent-50:  oklch(var(--ramp-l-50)  calc(var(--ramp-c-50)  * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-100: oklch(var(--ramp-l-100) calc(var(--ramp-c-100) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-200: oklch(var(--ramp-l-200) calc(var(--ramp-c-200) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-300: oklch(var(--ramp-l-300) calc(var(--ramp-c-300) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-400: oklch(var(--ramp-l-400) calc(var(--ramp-c-400) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-500: oklch(var(--ramp-l-500) calc(var(--ramp-c-500) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-600: oklch(var(--ramp-l-600) calc(var(--ramp-c-600) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+
+  --accent:       var(--accent-500);   /* step 500 both themes — theme-independent */
+  --accent-soft:  oklch(var(--accent-soft-l)  calc(var(--accent-soft-c)  * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-tint:  oklch(var(--accent-tint-l)  calc(var(--accent-tint-c)  * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-deep:  oklch(var(--accent-deep-l)  calc(var(--accent-deep-c)  * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --accent-solid: oklch(var(--accent-solid-l) calc(var(--accent-solid-c) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  /* --accent-on stays paper-based on the theme blocks (constant). */
 }

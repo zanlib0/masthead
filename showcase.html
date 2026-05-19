@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="light" data-accent="tourmaline">
+<html lang="en" data-theme="light" data-accent="ruby">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -152,7 +152,7 @@
       <div><div class="cl-ramp-label">ink 50&ndash;900</div><div class="cl-ramp"><div style="background:var(--ink-50)"></div><div style="background:var(--ink-100)"></div><div style="background:var(--ink-200)"></div><div style="background:var(--ink-300)"></div><div style="background:var(--ink-400)"></div><div style="background:var(--ink-500)"></div><div style="background:var(--ink-600)"></div><div style="background:var(--ink-700)"></div><div style="background:var(--ink-800)"></div><div style="background:var(--ink-900)"></div></div></div>
     </div>
 
-    <h4 class="cl-h4">Semantic aliases (sapphire accent)</h4>
+    <h4 class="cl-h4">Semantic aliases (ruby accent — the default)</h4>
     <div class="cl-chips" style="margin-top:var(--space-4)">
       <span class="cl-chip"><i style="background:var(--paper)"></i>--paper</span>
       <span class="cl-chip"><i style="background:var(--paper-sunk)"></i>--paper-sunk</span>
@@ -171,6 +171,19 @@
       <span class="cl-chip"><i style="background:var(--err)"></i>--err</span>
       <span class="cl-chip"><i style="background:var(--info)"></i>--info</span>
     </div>
+
+    <h4 class="cl-h4">Caller surface — the reverse-type bar (<code class="t-mono">--accent-solid</code> / <code class="t-mono">--accent-on</code>)</h4>
+    <div class="cl-row" style="margin-top:var(--space-4)">
+      <span style="display:inline-block;background:var(--accent-solid);color:var(--accent-on);font-family:var(--font-display);font-size:var(--text-13);letter-spacing:var(--track-button);text-transform:uppercase;text-box:trim-both cap alphabetic;padding:var(--space-2) var(--space-4);border-radius:var(--radius-0)">Default · ruby</span>
+      <span data-accent="emerald" style="display:inline-block;background:var(--accent-solid);color:var(--accent-on);font-family:var(--font-display);font-size:var(--text-13);letter-spacing:var(--track-button);text-transform:uppercase;text-box:trim-both cap alphabetic;padding:var(--space-2) var(--space-4);border-radius:var(--radius-0)">data-accent="emerald"</span>
+      <span data-accent="amethyst" style="display:inline-block;background:var(--accent-solid);color:var(--accent-on);font-family:var(--font-display);font-size:var(--text-13);letter-spacing:var(--track-button);text-transform:uppercase;text-box:trim-both cap alphabetic;padding:var(--space-2) var(--space-4);border-radius:var(--radius-0)">data-accent="amethyst"</span>
+    </div>
+    <p class="cl-note">These caller-facing tokens only resolve correctly because the
+      accent surface recomputes per element — each bar reads its own
+      <code class="t-mono">data-accent</code>, label knocked out in
+      <code class="t-mono">--accent-on</code> at AA. <code class="t-mono">--radius-0</code>
+      squares the bar; no component uses this fill (the primary is the coloured
+      strike) — it is here for callers, per the §2 contract.</p>
 
     <div class="cl-grid -2" style="margin-top:var(--space-10)">
       <div>
@@ -209,6 +222,7 @@
       <div class="cl-type-row"><code>--text-38</code><span style="font-size:var(--text-38)">Small apps</span></div>
       <div class="cl-type-row"><code>--text-64</code><span style="font-size:var(--text-64);line-height:1.05">Press</span></div>
       <div class="cl-type-row"><code>--display-2</code><span style="font-size:var(--display-2);line-height:1.02">Press</span></div>
+      <div class="cl-type-row"><code>--display-3</code><span style="font-size:var(--display-3);line-height:1.05">Small apps</span></div>
     </div>
     <p class="cl-note">The last row is an opt-in fluid <code>--display-*</code> token,
       applied by the caller (resize the window) — exactly like <code>.prose</code>.
@@ -228,8 +242,7 @@
           <span class="t-lede">A lede, set in italic serif.</span>
           <span class="t-body">Body — EB Garamond at eighteen, weight 400.</span>
           <span class="t-eyebrow">Eyebrow label</span>
-          <span class="t-label">UI label</span>
-          <span class="t-mono">mono 14 · 0027</span>
+          <span class="t-mono">mono · 0027</span>
           <span class="t-meta">metadata, italic</span>
         </div>
         <div class="cl-cap"><span>type roles</span><span>.t-display … .t-meta</span></div>
@@ -272,8 +285,21 @@
         <button class="stamp-button -small">Export</button>
         <button class="stamp-button -large -accent">Get started</button>
       </div>
-      <div class="cl-cap"><span>default · -accent · -ghost · :disabled · -small · -large</span><span>hover &amp; press are live — the strike</span></div>
+      <div class="cl-stage">
+        <button class="stamp-button" aria-pressed="false">Toggle off</button>
+        <button class="stamp-button" aria-pressed="true">Toggle on</button>
+        <button class="stamp-button -accent" aria-pressed="true">Pinned</button>
+        <button class="stamp-button -ghost" aria-pressed="true">Showing</button>
+        <button class="stamp-button" aria-disabled="true">Aria-disabled (focusable)</button>
+      </div>
+      <div class="cl-cap"><span>default · -accent · -ghost · :disabled · -small · -large · aria-pressed · aria-disabled</span><span>hover &amp; press are live — the strike</span></div>
     </div>
+    <p class="cl-note">Bottom row: a toggle. <code class="t-mono">aria-pressed="true"</code>
+      is a <em>stable</em> on-state — full ink and a resting bloom, no snap and no
+      depressed scale (a stamp left inked, not a button held down) — distinct from
+      the transient <code class="t-mono">:active</code> strike. The last button is
+      <code class="t-mono">aria-disabled</code>: styled spent but still
+      keyboard-focusable so assistive tech announces it (tab to it).</p>
     <p class="cl-note">Print's call-to-action is a rubber stamp brought down by
       hand — a keyline impression set slightly askew, its ink held back until
       contact. The neutral strike is blue-black ink (secondary), the coloured
@@ -364,11 +390,11 @@
     <div class="cl-spec">
       <div class="cl-stage -center" style="gap:var(--space-8)">
         <span class="cancel-stamp">Cancelled</span>
-        <span class="cancel-stamp -tourmaline">Expired</span>
-        <span class="cancel-stamp -emerald">Paid</span>
-        <span class="cancel-stamp -amber">Draft</span>
-        <span class="cancel-stamp -ruby">Void</span>
-        <span class="cancel-stamp -sapphire">Filed</span>
+        <span class="cancel-stamp" data-accent="tourmaline">Expired</span>
+        <span class="cancel-stamp" data-accent="emerald">Paid</span>
+        <span class="cancel-stamp" data-accent="amber">Draft</span>
+        <span class="cancel-stamp" data-accent="ruby">Void</span>
+        <span class="cancel-stamp" data-accent="sapphire">Filed</span>
       </div>
       <div class="cl-cap"><span>accent default · gem variants</span><span>square-set · softly rounded · subtly raised</span></div>
     </div>
@@ -557,7 +583,7 @@
           <button class="stamp-button -accent -large" style="width:100%">Subscribe</button>
           <div class="cl-sub-foot">
             <span class="t-meta">Volume I</span>
-            <span class="cancel-stamp -emerald">Paid</span>
+            <span class="cancel-stamp" data-accent="emerald">Paid</span>
           </div>
         </article>
       </div>

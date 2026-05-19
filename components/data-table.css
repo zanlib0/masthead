@@ -8,7 +8,12 @@
   width: 100%;
   border-collapse: collapse;
   font-family: var(--font-serif);
+  /* Body's inherited --feat-serif carries "onum"; it would fight
+     tabular-nums and survive even under .-numeric (feature-settings
+     beats font-variant). So state the low-level features explicitly
+     per intent: catalogue body keeps old-style figures, tabular. */
   font-variant-numeric: tabular-nums oldstyle-nums;
+  font-feature-settings: "tnum", "onum", "kern";
 
   > thead th {
     font-family: var(--font-display);
@@ -16,6 +21,7 @@
     font-size: var(--text-12);
     letter-spacing: var(--track-eyebrow);
     text-transform: uppercase;
+    text-box: trim-both cap alphabetic;   /* cap-trim — see DESIGN.md §3 */
     color: var(--ink-2);
     text-align: left;
     padding: 8px 12px;
@@ -29,7 +35,11 @@
   }
   > tbody tr:hover td { background: var(--paper-sunk); }
 
-  &.-numeric > tbody td { font-variant-numeric: tabular-nums lining-nums; }
+  /* Numeric variant: lining figures for columns of pure number. */
+  &.-numeric > tbody td {
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: var(--feat-tabular);   /* "tnum","lnum","kern" */
+  }
 }
 
 /* ---------- .toc-row — an article-contents line ----------
