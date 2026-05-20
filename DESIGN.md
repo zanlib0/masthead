@@ -422,14 +422,27 @@ is rationed to those three cues and earned by a physical metaphor each time.
 
 ## 8. Responsive Behavior
 
-Responsiveness is **the caller's job by design**, not the system's — components
-have no breakpoints and never reflow themselves.
+**Layout** responsiveness is **the caller's job** — the system never sets
+breakpoints for grids, page rhythm, or where a component sits. **Intrinsic**
+responsiveness — a sealed‑box reflowing its *own* parts at its *own* size — is
+the **component's**, the same family as `gap` and `padding` (the §1 carve‑out
+applied here: "no margins" really means "no *outer* margins"; likewise "no
+breakpoints" really means "no *layout* breakpoints"). The
+`.press-masthead`'s narrow‑viewport stack (title centred on top, nav row
+below) is the canonical example: the bar arranging its own contents, no
+opinion on where the bar sits.
 
 - **Type** is a fixed **rem** scale on a 24px reference root (`html { font-size:
   150% }`) — it does *not* reflow with the viewport, but it *does* honour the
   reader's browser font‑size setting (and the `--space-*` ruler scales with it).
   For heroes that must survive a phone the caller opts into `--display-1/2/3`
   (`clamp()`); the system never bakes viewport coupling into a component.
+  To scale **everything** down on small viewports, the caller overrides the
+  root in one line — the whole rem scale (type *and* the `--space-*` ruler)
+  flows through automatically, nothing else to touch:
+  ```css
+  @media (max-width: 30rem) { html { font-size: 100%; } }
+  ```
 - **Touch targets.** Controls are **compact chrome by design** — the
   `.stamp-button` runs roughly 28–45px tall across `.-small`→`.-large` (it is
   *smaller* than body type on purpose; the askew strike enlarges its *perceived*

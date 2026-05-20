@@ -12,6 +12,11 @@
    belongs to the consumer. Components carry none of it.
    Prefixed .cl-* so it can never be mistaken for the system.
    ============================================================ */
+
+/* Root scale on mobile — the documented caller override
+   (DESIGN.md §8). The rem type scale AND the --space-* ruler
+   flow through automatically; nothing else needs touching. */
+@media (max-width: 40rem) { html { font-size: 125%; } }
 .cl-page { max-width: 1140px; margin: 0 auto; padding: var(--space-12) var(--space-6) var(--space-24); }
 .cl-section { margin-top: var(--space-20); }
 .cl-section > .rule { margin: var(--space-4) 0 var(--space-10); }
@@ -38,7 +43,7 @@
   font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-3);
   display: flex; justify-content: space-between; gap: var(--space-4);
 }
-.cl-note { font-family: var(--font-serif); font-style: italic; font-size: var(--text-sm); color: var(--ink-3); margin-top: var(--space-3); max-width: 66ch; }
+.cl-note { font-family: var(--font-serif); font-style: italic; font-size: var(--text-ms); color: var(--ink-3); margin-top: var(--space-3); max-width: 66ch; }
 
 .cl-ramp { display: grid; grid-template-columns: repeat(10, 1fr); border: 1px solid var(--rule); border-radius: var(--radius-1); overflow: hidden; }
 .cl-ramp > div { height: 46px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 3px; font-family: var(--font-mono); font-size: 9px; color: oklch(0 0 0 / .42); }
@@ -88,6 +93,26 @@
 .cl-foot { margin-top: var(--space-24); color: var(--ink-3); font-size: var(--text-sm); font-style: italic; }
 .cl-eyebrow-mono { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-3); }
 .cl-lede { max-width: 60ch; margin-top: var(--space-6); }
+
+/* Horizontal-scroll wrapper for wide tables on narrow viewports —
+   .data-table ships width:100% (DESIGN §1), so making it scrollable
+   is a caller-layout concern. */
+.cl-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+/* Caller-layer mobile reflow. The system handles its own components;
+   these adjust caller-owned layout to the same 30rem breakpoint. */
+@media (max-width: 30rem) {
+  /* Type-scale rows stack: code label above its sample. */
+  .cl-type-row { grid-template-columns: 1fr; gap: var(--space-1); }
+  /* Article header: drop the absolute Draft stamp into flow so it
+     no longer overlaps the title on narrow widths. */
+  .cl-arthead { position: static; }
+  .cl-arthead .cancel-stamp {
+    position: static;
+    display: inline-block;
+    margin-top: var(--space-2);
+  }
+}
 </style>
 </head>
 <body>
@@ -373,14 +398,16 @@
     <h4 class="cl-h4">.data-table &amp; .toc-row</h4>
     <div class="cl-grid -2">
       <div class="cl-spec"><div class="cl-stage -block" style="padding:var(--space-5)">
-        <table class="data-table -numeric">
-          <thead><tr><th>City</th><th>Index</th><th>Reading</th></tr></thead>
-          <tbody>
-            <tr><td>Reykjav&iacute;k</td><td>14</td><td>Good</td></tr>
-            <tr><td>Lisbon</td><td>38</td><td>Fair</td></tr>
-            <tr><td>Jakarta</td><td>171</td><td>Poor</td></tr>
-          </tbody>
-        </table>
+        <div class="cl-table-scroll">
+          <table class="data-table -numeric">
+            <thead><tr><th>City</th><th>Index</th><th>Reading</th></tr></thead>
+            <tbody>
+              <tr><td>Reykjav&iacute;k</td><td>14</td><td>Good</td></tr>
+              <tr><td>Lisbon</td><td>38</td><td>Fair</td></tr>
+              <tr><td>Jakarta</td><td>171</td><td>Poor</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div><div class="cl-cap"><span>.data-table</span><span>softened head rule, tabular figures</span></div></div>
       <div class="cl-spec"><div class="cl-stage -block" style="padding:var(--space-6)">
         <div class="toc-row"><span>On the Composition of Small Apps</span><span class="leader"></span><span class="meta">3 min</span></div>

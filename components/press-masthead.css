@@ -6,6 +6,13 @@
    grandeur, no heavy rules, no edition cells.
    The flex row IS the masthead (intrinsic). It never sets its
    own margin, width, or `position: sticky` — that is the page's.
+
+   At narrow viewports the masthead stacks: title centered on
+   top, nav as a centered horizontal row beneath. This is the
+   one sanctioned component breakpoint — the chrome bar
+   reflowing its OWN parts is intrinsic, the same family as
+   `gap` and `padding` (DESIGN.md §8). Threshold is rem so it
+   honours the reader's root scale.
    ============================================================ */
 .press-masthead {
   display: flex;
@@ -47,5 +54,20 @@
     color: var(--accent);
     margin-right: 0.4em;
     font-size: 0.9em;
+  }
+
+  /* Intrinsic mobile reflow — title centred on top, nav as a
+     centred horizontal row below. DESIGN.md §8 (intrinsic
+     responsiveness). */
+  @media (max-width: 40rem) {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+
+    > .title { text-align: center; }
+    > .nav {
+      justify-content: center;
+      gap: var(--space-5);
+    }
   }
 }
