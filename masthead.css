@@ -37,7 +37,7 @@
 /* EB Garamond — Pardo's EBGaramond12 (SIL OFL). Variable roman + italic. */
 @font-face {
   font-family: 'EB Garamond';
-  src: url('fonts/eb-garamond/EBGaramond[wdth,wght].woff2') format('woff2-variations');
+  src: url('fonts/eb-garamond/eb-garamond-variable.woff2') format('woff2-variations');
   font-weight: 400 800;
   font-style: normal;
   font-display: swap;
@@ -45,7 +45,7 @@
 
 @font-face {
   font-family: 'EB Garamond';
-  src: url('fonts/eb-garamond/EBGaramond-Italic[wdth,wght].woff2') format('woff2-variations');
+  src: url('fonts/eb-garamond/eb-garamond-italic-variable.woff2') format('woff2-variations');
   font-weight: 400 800;
   font-style: italic;
   font-display: swap;
@@ -54,7 +54,7 @@
 /* League Spartan — The League of Movable Type (SIL OFL). Variable. */
 @font-face {
   font-family: 'League Spartan';
-  src: url('fonts/league-spartan/LeagueSpartan-VF.woff2') format('woff2-variations');
+  src: url('fonts/league-spartan/league-spartan-variable.woff2') format('woff2-variations');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -63,7 +63,7 @@
 /* IBM Plex Mono — IBM (SIL OFL). Static faces; no variable mono available. */
 @font-face {
   font-family: 'IBM Plex Mono';
-  src: url('fonts/ibm-plex-mono/IBMPlexMono-Regular.woff2') format('woff2');
+  src: url('fonts/ibm-plex-mono/ibm-plex-mono-regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -71,7 +71,7 @@
 
 @font-face {
   font-family: 'IBM Plex Mono';
-  src: url('fonts/ibm-plex-mono/IBMPlexMono-Italic.woff2') format('woff2');
+  src: url('fonts/ibm-plex-mono/ibm-plex-mono-italic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -79,7 +79,7 @@
 
 @font-face {
   font-family: 'IBM Plex Mono';
-  src: url('fonts/ibm-plex-mono/IBMPlexMono-Medium.woff2') format('woff2');
+  src: url('fonts/ibm-plex-mono/ibm-plex-mono-medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -87,7 +87,7 @@
 
 @font-face {
   font-family: 'IBM Plex Mono';
-  src: url('fonts/ibm-plex-mono/IBMPlexMono-SemiBold.woff2') format('woff2');
+  src: url('fonts/ibm-plex-mono/ibm-plex-mono-semibold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
