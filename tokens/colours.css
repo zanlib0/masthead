@@ -200,27 +200,26 @@
    Ink:   blue-black family, never pure/OLED black.
    ------------------------------------------------------------ */
 :root {
-  --paper-50:  oklch(0.985 0.003 250);
-  --paper-100: oklch(0.967 0.004 250);
-  --paper-200: oklch(0.940 0.004 250);
-  --paper-300: oklch(0.900 0.005 250);
-  --paper-400: oklch(0.850 0.005 250);
-  --paper-500: oklch(0.780 0.006 250);
-  --paper-600: oklch(0.700 0.006 250);
-  --paper-700: oklch(0.620 0.006 250);
-  --paper-800: oklch(0.540 0.006 250);
-  --paper-900: oklch(0.460 0.006 250);
-
-  --ink-50:  oklch(0.760 0.010 255);
-  --ink-100: oklch(0.680 0.012 255);
-  --ink-200: oklch(0.600 0.013 255);
-  --ink-300: oklch(0.520 0.014 255);
-  --ink-400: oklch(0.440 0.014 255);
-  --ink-500: oklch(0.370 0.014 255);
-  --ink-600: oklch(0.310 0.014 255);
-  --ink-700: oklch(0.260 0.014 255);
-  --ink-800: oklch(0.215 0.014 255);
-  --ink-900: oklch(0.175 0.013 255);
+  --paper-50:  oklch(98.5% 0.003 250deg);
+  --paper-100: oklch(96.7% 0.004 250deg);
+  --paper-200: oklch(94% 0.004 250deg);
+  --paper-300: oklch(90% 0.005 250deg);
+  --paper-400: oklch(85% 0.005 250deg);
+  --paper-500: oklch(78% 0.006 250deg);
+  --paper-600: oklch(70% 0.006 250deg);
+  --paper-700: oklch(62% 0.006 250deg);
+  --paper-800: oklch(54% 0.006 250deg);
+  --paper-900: oklch(46% 0.006 250deg);
+  --ink-50:  oklch(76% 0.010 255deg);
+  --ink-100: oklch(68% 0.012 255deg);
+  --ink-200: oklch(60% 0.013 255deg);
+  --ink-300: oklch(52% 0.014 255deg);
+  --ink-400: oklch(44% 0.014 255deg);
+  --ink-500: oklch(37% 0.014 255deg);
+  --ink-600: oklch(31% 0.014 255deg);
+  --ink-700: oklch(26% 0.014 255deg);
+  --ink-800: oklch(21.5% 0.014 255deg);
+  --ink-900: oklch(17.5% 0.013 255deg);
 }
 
 /* ------------------------------------------------------------
@@ -270,11 +269,9 @@
   --paper:        var(--paper-50);
   --paper-sunk:   var(--paper-100);
   --paper-edge:   var(--paper-200);
-
   --ink:          var(--ink-900);
   --ink-2:        var(--ink-700);
   --ink-3:        var(--ink-500);
-
   --rule:         var(--paper-300);
   --rule-soft:    var(--paper-200);
   --rule-strong:  var(--ink-2);     /* the firmest stroke — NOT pure ink */
@@ -288,12 +285,10 @@
   --accent-deep-l:  var(--ramp-l-800);  --accent-deep-c:  var(--ramp-c-800);
   --accent-solid-l: var(--ramp-l-600);  --accent-solid-c: var(--ramp-c-600);  /* reverse-type bar — AA with --accent-on */
   --accent-on:      var(--paper-50);
-
   --ok:    var(--gem-emerald-500);   --ok-tint:   var(--gem-emerald-100);
   --warn:  var(--gem-amber-500);     --warn-tint: var(--gem-amber-100);
   --err:   var(--gem-ruby-500);      --err-tint:  var(--gem-ruby-100);
   --info:  var(--gem-sapphire-500);  --info-tint: var(--gem-sapphire-100);
-
   --selection-bg: var(--accent-100);
   --selection-fg: var(--ink-900);
 
@@ -304,11 +299,9 @@
   --paper:        var(--ink-900);
   --paper-sunk:   var(--ink-800);
   --paper-edge:   var(--ink-700);
-
   --ink:          var(--paper-100);
   --ink-2:        var(--paper-300);
   --ink-3:        var(--paper-500);
-
   --rule:         var(--ink-600);
   --rule-soft:    var(--ink-700);
   --rule-strong:  var(--paper-400);
@@ -324,12 +317,10 @@
   --accent-deep-l:  var(--ramp-l-300);  --accent-deep-c:  var(--ramp-c-300);
   --accent-solid-l: var(--ramp-l-600);  --accent-solid-c: var(--ramp-c-600);
   --accent-on:      var(--paper-100);
-
   --ok:    var(--gem-emerald-500);   --ok-tint:   var(--gem-emerald-800);
   --warn:  var(--gem-amber-500);     --warn-tint: var(--gem-amber-800);
   --err:   var(--gem-ruby-500);      --err-tint:  var(--gem-ruby-800);
   --info:  var(--gem-sapphire-500);  --info-tint: var(--gem-sapphire-800);
-
   --selection-bg: var(--accent-800);
   --selection-fg: var(--paper-100);
 
@@ -352,11 +343,11 @@
   --accent-700: oklch(var(--ramp-l-700) calc(var(--ramp-c-700) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
   --accent-800: oklch(var(--ramp-l-800) calc(var(--ramp-c-800) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
   --accent-900: oklch(var(--ramp-l-900) calc(var(--ramp-c-900) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
-
   --accent:       var(--accent-500);   /* step 500 both themes — theme-independent */
   --accent-soft:  oklch(var(--accent-soft-l)  calc(var(--accent-soft-c)  * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
   --accent-tint:  oklch(var(--accent-tint-l)  calc(var(--accent-tint-c)  * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
   --accent-deep:  oklch(var(--accent-deep-l)  calc(var(--accent-deep-c)  * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
   --accent-solid: oklch(var(--accent-solid-l) calc(var(--accent-solid-c) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+
   /* --accent-on stays paper-based on the theme blocks (constant). */
 }

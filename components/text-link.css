@@ -25,6 +25,7 @@
   &.-reference {
     font-style: italic;
   }
+
   &.-reference::after {
     content: "\2197";
     display: inline-block;
@@ -39,6 +40,7 @@
   &.-reference:hover::after { color: var(--accent); }
 
   /* — Running-head, small-caps tracked nav cue — */
+
   /* Running-head: serif small-caps-style nav cue now — section
      pagers, footers, in-page jumps. No League Spartan here. */
   &.-runninghead {
@@ -53,6 +55,7 @@
     padding-bottom: var(--underline-offset);
     transition: color var(--duration-1), border-color var(--duration-1);
   }
+
   &.-runninghead:hover,
   &.-runninghead[aria-current="page"] {
     color: var(--ink);

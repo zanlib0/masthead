@@ -17,6 +17,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.45em;
+
   /* Documented optical exception to the --space ruler (DESIGN.md §3
      sanctions these): text-box trims to the cap band, but League
      Spartan's cap metric leaves a residual in Chrome so the seal
@@ -31,6 +32,7 @@
   line-height: 1;                    /* don't inherit the 1.55 prose leading */
   letter-spacing: 0.14em;
   text-transform: uppercase;
+
   /* Cap-trim to the cap band so padding can centre the all-caps
      seal; it gets most of the way, the small Chrome residual is
      the documented 5/3 padding nudge above (DESIGN.md §3). Ignored

@@ -8,6 +8,7 @@
   width: 100%;
   border-collapse: collapse;
   font-family: var(--font-serif);
+
   /* Body's inherited --feat-serif carries "onum"; it would fight
      tabular-nums and survive even under .-numeric (feature-settings
      beats font-variant). So state the low-level features explicitly
@@ -26,6 +27,7 @@
     padding: var(--space-1) var(--space-2);
     border-bottom: 1px solid var(--rule-strong);
   }
+
   > tbody td {
     padding: var(--space-2);
     border-bottom: 1px solid var(--rule-soft);
@@ -61,6 +63,7 @@
     border-bottom: 1.5px dotted var(--rule);
     transform: translateY(-0.13em);
   }
+
   > .meta {
     font-family: var(--font-serif);
     font-weight: var(--weight-medium);

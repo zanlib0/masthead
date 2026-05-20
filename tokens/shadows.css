@@ -51,8 +51,8 @@
      short soft drop. Deep ink, low alpha: a seal lifted a hair
      off the page, never a card-sized float. */
   --plate-lift:
-    1px 1px 0          oklch(from var(--ink) l c h / 0.22),
-    1.5px 3px 5px -2px oklch(from var(--ink) l c h / 0.20);
+    1px 1px 0          oklch(from var(--ink) l c h / 22%),
+    1.5px 3px 5px -2px oklch(from var(--ink) l c h / 20%);
 }
 
 /* ---- Dark surfaces ---- */
@@ -66,6 +66,6 @@
      (not the parchment --ink) so a lifted seal never haloes
      white against the dark page. */
   --plate-lift:
-    1px 1px 0          oklch(0 0 0 / 0.55),
-    1.5px 3px 5px -2px oklch(0 0 0 / 0.50);
+    1px 1px 0          oklch(0% 0 0deg / 55%),
+    1.5px 3px 5px -2px oklch(0% 0 0deg / 50%);
 }

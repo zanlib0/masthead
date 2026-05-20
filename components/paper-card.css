@@ -39,12 +39,14 @@
     line-height: var(--leading-snug);
     color: var(--ink);
   }
+
   > .body {
     font-family: var(--font-serif);
     font-size: var(--text-ms);
     line-height: var(--leading-prose);
     color: var(--ink-2);
   }
+
   > .foot {
     display: flex;
     justify-content: space-between;
@@ -71,6 +73,7 @@
     border-radius: var(--radius-1);
     z-index: -1;
   }
+
   /* First sheet beneath — one step into shadow. Shared by both
      -stack-1 and the front sheet of -stack-2 (identical). */
   &.-stack-1::before,
@@ -78,6 +81,7 @@
     background: var(--sheet-1);
     transform: translate(var(--stack-shift), var(--stack-shift));
   }
+
   /* Second sheet — the deeper one is darker still (no rotation). */
   &.-stack-2::after {
     background: var(--sheet-2);
@@ -92,6 +96,7 @@
   &.-framed {
     border: 1px solid var(--rule-strong);
   }
+
   &.-framed::before {
     content: "";
     position: absolute;

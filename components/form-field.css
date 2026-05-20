@@ -13,6 +13,7 @@
     font-weight: var(--weight-medium);
     font-style: italic;
     font-size: var(--text-xs);
+
     /* Cap-trim — keep the uppercase label optically centred
        (DESIGN.md §3); ignored where unsupported. */
     text-box: trim-both cap alphabetic;
@@ -41,6 +42,7 @@
     border-radius: var(--radius-0);
   }
   &:not(.-boxed) > .input:disabled { border-bottom-style: dashed; }
+
   /* On top of the shared ring, the ruled line itself thickens
      1px→2px and goes accent — a non-colour cue doubling the
      affordance. Driven by :focus-visible to match the ring. */

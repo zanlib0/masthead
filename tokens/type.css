@@ -21,9 +21,9 @@
   /* Families. League Spartan is now rationed — only the two ink
      stamps (.stamp-button, .cancel-stamp) and the last-resort
      eyebrow (h6 / .t-eyebrow) use it. Everything else is serif. */
-  --font-serif:   'EB Garamond', 'Hoefler Text', Garamond, Georgia, serif;
-  --font-display: 'League Spartan', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-mono:    'IBM Plex Mono', ui-monospace, Menlo, 'SF Mono', monospace;
+  --font-serif:   'EB Garamond', 'Hoefler Text', garamond, georgia, serif;
+  --font-display: 'League Spartan', 'Helvetica Neue', helvetica, arial, sans-serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, menlo, 'SF Mono', monospace;
 
   /* OpenType features — the reason to use a real book face */
   --feat-serif:   "onum", "kern", "liga", "calt";
