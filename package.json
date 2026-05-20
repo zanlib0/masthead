@@ -1,0 +1,19 @@
+{
+  "name": "masthead",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A small, opinionated letterpress design system.",
+  "license": "MIT",
+  "scripts": {
+    "build": "mkdir -p dist && lightningcss --bundle --sourcemap masthead.css -o dist/masthead.css && lightningcss --bundle --minify --sourcemap masthead.css -o dist/masthead.min.css && mkdir -p dist/fonts && cp -r fonts/. dist/fonts/",
+    "lint": "stylelint '**/*.css' --ignore-path .gitignore",
+    "lint:fix": "stylelint '**/*.css' --fix --ignore-path .gitignore",
+    "dev": "lightningcss --bundle --watch masthead.css -o dist/masthead.css",
+    "release": "./scripts/release.sh"
+  },
+  "devDependencies": {
+    "lightningcss-cli": "^1.x",
+    "stylelint": "^16.x",
+    "stylelint-config-standard": "^36.x"
+  }
+}

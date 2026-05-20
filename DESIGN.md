@@ -6,7 +6,7 @@
 > sheet, the badge is a seal affixed a hair proud of it — everything else flat.
 >
 > Format follows the [DESIGN.md convention](https://getdesign.md). Visual catalog:
-> `showcase.html` (light + dark, every token and component, three use‑cases).
+> `index.html` (light + dark, every token and component, three use‑cases).
 > Source is split CSS behind one entrypoint, `masthead.css`.
 
 ---
