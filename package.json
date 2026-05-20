@@ -6,8 +6,8 @@
   "license": "MIT",
   "scripts": {
     "build": "mkdir -p dist && lightningcss --bundle --sourcemap masthead.css -o dist/masthead.css && lightningcss --bundle --minify --sourcemap masthead.css -o dist/masthead.min.css && mkdir -p dist/fonts && cp -r fonts/. dist/fonts/",
-    "lint": "stylelint '**/*.css' --ignore-path .gitignore",
-    "lint:fix": "stylelint '**/*.css' --fix --ignore-path .gitignore",
+    "lint": "stylelint '**/*.css'",
+    "lint:fix": "stylelint '**/*.css' --fix",
     "dev": "lightningcss --bundle --watch masthead.css -o dist/masthead.css",
     "release": "./scripts/release.sh"
   },

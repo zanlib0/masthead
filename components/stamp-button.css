@@ -64,7 +64,6 @@
   user-select: none;
   text-decoration: none;
   appearance: none;
-  appearance: none;
   transition:
     color        var(--strike-out),
     border-color var(--strike-out),

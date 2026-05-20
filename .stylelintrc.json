@@ -3,6 +3,11 @@
   "rules": {
     "selector-class-pattern": null,
     "custom-property-pattern": null,
-    "color-no-hex": [true, { "severity": "warning" }]
+    "color-no-hex": [true, { "severity": "warning" }],
+
+    "number-max-precision": null,
+    "no-duplicate-selectors": null,
+    "no-descending-specificity": null,
+    "declaration-block-single-line-max-declarations": null
   }
 }
