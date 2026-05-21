@@ -94,11 +94,6 @@
 .cl-eyebrow-mono { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-3); }
 .cl-lede { max-width: 60ch; margin-top: var(--space-6); }
 
-/* Horizontal-scroll wrapper for wide tables on narrow viewports —
-   .data-table ships width:100% (DESIGN §1), so making it scrollable
-   is a caller-layout concern. */
-.cl-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-
 /* Caller-layer mobile reflow. The system handles its own components;
    these adjust caller-owned layout to the same 30rem breakpoint. */
 @media (max-width: 30rem) {
@@ -398,16 +393,14 @@
     <h4 class="cl-h4">.data-table &amp; .toc-row</h4>
     <div class="cl-grid -2">
       <div class="cl-spec"><div class="cl-stage -block" style="padding:var(--space-5)">
-        <div class="cl-table-scroll">
-          <table class="data-table -numeric">
-            <thead><tr><th>City</th><th>Index</th><th>Reading</th></tr></thead>
-            <tbody>
-              <tr><td>Reykjav&iacute;k</td><td>14</td><td>Good</td></tr>
-              <tr><td>Lisbon</td><td>38</td><td>Fair</td></tr>
-              <tr><td>Jakarta</td><td>171</td><td>Poor</td></tr>
-            </tbody>
-          </table>
-        </div>
+        <table class="data-table -numeric">
+          <thead><tr><th>City</th><th>Index</th><th>Reading</th></tr></thead>
+          <tbody>
+            <tr><td>Reykjav&iacute;k</td><td>14</td><td>Good</td></tr>
+            <tr><td>Lisbon</td><td>38</td><td>Fair</td></tr>
+            <tr><td>Jakarta</td><td>171</td><td>Poor</td></tr>
+          </tbody>
+        </table>
       </div><div class="cl-cap"><span>.data-table</span><span>softened head rule, tabular figures</span></div></div>
       <div class="cl-spec"><div class="cl-stage -block" style="padding:var(--space-6)">
         <div class="toc-row"><span>On the Composition of Small Apps</span><span class="leader"></span><span class="meta">3 min</span></div>

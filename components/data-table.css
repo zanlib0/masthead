@@ -5,6 +5,13 @@
    placement remain the caller's.
    ============================================================ */
 .data-table {
+  /* display:block + overflow-x:auto lets a wide table scroll horizontally
+     inside its caller's container instead of pushing the page wider. The
+     inner thead/tbody/tr/td keep their table-* displays, so the browser
+     still lays them out as a table within the scrollable block. */
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
   width: 100%;
   border-collapse: collapse;
   font-family: var(--font-serif);
