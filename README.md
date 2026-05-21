@@ -3,10 +3,12 @@
 A small, opinionated **letterpress** design system — cool rag paper, blue-black
 ink, twelve gemstone accents, hairline rules. CSS only, one file, one link.
 
+See: https://zanlib0.github.io/masthead.
+
 ## Install
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zanlib/masthead@v0.1.0/dist/masthead.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zanlib0/masthead/dist/masthead.min.css">
 ```
 
 Link `dist/masthead.min.css` — never the source `masthead.css` (that's the
@@ -19,7 +21,7 @@ authoring entrypoint and pulls 11 files via `@import`).
 <html data-theme="light" data-accent="ruby">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zanlib/masthead@v0.1.0/dist/masthead.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zanlib0/masthead@v0.1.0/dist/masthead.min.css">
   </head>
   <body>
     <article class="paper-card">
@@ -37,11 +39,6 @@ Requires **Chrome/Edge 117+, Safari 16.4+, Firefox 128+** (Baseline 2024+).
 Masthead uses `oklch()`, `color-mix()`, native nesting, and relative-color
 syntax with no `@supports` guards and no transpile. Older browsers degrade
 per feature.
-
-## See it live
-
-[zanlib.github.io/masthead](https://zanlib.github.io/masthead/) — every
-component, both themes, all twelve accents.
 
 ## The contract
 
