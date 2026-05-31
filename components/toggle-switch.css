@@ -1,0 +1,93 @@
+/* ============================================================
+   .toggle-switch — a pip riding a hairline rail between off & on.
+   Print has no animated controls, so this is the quietest reading
+   of a switch: the track is a single hairline rule (the structure
+   that boxes do elsewhere), the state is a small ink pip that
+   slides its length, and the two positions are NAMED in the
+   margin — italic serif "off" / "on", the way a catalogue labels a
+   setting. The label that wins (off when resting, on when thrown)
+   firms from --ink-3; thrown, "on" takes gem ink (--accent-deep).
+   No gloss, no knob shadow — the slide IS the affordance.
+
+   The slide is carried by `transition` (not `animation`), so a
+   pre-checked input never flickers on initial paint — no JS
+   sentinel needed, same discipline as .tick-box.
+
+   Sized in em so the rail and pip scale with the caller's
+   font-size; the track stays a true 1px hairline. Intrinsic only:
+   no margin / width / placement — the caller wraps the bare
+   <input type="checkbox"> in <label class="toggle-switch">; the
+   internal gap holds the named positions to the rail.
+
+     default  → blue-black ink pip
+     :checked → gem-ink pip + "on" in --accent-deep
+   ============================================================ */
+.toggle-switch {
+  --switch-rail: 1.4em;   /* rail length */
+  --switch-pip:  0.5em;   /* pip diameter (also its travel anchor) */
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  user-select: none;
+
+  /* The named positions — italic serif in the margin. Both faint
+     at rest; the active side firms (off when resting, on when
+     thrown), so the pair always reads which way the rail is set. */
+  &::before,
+  &::after {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--text-xs);
+    line-height: 1;
+    color: var(--ink-3);
+    transition: color var(--duration-1);
+  }
+
+  &::before { content: 'off'; }
+  &::after  { content: 'on'; }
+  &:not(:has(:checked))::before { color: var(--ink-2); }
+  &:has(:checked)::after        { color: var(--accent-deep); }
+
+  /* The rail — a single hairline; ink at rest, gem ink when thrown. */
+  & > input {
+    appearance: none;
+    position: relative;
+    flex: none;
+    width: var(--switch-rail);
+    height: var(--rule-1);
+    background: var(--ink-3);
+    cursor: inherit;
+    transition: background var(--duration-1);
+  }
+
+  & > input:checked { background: var(--accent); }
+
+  /* The pip — straddles the hairline, slides its own length. The
+     checked position is rail-end minus a pip, so it tracks any
+     font-size with no second measurement. */
+  & > input::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: var(--switch-pip);
+    height: var(--switch-pip);
+    margin-top: calc(var(--switch-pip) / -2);
+    background: var(--ink-3);
+    border-radius: var(--radius-1);
+    transition: left var(--duration-1), background var(--duration-1);
+  }
+
+  & > input:checked::before {
+    left: calc(100% - var(--switch-pip));
+    background: var(--accent);
+  }
+
+  /* Disabled — the whole control reads spent. */
+  &:has(> input:disabled) {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}

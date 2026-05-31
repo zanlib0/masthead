@@ -554,6 +554,19 @@ code, kbd, samp {
   font-size: .8em;
 }
 
+kbd {
+  white-space: nowrap;
+  background: var(--paper-sunk);
+  border: var(--rule-1) solid var(--ink-3);
+  border-radius: var(--radius-1);
+  color: var(--ink-2);
+  align-items: center;
+  padding: .1em .4em .16em;
+  font-size: .7em;
+  line-height: 1;
+  display: inline-flex;
+}
+
 pre {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
@@ -971,6 +984,79 @@ hr {
 
   &.-accent:checked {
     border-color: var(--accent);
+  }
+}
+
+.toggle-switch {
+  --switch-rail: 1.4em;
+  --switch-pip: .5em;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  user-select: none;
+  display: inline-flex;
+
+  &:before, &:after {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--text-xs);
+    color: var(--ink-3);
+    transition: color var(--duration-1);
+    line-height: 1;
+  }
+
+  &:before {
+    content: "off";
+  }
+
+  &:after {
+    content: "on";
+  }
+
+  &:not(:has(:checked)):before {
+    color: var(--ink-2);
+  }
+
+  &:has(:checked):after {
+    color: var(--accent-deep);
+  }
+
+  & > input {
+    appearance: none;
+    width: var(--switch-rail);
+    height: var(--rule-1);
+    background: var(--ink-3);
+    cursor: inherit;
+    transition: background var(--duration-1);
+    flex: none;
+    position: relative;
+  }
+
+  & > input:checked {
+    background: var(--accent);
+  }
+
+  & > input:before {
+    content: "";
+    width: var(--switch-pip);
+    height: var(--switch-pip);
+    margin-top: calc(var(--switch-pip) / -2);
+    background: var(--ink-3);
+    border-radius: var(--radius-1);
+    transition: left var(--duration-1), background var(--duration-1);
+    position: absolute;
+    top: 50%;
+    left: 0;
+  }
+
+  & > input:checked:before {
+    left: calc(100% - var(--switch-pip));
+    background: var(--accent);
+  }
+
+  &:has( > input:disabled) {
+    cursor: not-allowed;
+    opacity: .5;
   }
 }
 

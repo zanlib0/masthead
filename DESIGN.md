@@ -302,6 +302,25 @@ to `--accent` (gem ink, every `data-accent` flows through). Sized in `em` so
 the box tracks the caller's font‑size; the caller wraps it in `<label>` and the
 natural inline whitespace handles the gap to the label text.
 
+### `.toggle-switch` — a pip riding a hairline rail
+The quietest reading of a switch: the track is a single hairline rule, the
+state is a small ink pip that slides its length, and the two positions are
+**named in the margin** — italic serif `off` / `on`, the way a catalogue labels
+a setting. The active side firms from `--ink-3` (`off` at rest, `on` when
+thrown); thrown, `on` takes gem ink (`--accent-deep`) and the pip + rail go
+`--accent` (every `data-accent` flows through). No knob shadow — the slide *is*
+the affordance. Built on a bare `<input type="checkbox">` the caller wraps in
+`<label class="toggle-switch">`; transition‑driven so a pre‑checked input never
+flickers. Sized in `em` so rail and pip track the caller's font‑size; the track
+stays a true 1px hairline.
+
+### `kbd` — a key legend printed into the sheet (bare tag)
+Not a classed component — the bare `<kbd>` tag, styled alongside `code` / `samp`
+in `base.css`. A hairline cell on recessed paper (`--paper-sunk`), mono, **flat**:
+a raised 3‑D keycap would be a fourth depth cue outside the three §6 sanctions
+(no drop shadow on flat type), so the key reads as *printed into* the sheet, not
+floating above it.
+
 ### `.paper-card` — a sheet of paper, flat by default
 `> .title` `> .body` `> .foot`. Elevation = literal stacked sheets behind it,
 **no blur, no rotation**, each deeper sheet darker (`--sheet-1`, `--sheet-2`).
@@ -342,7 +361,7 @@ Type roles `.t-display/-heading/-subhead/-body/-lede/-eyebrow/-mono/-meta/-tabul
 Helpers: `._sr-only` (the only helper; `!important` allowed here alone).
 
 ### Deferred — documented, intentionally not built (same discipline as `.prose`)
-`.prose` (long‑form rhythm + measure); instrument gauge; tabs / switch / kbd;
+`.prose` (long‑form rhythm + measure); instrument gauge; tabs;
 `.text-link.-folio` / `.-manicule`; the **Press Ornaments** tier (cartouche,
 ticket/perforation, vertical‑type, serial, microtype).
 

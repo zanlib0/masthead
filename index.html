@@ -94,6 +94,12 @@
 .cl-eyebrow-mono { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-3); }
 .cl-lede { max-width: 60ch; margin-top: var(--space-6); }
 
+/* kbd demo helpers — caller-owned, not part of Masthead. */
+.cl-keycombo { display: inline-flex; align-items: baseline; gap: var(--space-1); }
+.cl-keycombo .sep { font-family: var(--font-serif); font-size: var(--text-xs); color: var(--ink-3); }
+.cl-keycombo .action { font-family: var(--font-serif); font-style: italic; font-size: var(--text-xs); color: var(--ink-3); margin-left: var(--space-2); }
+.cl-kbdprose { font-family: var(--font-serif); font-size: var(--text-ms); color: var(--ink-2); line-height: var(--leading-prose); border-top: 1px solid var(--rule-soft); padding-top: var(--space-3); margin-top: var(--space-4); max-width: 60ch; }
+
 /* Caller-layer mobile reflow. The system handles its own components;
    these adjust caller-owned layout to the same 30rem breakpoint. */
 @media (max-width: 30rem) {
@@ -381,6 +387,43 @@
       <div class="cl-cap"><span>default ink tick · -accent</span><span>two strokes draw on in sequence</span></div>
     </div>
 
+    <!-- toggle-switch -->
+    <h4 class="cl-h4">.toggle-switch</h4>
+    <div class="cl-spec">
+      <div class="cl-stage" style="gap:var(--space-8);align-items:flex-start">
+        <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+          <label class="toggle-switch"><input type="checkbox"></label>
+          <label class="toggle-switch"><input type="checkbox" checked></label>
+          <label class="toggle-switch"><input type="checkbox" disabled></label>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-4)" data-accent="emerald">
+          <label class="toggle-switch"><input type="checkbox"></label>
+          <label class="toggle-switch"><input type="checkbox" checked></label>
+          <label class="toggle-switch"><input type="checkbox" checked disabled></label>
+        </div>
+      </div>
+      <div class="cl-cap"><span>pip slides the rail · data-accent retints</span><span>off / on named in the margin</span></div>
+    </div>
+
+    <!-- kbd -->
+    <h4 class="cl-h4">&lt;kbd&gt; — a key legend printed into the sheet</h4>
+    <div class="cl-spec">
+      <div class="cl-stage" style="gap:var(--space-8);align-items:flex-start">
+        <div class="cl-keycombo">
+          <kbd>&#8984;</kbd><span class="sep">+</span><kbd>K</kbd>
+          <span class="action">open the command bar</span>
+        </div>
+        <div class="cl-keycombo">
+          <kbd>&#8679;</kbd><span class="sep">+</span><kbd>Enter</kbd>
+          <span class="action">set the line</span>
+        </div>
+      </div>
+      <div class="cl-cap"><span>bare &lt;kbd&gt; · hairline cell on recessed paper</span><span>flat — no glossy keycap (§6)</span></div>
+    </div>
+    <p class="cl-kbdprose">Press <kbd>Esc</kbd> to dismiss, or <kbd>/</kbd> to
+      jump to search. The key reads as printed <em>into</em> the sheet — mono on
+      a recessed ground, hairline-ruled — never a 3-D cap floating above it.</p>
+
     <!-- paper-card -->
     <h4 class="cl-h4">.paper-card — flat default, stacked-paper lift</h4>
     <div class="cl-grid -4">
@@ -522,7 +565,7 @@
     <div class="cl-grid -3" style="margin-top:var(--space-6)">
       <div class="cl-stub"><h4>.prose</h4><p>Opt-in long-form rhythm + measure. Caller owns it meanwhile.</p></div>
       <div class="cl-stub"><h4>Instrument gauge</h4><p>Victorian readout: ruled box, label, tabular value, unit.</p></div>
-      <div class="cl-stub"><h4>Tabs · switch · kbd</h4><p>App-shell chrome; built when a shell needs them.</p></div>
+      <div class="cl-stub"><h4>Tabs</h4><p>App-shell chrome; built when a shell needs it.</p></div>
       <div class="cl-stub"><h4>text-link -folio · -manicule</h4><p>Leader-dot folio link; &#9758; manicule link.</p></div>
       <div class="cl-stub"><h4>Press Ornaments tier</h4><p>Cartouche, ticket/perforation, vertical-type, serial, microtype.</p></div>
     </div>

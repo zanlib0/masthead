@@ -135,6 +135,23 @@ blockquote cite {
 }
 
 code, kbd, samp { font-family: var(--font-mono); font-size: 0.8em; }
+
+/* A key legend printed into the sheet — not a glossy 3D keycap.
+   Hairline cell + recessed paper ground, mono, flat. Depth is
+   refused here on purpose: a raised keycap would be a fourth cue
+   outside the three §6 sanctions (no drop shadow on flat type). */
+kbd {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-size: 0.7em;
+  padding: 0.1em 0.4em 0.16em;
+  line-height: 1;
+  background: var(--paper-sunk);
+  border: var(--rule-1) solid var(--rule);
+  border-radius: var(--radius-1);
+  color: var(--ink-2);
+}
 pre { font-family: var(--font-mono); font-size: var(--text-sm); line-height: var(--leading-prose); }
 pre code { font-size: inherit; }
 
