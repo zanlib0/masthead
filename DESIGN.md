@@ -293,6 +293,15 @@ same ink gone faint, no bloom, left permanently crooked.
 `> .label` (**serif** all‑caps, tracked, cap‑trimmed) · `> .input` (serif, ruled
 underline that thickens to `--accent` on focus). `.-boxed` = a mail‑order entry box.
 
+### `.tick-box` — a tick written into a printed form box
+Replaces the browser's `<input type="checkbox">`. Hairline‑bordered paper cell;
+on check, two ink strokes draw on in sequence — a short bite, then the long
+sweep (~280ms, transition‑driven so a pre‑checked input never flickers on
+initial paint). Toggle off reverses the same draw. `.-accent` retints the ink
+to `--accent` (gem ink, every `data-accent` flows through). Sized in `em` so
+the box tracks the caller's font‑size; the caller wraps it in `<label>` and the
+natural inline whitespace handles the gap to the label text.
+
 ### `.paper-card` — a sheet of paper, flat by default
 `> .title` `> .body` `> .foot`. Elevation = literal stacked sheets behind it,
 **no blur, no rotation**, each deeper sheet darker (`--sheet-1`, `--sheet-2`).

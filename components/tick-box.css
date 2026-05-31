@@ -1,0 +1,107 @@
+/* ============================================================
+   .tick-box — a tick written by hand into a printed form box.
+   Catalogues and mail-order sheets had a row of empty squares
+   for the reader to check by pen; this is one of them. The box
+   is paper inside a hairline border (the printed cell). On
+   check, two ink strokes draw on in sequence — a short bite,
+   then the long sweep, ~280ms total. Toggling off truly reverses
+   the gesture: the sweep recedes first, the bite last — via
+   direction-asymmetric transition-delays (see below). No mock
+   erasing — the .stamp-button took the dramatic press; this is
+   quieter.
+
+   The draw is carried by `transition` (not `animation`), so a
+   pre-checked or pristine input never flickers on initial paint
+   — no JS sentinel needed.
+
+     default  → ink tick
+     .-accent → accent tick (one accent per surface — §7)
+
+   Sized in em so the box and check scale with the caller's
+   font-size. Intrinsic only: no margin / width / placement —
+   the caller wraps the input in <label> and the natural inline
+   whitespace handles the gap to the label text.
+   ============================================================ */
+.tick-box {
+  --tick-ink: var(--ink);
+  --tick-stroke: 1.5px;                                 /* hairline (DESIGN.md §3 — px for hairlines) */
+  --tick-bite: 100ms;                                   /* bite duration AND the sweep's wait-to-start */
+  --tick-sweep: 180ms;                                  /* sweep duration AND the bite's wait-to-undraw */
+  --tick-curve: cubic-bezier(0.1, 0.85, 0.3, 1);        /* abrupt ease-out: the hand decelerating at stroke end */
+
+  appearance: none;
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: 1.1em;
+  height: 1.1em;
+
+  /* Centre the box vertically against the lowercase letters of the
+     label text it sits beside — it is a glyph inline with text. */
+  vertical-align: middle;
+  background: var(--paper);
+  border: var(--rule-1) solid var(--rule-strong);
+  border-radius: var(--radius-1);
+  color: var(--tick-ink);
+  cursor: pointer;
+  transition: border-color var(--duration-1);
+
+  /* Two ink strokes. Width grows from a fixed anchor (the rotation
+     pivot) so the line draws OUT from its starting endpoint, not
+     from its centre — the "nib leaving the page" feeling. The
+     coordinates are geometric: ::after's (left, top) is exactly
+     ::before's endpoint at length 0.32em × 45°. */
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    height: var(--tick-stroke);
+    background: currentcolor;
+    border-radius: 1px;
+    transform-origin: 0 50%;
+    width: 0;
+  }
+
+  /* Direction-asymmetric timing. CSS reads the `transition` of the
+     POST-change state, so giving :checked and the resting state
+     different delays lets the same property travel each way in its
+     own order — sweep recedes first, bite last, mirroring the draw
+     in reverse. Each stroke's reverse-delay equals the OTHER
+     stroke's duration; that's the sequencing logic. */
+
+  /* The short bite — drawn first, retracted last. */
+  &::before {
+    left: 0.22em;
+    top: calc(0.56em - var(--tick-stroke) / 2);
+    transform: rotate(45deg);
+    transition: width var(--tick-bite) linear var(--tick-sweep);
+  }
+
+  /* The long sweep — drawn second, retracted first. */
+  &::after {
+    left: 0.44em;
+    top: calc(0.78em - var(--tick-stroke) / 2);
+    transform: rotate(-49deg);
+    transition: width var(--tick-sweep) var(--tick-curve);
+  }
+
+  &:checked::before { width: 0.32em; transition: width var(--tick-bite) linear; }
+  &:checked::after  { width: 1.22em; transition: width var(--tick-sweep) var(--tick-curve) var(--tick-bite); }
+
+  &:hover { border-color: var(--ink); }
+
+  /* Disabled — a spent cell: faded ink, recessed paper, no pointer.
+     Mirrors the .stamp-button's "spent impression" vocabulary. */
+  &:disabled {
+    background: var(--paper-sunk);
+    border-color: var(--rule);
+    color: color-mix(in oklab, var(--tick-ink) 50%, transparent);
+    cursor: not-allowed;
+  }
+
+  /* — Accent: same tick, gem ink. The border firms to accent when
+       checked so the empty/checked states share a colour story
+       (and every data-accent flows through --accent here). — */
+  &.-accent { --tick-ink: var(--accent); }
+  &.-accent:checked { border-color: var(--accent); }
+}

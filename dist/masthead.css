@@ -900,6 +900,80 @@ hr {
   }
 }
 
+.tick-box {
+  --tick-ink: var(--ink);
+  --tick-stroke: 1.5px;
+  --tick-bite: .1s;
+  --tick-sweep: .18s;
+  --tick-curve: cubic-bezier(.1, .85, .3, 1);
+  appearance: none;
+  vertical-align: middle;
+  background: var(--paper);
+  border: var(--rule-1) solid var(--rule-strong);
+  border-radius: var(--radius-1);
+  width: 1.1em;
+  height: 1.1em;
+  color: var(--tick-ink);
+  cursor: pointer;
+  transition: border-color var(--duration-1);
+  flex: none;
+  display: inline-block;
+  position: relative;
+
+  &:before, &:after {
+    content: "";
+    height: var(--tick-stroke);
+    transform-origin: 0;
+    background: currentColor;
+    border-radius: 1px;
+    width: 0;
+    position: absolute;
+  }
+
+  &:before {
+    left: .22em;
+    top: calc(.56em - var(--tick-stroke) / 2);
+    transition: width var(--tick-bite) linear var(--tick-sweep);
+    transform: rotate(45deg);
+  }
+
+  &:after {
+    left: .44em;
+    top: calc(.78em - var(--tick-stroke) / 2);
+    transition: width var(--tick-sweep) var(--tick-curve);
+    transform: rotate(-49deg);
+  }
+
+  &:checked:before {
+    width: .32em;
+    transition: width var(--tick-bite) linear;
+  }
+
+  &:checked:after {
+    width: 1.22em;
+    transition: width var(--tick-sweep) var(--tick-curve) var(--tick-bite);
+  }
+
+  &:hover {
+    border-color: var(--ink);
+  }
+
+  &:disabled {
+    background: var(--paper-sunk);
+    border-color: var(--rule);
+    color: color-mix(in oklab, var(--tick-ink) 50%, transparent);
+    cursor: not-allowed;
+  }
+
+  &.-accent {
+    --tick-ink: var(--accent);
+  }
+
+  &.-accent:checked {
+    border-color: var(--accent);
+  }
+}
+
 .paper-card {
   background: var(--paper);
   border: 1px solid var(--rule);
