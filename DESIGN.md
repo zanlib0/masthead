@@ -333,8 +333,7 @@ Type roles `.t-display/-heading/-subhead/-body/-lede/-eyebrow/-mono/-meta/-tabul
 Helpers: `._sr-only` (the only helper; `!important` allowed here alone).
 
 ### Deferred — documented, intentionally not built (same discipline as `.prose`)
-`.prose` (long‑form rhythm + measure); **drop cap** (a forward, per‑article
-editorial choice, never a primitive); instrument gauge; tabs / switch / kbd;
+`.prose` (long‑form rhythm + measure); instrument gauge; tabs / switch / kbd;
 `.text-link.-folio` / `.-manicule`; the **Press Ornaments** tier (cartouche,
 ticket/perforation, vertical‑type, serial, microtype).
 
@@ -406,7 +405,7 @@ is rationed to those three cues and earned by a physical metaphor each time.
 - ❌ Gloss/sheen gradients, bevels, glassmorphism, Material elevation, ambient
   soft floats — depth only via the three §6 cues, never invented elsewhere.
 - ❌ Generic blue/red/green; status badges; hard‑coded hex.
-- ❌ Emoji as icons; drop caps as a system feature; pill buttons.
+- ❌ Emoji as icons; pill buttons.
 - ❌ Cream backgrounds, pure/OLED black, jet‑black 2–3px strokes.
 - ❌ Faked font weights (`font-synthesis`); Garamond above 600 (the
   `.stamp-button` label's display **700** is the one sanctioned bold — League

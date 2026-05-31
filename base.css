@@ -182,9 +182,6 @@ a:hover { color: var(--accent-deep); text-decoration-color: var(--accent); }
 .t-meta     { font-family: var(--font-serif); font-style: italic; font-size: var(--text-sm); color: var(--ink-3); }
 .t-tabular  { font-variant-numeric: tabular-nums lining-nums; font-feature-settings: var(--feat-tabular); }
 
-/* Drop caps are intentionally NOT a system primitive — they are a
-   forward, per-article editorial concern (DESIGN.md §7, deferred). */
-
 /* Hairline rules — appearance only, zero margin. */
 .rule        { border: 0; border-top: var(--rule-1) solid var(--rule); }
 .rule-thick  { border: 0; border-top: var(--rule-2) solid var(--rule-strong); }
