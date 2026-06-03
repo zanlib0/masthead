@@ -557,7 +557,7 @@ code, kbd, samp {
 kbd {
   white-space: nowrap;
   background: var(--paper-sunk);
-  border: var(--rule-1) solid var(--ink-3);
+  border: var(--rule-1) solid var(--rule);
   border-radius: var(--radius-1);
   color: var(--ink-2);
   align-items: center;
@@ -638,12 +638,13 @@ a:hover {
 
 .t-subhead {
   font-family: var(--font-serif);
-  font-weight: var(--weight-medium);
-  font-size: var(--text-subhead);
+  font-weight: var(--weight-regular);
   letter-spacing: var(--track-subhead);
-  text-transform: uppercase;
+  font-variant: small-caps;
+  text-transform: lowercase;
   text-box: trim-both cap alphabetic;
   color: var(--ink-2);
+  font-size: 1.21rem;
 }
 
 .t-eyebrow {

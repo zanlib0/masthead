@@ -184,11 +184,13 @@ a:hover { color: var(--accent-deep); text-decoration-color: var(--accent); }
 .t-body     { font-family: var(--font-serif); font-size: var(--text-base); line-height: var(--leading-prose); text-wrap: pretty; }
 .t-lede     { font-family: var(--font-serif); font-size: var(--text-lede); line-height: var(--leading-normal); color: var(--ink-2); text-wrap: pretty; }
 
-/* The accented subtitle (Image-1 effect): serif all-caps, tracked.
-   Defaults to --ink-2; pair with `color: var(--accent)` for the
-   red-subtitle look — that accent pairing is the caller's call,
-   one accent per surface (DESIGN.md §7). */
-.t-subhead  { font-family: var(--font-serif); font-weight: var(--weight-medium); font-size: var(--text-subhead); letter-spacing: var(--track-subhead); text-transform: uppercase; text-box: trim-both cap alphabetic; color: var(--ink-2); }
+/* The accented subtitle (Image-1 effect): serif small-caps, tracked.
+   font-size is bumped (vs --text-subhead) so the small-cap glyphs
+   land at roughly the prior all-caps height. Defaults to --ink-2;
+   pair with `color: var(--accent)` for the red-subtitle look — that
+   accent pairing is the caller's call, one accent per surface
+   (DESIGN.md §7). */
+.t-subhead  { font-family: var(--font-serif); font-weight: var(--weight-regular); font-size: 1.0833333rem; letter-spacing: var(--track-subhead); font-variant: small-caps; text-transform: lowercase; text-box: trim-both cap alphabetic; color: var(--ink-2); }
 
 /* The last-resort label: the one surviving League Spartan in the
    type primitives — captions, footers, the smallest chrome. */
