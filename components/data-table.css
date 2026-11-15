@@ -24,6 +24,8 @@
     line-height: var(--leading-ui);
   }
 
+  > table :is(th, td) { padding: var(--space-2); }
+
   > table > thead th {
     position: sticky;                     /* internal: sticks within the wrapper */
     top: 0;
@@ -34,21 +36,18 @@
     color: var(--ink-2);
     text-align: start;
     text-box: trim-both ex alphabetic;    /* small-cap trim — DESIGN.md §3 */
-    padding: var(--space-2);
     background: var(--paper);
     border-bottom: 1px solid var(--rule-strong);
   }
 
-  > table > thead th[aria-sort="ascending"],
-  > table > thead th[aria-sort="descending"] { color: var(--ink); }
-
   /* The arrow is decoration — aria-sort already names the order —
      so its alt text is empty. */
-  > table > thead th[aria-sort="ascending"]::after { content: "\2191" / ""; margin-left: 0.25em; }
-  > table > thead th[aria-sort="descending"]::after { content: "\2193" / ""; margin-left: 0.25em; }
+  > table > thead th:is([aria-sort="ascending"], [aria-sort="descending"]) { color: var(--ink); }
+  > table > thead th[aria-sort]::after { margin-left: 0.25em; }
+  > table > thead th[aria-sort="ascending"]::after { content: "\2191" / ""; }
+  > table > thead th[aria-sort="descending"]::after { content: "\2193" / ""; }
 
   > table > tbody td {
-    padding: var(--space-2);
     border-bottom: 1px solid var(--rule-soft);
     color: var(--ink-2);
   }
@@ -63,7 +62,6 @@
   > table > tbody:has(+ tfoot) > tr:last-child > td { border-bottom-color: var(--rule-strong); }
 
   > table > tfoot :is(th, td) {
-    padding: var(--space-2);
     border-top: 1px solid var(--rule-strong);
     font-weight: var(--weight-medium);
     color: var(--ink);

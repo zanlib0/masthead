@@ -34,29 +34,29 @@ const url = `http://localhost:${server.address().port}/`;
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48);
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch();
+// The four width × theme runs are independent, so they run side by side.
+const runs = [1280, 390].flatMap((width) => ['light', 'dark'].map((theme) => [width, theme]));
 try {
-  for (const width of [1280, 390]) {
-    for (const theme of ['light', 'dark']) {
-      const page = await browser.newPage({ viewport: { width, height: 900 } });
-      await page.goto(url, { waitUntil: 'networkidle' });
-      await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
-      await page.evaluate(() => document.fonts.ready);
-      const tag = `${width}-${theme}`;
-      await page.screenshot({ path: join(out, `page-${tag}.png`), fullPage: true });
+  await Promise.all(runs.map(async ([width, theme]) => {
+    const page = await browser.newPage({ viewport: { width, height: 900 } });
+    await page.goto(url, { waitUntil: 'networkidle' });
+    await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
+    await page.evaluate(() => document.fonts.ready);
+    const tag = `${width}-${theme}`;
+    await page.screenshot({ path: join(out, `page-${tag}.png`), fullPage: true });
 
-      // Name every plate: the element after each h4.cl-h4, each use-case, the
-      // dark panel, plus anything marked data-shot in the page.
-      await page.evaluate(() => {
-        for (const h of document.querySelectorAll('h4.cl-h4')) h.nextElementSibling?.setAttribute('data-shot', h.textContent);
-        for (const u of document.querySelectorAll('.cl-uc')) u.setAttribute('data-shot', 'case ' + u.querySelector('.cl-uc-tag span').textContent);
-        for (const d of document.querySelectorAll('.cl-dark')) d.setAttribute('data-shot', 'dark panel');
-      });
-      for (const el of await page.$$('[data-shot]')) {
-        await el.screenshot({ path: join(out, `${slug(await el.getAttribute('data-shot'))}-${tag}.png`) });
-      }
-      await page.close();
+    // Name every plate: the element after each h4.cl-h4, each use-case, the
+    // dark panel, plus anything marked data-shot in the page.
+    await page.evaluate(() => {
+      for (const h of document.querySelectorAll('h4.cl-h4')) h.nextElementSibling?.setAttribute('data-shot', h.textContent);
+      for (const u of document.querySelectorAll('.cl-uc')) u.setAttribute('data-shot', 'case ' + u.querySelector('.cl-uc-tag span').textContent);
+      for (const d of document.querySelectorAll('.cl-dark')) d.setAttribute('data-shot', 'dark panel');
+    });
+    for (const el of await page.$$('[data-shot]')) {
+      await el.screenshot({ path: join(out, `${slug(await el.getAttribute('data-shot'))}-${tag}.png`) });
     }
-  }
+    await page.close();
+  }));
 } finally {
   await browser.close();
   server.close();

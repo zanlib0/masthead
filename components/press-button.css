@@ -59,7 +59,6 @@
     flex: none;
     width: var(--icon-ui);
     height: var(--icon-ui);
-    color: currentcolor;
     stroke-width: var(--icon-stroke);
   }
 
@@ -70,13 +69,8 @@
 
   /* Press — the deboss. A transient gesture on :active; a stable
      state on aria-pressed, which also takes the accent wash. */
-  &:active { box-shadow: var(--deboss); }
-
-  &[aria-pressed="true"] {
-    --press-fill: var(--selected);
-
-    box-shadow: var(--deboss);
-  }
+  &:is(:active, [aria-pressed="true"]) { box-shadow: var(--deboss); }
+  &[aria-pressed="true"] { --press-fill: var(--selected); }
 
   &.-accent {
     --press-ink: var(--accent-on);
@@ -84,19 +78,16 @@
     --press-frame: var(--accent-solid);
   }
 
-  &.-ghost { --press-frame: transparent; }
+  &.-ghost { border-color: transparent; }   /* beats every --press-frame */
 
   &.-danger {
     --press-ink: var(--err-ink);
     --press-frame: var(--err);
   }
 
-  &.-ghost.-danger { --press-frame: transparent; }
-
-  &.-icon { aspect-ratio: 1; padding: 0; }
   &.-small { --control-h: var(--space-6); padding: 0 var(--space-2); }
   &.-large { --control-h: var(--space-10); padding: 0 var(--space-4); }
-  &.-icon.-small, &.-icon.-large { padding: 0; }
+  &.-icon { aspect-ratio: 1; padding: 0; }   /* after the sizes: stays square */
 
   /* Disabled — spent: faint ink, quiet frame, no wash, no deboss.
      Two forms, styled alike:
@@ -114,7 +105,4 @@
     box-shadow: none;
     cursor: not-allowed;
   }
-
-  &.-ghost:disabled,
-  &.-ghost[aria-disabled="true"] { --press-frame: transparent; }
 }

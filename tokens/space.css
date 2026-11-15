@@ -24,7 +24,7 @@
 
   /* Control height — buttons, boxed inputs and selects share it
      so they line up in one bar (32px). */
-  --control-h: 2rem;
+  --control-h: var(--space-8);
 
   /* Radii — print has almost none. 2px is the ceiling for cards
      and inputs; the .cancel-stamp seal is the one sanctioned

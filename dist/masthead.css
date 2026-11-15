@@ -351,9 +351,8 @@
   --font-serif: "EB Garamond", "Hoefler Text", garamond, georgia, serif;
   --font-mono: "IBM Plex Mono", ui-monospace, menlo, "SF Mono", monospace;
   --feat-serif: "kern", "liga", "calt";
-  --feat-tabular: "tnum", "lnum", "kern";
   --text-ui: 1rem;
-  --text-body: 1rem;
+  --text-body: var(--text-ui);
   --text-subhead: 1.125rem;
   --text-h4: 1.1875rem;
   --text-lede: 1.25rem;
@@ -367,7 +366,7 @@
   --leading-prose: 1.55;
   --track-display: -.01em;
   --track-caps: .06em;
-  --icon-ui: 1rem;
+  --icon-ui: var(--text-ui);
   --icon-stroke: 1.5;
   --underline-thickness: .6px;
   --underline-offset: .13em;
@@ -409,7 +408,7 @@
   --space-16: 4rem;
   --space-20: 5rem;
   --space-24: 6rem;
-  --control-h: 2rem;
+  --control-h: var(--space-8);
   --radius-0: 0;
   --radius-1: 1px;
   --radius-2: 2px;
@@ -695,7 +694,6 @@ a:hover {
 
 .t-tabular {
   font-variant-numeric: tabular-nums lining-nums;
-  font-feature-settings: var(--feat-tabular);
 }
 
 .rule {
@@ -808,7 +806,6 @@ hr {
   & > .icon {
     width: var(--icon-ui);
     height: var(--icon-ui);
-    color: currentColor;
     stroke-width: var(--icon-stroke);
     flex: none;
   }
@@ -817,13 +814,12 @@ hr {
     background-image: linear-gradient(var(--hover), var(--hover));
   }
 
-  &:active {
+  &:is(:active, [aria-pressed="true"]) {
     box-shadow: var(--deboss);
   }
 
   &[aria-pressed="true"] {
     --press-fill: var(--selected);
-    box-shadow: var(--deboss);
   }
 
   &.-accent {
@@ -833,21 +829,12 @@ hr {
   }
 
   &.-ghost {
-    --press-frame: transparent;
+    border-color: #0000;
   }
 
   &.-danger {
     --press-ink: var(--err-ink);
     --press-frame: var(--err);
-  }
-
-  &.-ghost.-danger {
-    --press-frame: transparent;
-  }
-
-  &.-icon {
-    aspect-ratio: 1;
-    padding: 0;
   }
 
   &.-small {
@@ -860,7 +847,8 @@ hr {
     padding: 0 var(--space-4);
   }
 
-  &.-icon.-small, &.-icon.-large {
+  &.-icon {
+    aspect-ratio: 1;
     padding: 0;
   }
 
@@ -872,14 +860,11 @@ hr {
     cursor: not-allowed;
     background-image: none;
   }
-
-  &.-ghost:disabled, &.-ghost[aria-disabled="true"] {
-    --press-frame: transparent;
-  }
 }
 
 .form-field {
   gap: var(--space-1);
+  font-size: var(--text-ui);
   flex-direction: column;
   display: flex;
 
@@ -892,7 +877,6 @@ hr {
   & > .label {
     font-family: var(--font-serif);
     font-weight: var(--weight-medium);
-    font-size: var(--text-ui);
     letter-spacing: var(--track-caps);
     text-box: trim-both ex alphabetic;
     color: var(--ink-2);
@@ -904,13 +888,11 @@ hr {
   }
 
   & > .hint {
-    font-style: italic;
-    font-size: var(--text-ui);
     color: var(--ink-3);
+    font-style: italic;
   }
 
   & > .error {
-    font-size: var(--text-ui);
     color: var(--err-ink);
   }
 
@@ -918,7 +900,6 @@ hr {
     width: 100%;
     min-height: var(--control-h);
     font-family: var(--font-serif);
-    font-size: var(--text-ui);
     line-height: var(--leading-ui);
     color: var(--ink);
   }
@@ -950,7 +931,7 @@ hr {
 
   &:not(.-boxed) > .input {
     border: 0;
-    border-bottom: 1px solid var(--ink);
+    border-bottom: var(--rule-1) solid var(--ink);
     border-radius: var(--radius-0);
     padding: var(--space-1) 0;
     background-color: #0000;
@@ -961,8 +942,8 @@ hr {
   }
 
   &:not(.-boxed) > .input:focus-visible {
-    border-bottom: 2px solid var(--focus-ring-color);
-    padding-bottom: calc(var(--space-1) - 1px);
+    border-bottom: var(--focus-ring-width) solid var(--focus-ring-color);
+    padding-bottom: calc(var(--space-1) - (var(--focus-ring-width) - var(--rule-1)));
     outline: none;
   }
 
@@ -1275,6 +1256,10 @@ hr {
     line-height: var(--leading-ui);
   }
 
+  & > table :is(th, td) {
+    padding: var(--space-2);
+  }
+
   & > table > thead th {
     z-index: var(--layer-sticky);
     font-weight: var(--weight-medium);
@@ -1282,7 +1267,6 @@ hr {
     color: var(--ink-2);
     text-align: start;
     text-box: trim-both ex alphabetic;
-    padding: var(--space-2);
     background: var(--paper);
     border-bottom: 1px solid var(--rule-strong);
     font-variant-caps: all-small-caps;
@@ -1290,22 +1274,23 @@ hr {
     top: 0;
   }
 
-  & > table > thead th[aria-sort="ascending"], & > table > thead th[aria-sort="descending"] {
+  & > table > thead th:is([aria-sort="ascending"], [aria-sort="descending"]) {
     color: var(--ink);
+  }
+
+  & > table > thead th[aria-sort]:after {
+    margin-left: .25em;
   }
 
   & > table > thead th[aria-sort="ascending"]:after {
     content: "↑" / "";
-    margin-left: .25em;
   }
 
   & > table > thead th[aria-sort="descending"]:after {
     content: "↓" / "";
-    margin-left: .25em;
   }
 
   & > table > tbody td {
-    padding: var(--space-2);
     border-bottom: 1px solid var(--rule-soft);
     color: var(--ink-2);
   }
@@ -1323,7 +1308,6 @@ hr {
   }
 
   & > table > tfoot :is(th, td) {
-    padding: var(--space-2);
     border-top: 1px solid var(--rule-strong);
     font-weight: var(--weight-medium);
     color: var(--ink);

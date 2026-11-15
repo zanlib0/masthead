@@ -24,7 +24,6 @@
 
   /* OpenType features — the reason to use a real book face */
   --feat-serif:   "kern", "liga", "calt";   /* figure style is font-variant-numeric's */
-  --feat-tabular: "tnum", "lnum", "kern";
 
   /* The one chrome size. Every UI part — buttons, labels, inputs,
      table cells, nav — sets this; it never remaps by register.
@@ -34,7 +33,7 @@
 
   /* Register-mapped scale — APP values here; .prose remaps them
      below. Named by role, not by size. px at the 16px root. */
-  --text-body:    1rem;         /* 16px — body (= --text-ui) */
+  --text-body:    var(--text-ui); /* 16px — body */
   --text-subhead: 1.125rem;     /* 18px — h5 / .t-subhead */
   --text-h4:      1.1875rem;    /* 19px — h4, .press-masthead title */
   --text-lede:    1.25rem;      /* 20px — lede, card title, blockquote */
@@ -57,7 +56,7 @@
 
   /* Icons — sized to the UI text they sit beside; the stroke is
      in viewBox units (1.5 of 24 ≈ a 1px hairline at 16px). */
-  --icon-ui:     1rem;
+  --icon-ui:     var(--text-ui);
   --icon-stroke: 1.5;
 
   /* Underline decoration — one hairline recipe for every link, so

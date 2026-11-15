@@ -19,6 +19,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  font-size: var(--text-ui);           /* every part, controls included */
 
   /* A <fieldset class="form-field"> of radios drops the UA frame. */
   &:is(fieldset) {
@@ -30,7 +31,6 @@
   > .label {
     font-family: var(--font-serif);       /* a printed entry label, not a sans tag */
     font-weight: var(--weight-medium);
-    font-size: var(--text-ui);
     font-variant-caps: all-small-caps;
     letter-spacing: var(--track-caps);
 
@@ -44,16 +44,8 @@
      itself. */
   > legend.label { padding: 0 0 var(--space-2); }
 
-  > .hint {
-    font-style: italic;
-    font-size: var(--text-ui);
-    color: var(--ink-3);
-  }
-
-  > .error {
-    font-size: var(--text-ui);
-    color: var(--err-ink);
-  }
+  > .hint { font-style: italic; color: var(--ink-3); }
+  > .error { color: var(--err-ink); }
 
   /* Shared control chrome (both variants). Height is --control-h
      so a field lines up with a .press-button in one bar. */
@@ -61,7 +53,6 @@
     width: 100%;                       /* fills the field, not the page */
     min-height: var(--control-h);
     font-family: var(--font-serif);
-    font-size: var(--text-ui);
     line-height: var(--leading-ui);
     color: var(--ink);
   }
@@ -90,19 +81,20 @@
   &:not(.-boxed) > .input {
     background-color: transparent;
     border: 0;
-    border-bottom: 1px solid var(--ink);
+    border-bottom: var(--rule-1) solid var(--ink);
     border-radius: var(--radius-0);
     padding: var(--space-1) 0;
   }
   &:not(.-boxed) > .input:disabled { border-bottom-style: dashed; }
 
-  /* Focus: the ruled line becomes a real 2px accent underline (the
-     padding gives back the extra pixel, so nothing shifts). It
-     replaces the ring here — the line is the field's own mark. */
+  /* Focus: the ruled line thickens to the ring width (2px) in the
+     ring colour; the padding gives the extra back, so nothing
+     shifts. It replaces the ring here — the line is the field's own
+     focus mark. */
   &:not(.-boxed) > .input:focus-visible {
     outline: none;
-    border-bottom: 2px solid var(--focus-ring-color);
-    padding-bottom: calc(var(--space-1) - 1px);
+    border-bottom: var(--focus-ring-width) solid var(--focus-ring-color);
+    padding-bottom: calc(var(--space-1) - (var(--focus-ring-width) - var(--rule-1)));
   }
 
   /* — Boxed: a mail-order entry box. — */

@@ -176,7 +176,7 @@ The split is **who may read what**, not public vs private:
 theme/accent swap Just Works. The raw ramps are public but **formula‑bound**: a
 deliberate, announced ramp retune (the twenty `--ramp-l-*`/`--ramp-c-*` numbers)
 moves every step at once, by design. Internal and not contracted:
-`--feat-serif` / `--feat-tabular` and component‑local custom properties
+`--feat-serif` and component‑local custom properties
 (`--press-*`, `--tick-*`, `--switch-*`).
 
 ### Roll your own palette
