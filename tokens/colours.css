@@ -301,6 +301,14 @@
   --warn-ink: var(--gem-amber-600);
   --err-ink:  var(--gem-ruby-600);
   --info-ink: var(--gem-sapphire-600);
+
+  /* Status text on a --selected ground: one step deeper (700), so
+     it holds AA on the accent tint. Applied by the [aria-selected]
+     remap below; internal, not part of the public contract. */
+  --ok-ink-selected:   var(--gem-emerald-700);
+  --warn-ink-selected: var(--gem-amber-700);
+  --err-ink-selected:  var(--gem-ruby-700);
+  --info-ink-selected: var(--gem-sapphire-700);
   --selection-bg: var(--accent-100);
   --selection-fg: var(--ink-900);
 
@@ -346,6 +354,10 @@
   --warn-ink: var(--gem-amber-400);
   --err-ink:  var(--gem-ruby-400);
   --info-ink: var(--gem-sapphire-400);
+  --ok-ink-selected:   var(--gem-emerald-300);
+  --warn-ink-selected: var(--gem-amber-300);
+  --err-ink-selected:  var(--gem-ruby-300);
+  --info-ink-selected: var(--gem-sapphire-300);
   --selection-bg: var(--accent-800);
   --selection-fg: var(--paper-100);
   --surface-raised: var(--ink-800);
@@ -353,6 +365,20 @@
   --hover: color-mix(in oklab, var(--ink) 5%, transparent);
 
   color-scheme: dark;
+}
+
+/* The selected surface carries its own inks, the way a data-theme
+   subtree does. --ink-3 and the status inks can't hold AA on the
+   accent tint (dark: ~3:1), so a selected item lifts them: faint
+   text takes --ink-2, status text one step deeper. Worst case over
+   all twelve gems, hover included: >= 5.3:1 in both themes. Paint
+   --selected only on [aria-selected="true"], so the inks follow. */
+[aria-selected="true"] {
+  --ink-3:    var(--ink-2);
+  --ok-ink:   var(--ok-ink-selected);
+  --warn-ink: var(--warn-ink-selected);
+  --err-ink:  var(--err-ink-selected);
+  --info-ink: var(--info-ink-selected);
 }
 
 /* The accent SURFACE — recomputed on every element so a data-accent
