@@ -3,7 +3,7 @@
    set inside a hairline frame, corners at the 2px ceiling. It
    sits square in the line like the rules and inputs beside it.
    Hover lays the --hover wash over the ground; press is a DEBOSS
-   — the sheet pushed in, a 1px inset shadow on the upper-left
+   — the sheet pushed in, a 2px inset shadow on the upper-left
    inner edge (--deboss) — with no transform, scale or lean, so
    nothing beside it moves.
 
@@ -55,7 +55,9 @@
   user-select: none;
   text-decoration: none;
   appearance: none;
-  transition: background-color var(--duration-1), box-shadow var(--duration-1);
+
+  /* No transition: a press is contact, not motion — it lands the
+     instant the pointer does, and lifts the instant it leaves. */
 
   > .icon {
     flex: none;
@@ -79,6 +81,13 @@
     --press-ink: var(--accent-on);
     --press-fill: var(--accent-solid);
     --press-frame: var(--accent-solid);
+  }
+
+  /* A filled press: the ink wall can't show on a dark fill, so the
+     fill itself sinks into shadow and the wall deepens. */
+  &.-accent:is(:active, [aria-pressed="true"]) {
+    background-image: linear-gradient(var(--press-shade), var(--press-shade));
+    box-shadow: var(--deboss-solid);
   }
 
   &.-ghost { border-color: transparent; }   /* beats every --press-frame */

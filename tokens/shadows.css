@@ -12,7 +12,7 @@
 
    (a) stacked-paper card lift  — literal sheets behind a card.
    (b) deboss                   — a pressed .press-button: the
-       sheet pushed in, a 1px hard inset on the upper-left inner
+       sheet pushed in, a 2px hard inset on the upper-left inner
        edge (the lamp's side of the recess). No transform.
    (c) affixed-plate lift       — the .cancel-stamp sits subtly
        off the page: a short hard ink edge + a soft drop.
@@ -38,8 +38,14 @@
   --sheet-1: var(--paper-200);
   --sheet-2: var(--paper-400);
 
-  /* (b) Deboss — the recess wall facing the lamp falls in shadow. */
-  --deboss: inset 1px 1px 0 oklch(from var(--ink) l c h / 22%);
+  /* (b) Deboss — the recess wall facing the lamp falls in shadow.
+     On paper a 2px wall reads; on a filled (accent) ground an ink
+     wall vanishes, so a filled press also shades the fill itself
+     (--press-shade, laid over it like the --hover wash) and casts
+     a darker wall (--deboss-solid). */
+  --deboss:       inset 2px 2px 0 oklch(from var(--ink) l c h / 24%);
+  --deboss-solid: inset 2px 2px 0 oklch(0% 0 0deg / 30%);
+  --press-shade:  oklch(0% 0 0deg / 16%);
 
   /* (c) Loose sheet — a hard cast, no blur. */
   --overlay-lift: 4px 4px 0 oklch(from var(--ink) l c h / 14%);
@@ -58,7 +64,9 @@
      rim-lit a touch lighter to keep their edges legible. */
   --sheet-1: var(--ink-800);
   --sheet-2: var(--ink-700);
-  --deboss: inset 1px 1px 0 oklch(0% 0 0deg / 60%);
+  --deboss:       inset 2px 2px 0 oklch(0% 0 0deg / 60%);
+  --deboss-solid: inset 2px 2px 0 oklch(0% 0 0deg / 45%);
+  --press-shade:  oklch(0% 0 0deg / 24%);
   --overlay-lift: 4px 4px 0 oklch(0% 0 0deg / 50%);
 
   /* Same lamp, deeper terminus. The cast stays a true near-black
