@@ -269,12 +269,16 @@
   --paper:        var(--paper-50);
   --paper-sunk:   var(--paper-100);
   --paper-edge:   var(--paper-200);
+
+  /* Text ink, spread ~18 / 10 / 5:1 against --paper so that ink
+     alone carries hierarchy at the one UI size. All clear AA on
+     --paper and --paper-sunk. */
   --ink:          var(--ink-900);
-  --ink-2:        var(--ink-700);
-  --ink-3:        var(--ink-500);
+  --ink-2:        var(--ink-500);
+  --ink-3:        var(--ink-300);
   --rule:         var(--paper-300);
   --rule-soft:    var(--paper-200);
-  --rule-strong:  var(--ink-2);     /* the firmest stroke — NOT pure ink */
+  --rule-strong:  var(--ink-700);   /* the firmest stroke — NOT pure ink */
 
   /* Accent scalars — which ramp step each role maps to. The surface
      is computed on * below; --accent (step 500) is theme-independent
@@ -299,9 +303,9 @@
   --paper:        var(--ink-900);
   --paper-sunk:   var(--ink-800);
   --paper-edge:   var(--ink-700);
-  --ink:          var(--paper-100);
-  --ink-2:        var(--paper-300);
-  --ink-3:        var(--paper-500);
+  --ink:          var(--paper-100);   /* ~17 / 9.5 / 5:1, as light */
+  --ink-2:        var(--paper-500);
+  --ink-3:        var(--paper-700);
   --rule:         var(--ink-600);
   --rule-soft:    var(--ink-700);
   --rule-strong:  var(--paper-400);

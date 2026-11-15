@@ -26,7 +26,13 @@ html { font-size: 100%; }
 body {
   font-family: var(--font-serif);
   font-feature-settings: var(--feat-serif);
-  font-variant-numeric: oldstyle-nums;
+  font-variant-numeric: lining-nums;  /* chrome sets data; .prose restores onum */
+
+  /* One optical size across families: every face is scaled to EB
+     Garamond's x-height (0.4 of the em), so mono code, kbd and
+     tables sit on the same --text-ui as the serif with no
+     per-element shrink. Garamond itself is unchanged. */
+  font-size-adjust: 0.4;
   font-size: var(--text-body);
   font-weight: var(--weight-regular);
   line-height: var(--leading-ui);
@@ -73,22 +79,20 @@ h2 { font-size: var(--text-h2); font-weight: var(--weight-medium); }
 h3 { font-size: var(--text-h3); font-weight: var(--weight-medium); }
 h4 { font-size: var(--text-h4); font-weight: var(--weight-medium); }
 
-/* Cap-trim (system rule, DESIGN.md §3). Every UPPERCASE context —
-   serif OR display-face — gets `text-box: trim-both cap
-   alphabetic` so symmetric, ruler-based padding centres the caps
-   instead of letting them ride low in the line box. Applies here
-   (h5, h6) and to .t-eyebrow / .t-subhead plus the .stamp-button /
-   .cancel-stamp / .form-field label / .data-table head /
-   .text-link.-runninghead in components/. Browsers without
-   text-box (Firefox, early 2026) ignore it and fall back to the
-   prior rendering — non-breaking. */
+/* Small caps (system rule, DESIGN.md §3). Labels are set in EB
+   Garamond's real small caps (`all-small-caps`: smcp + c2sc), never
+   with text-transform, so the author's case survives ("API" and
+   "api" stay different) and nothing shouts. Block small-cap
+   contexts trim their line box to the x-band (`trim-both ex
+   alphabetic`) so symmetric ruler padding centres them; browsers
+   without text-box ignore it — non-breaking. */
 h5 {
   font-family: var(--font-serif);
   font-weight: var(--weight-medium);
   font-size: var(--text-subhead);
-  letter-spacing: var(--track-subhead);
-  text-transform: uppercase;
-  text-box: trim-both cap alphabetic;
+  font-variant-caps: all-small-caps;
+  letter-spacing: var(--track-caps);
+  text-box: trim-both ex alphabetic;
   color: var(--ink-2);
 }
 
@@ -116,16 +120,15 @@ blockquote {
   padding: var(--space-1) 0 var(--space-1) var(--space-4);
 }
 
-/* Attribution is the serif all-caps subtitle treatment now —
-   no League Spartan below a pull-quote. */
+/* Attribution is a small-caps label. */
 blockquote cite {
   display: block;
   font-family: var(--font-serif);
   font-style: normal;
   font-weight: var(--weight-medium);
   font-size: var(--text-ui);
-  letter-spacing: var(--track-subhead);
-  text-transform: uppercase;
+  font-variant-caps: all-small-caps;
+  letter-spacing: var(--track-caps);
   color: var(--ink-3);
   margin-top: var(--space-2);
 
@@ -135,7 +138,7 @@ blockquote cite {
   }
 }
 
-code, kbd, samp { font-family: var(--font-mono); font-size: 0.8em; }
+code, kbd, samp { font-family: var(--font-mono); }
 
 /* A key legend printed into the sheet — not a glossy 3D keycap.
    Hairline cell + recessed paper ground, mono, flat. Depth is
@@ -145,7 +148,6 @@ kbd {
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
-  font-size: 0.7em;
   padding: 0.1em 0.4em 0.16em;
   line-height: 1;
   background: var(--paper-sunk);
@@ -154,7 +156,6 @@ kbd {
   color: var(--ink-2);
 }
 pre { font-family: var(--font-mono); font-size: var(--text-ui); line-height: var(--leading-prose); }
-pre code { font-size: inherit; }
 
 ul, ol { padding-left: 1.3em; }
 li::marker { color: var(--ink-3); }
@@ -185,20 +186,18 @@ a:hover { color: var(--accent-deep); text-decoration-color: var(--accent); }
 .t-body     { font-family: var(--font-serif); font-size: var(--text-body); line-height: var(--leading-prose); text-wrap: pretty; }
 .t-lede     { font-family: var(--font-serif); font-size: var(--text-lede); line-height: var(--leading-normal); color: var(--ink-2); text-wrap: pretty; }
 
-/* The accented subtitle (Image-1 effect): serif small-caps, tracked.
-   font-size is bumped (vs --text-subhead) so the small-cap glyphs
-   land at roughly the prior all-caps height. Defaults to --ink-2;
-   pair with `color: var(--accent)` for the red-subtitle look — that
-   accent pairing is the caller's call, one accent per surface
-   (DESIGN.md §7). */
-.t-subhead  { font-family: var(--font-serif); font-weight: var(--weight-regular); font-size: 1.0833333rem; letter-spacing: var(--track-subhead); font-variant: small-caps; text-transform: lowercase; text-box: trim-both cap alphabetic; color: var(--ink-2); }
+/* The accented subtitle (Image-1 effect): real small caps, tracked —
+   the h5 treatment, detachable. Defaults to --ink-2; pair with
+   `color: var(--accent)` for the red-subtitle look — that accent
+   pairing is the caller's call, one accent per surface (§7). */
+.t-subhead  { font-family: var(--font-serif); font-weight: var(--weight-regular); font-size: var(--text-subhead); font-variant-caps: all-small-caps; letter-spacing: var(--track-caps); text-box: trim-both ex alphabetic; color: var(--ink-2); }
 
 /* The last-resort label: the one surviving League Spartan in the
    type primitives — captions, footers, the smallest chrome. */
 .t-eyebrow  { font-family: var(--font-display); font-weight: var(--weight-semibold); font-size: var(--text-ui); letter-spacing: var(--track-eyebrow); text-transform: uppercase; text-box: trim-both cap alphabetic; color: var(--ink-3); }
 
-/* Relative (not a fixed step): inline mono tracks & optically matches its host text — IBM Plex Mono runs large at equal size. */
-.t-mono     { font-family: var(--font-mono); font-size: 0.83em; }
+/* Optically matched to the host text by body's font-size-adjust. */
+.t-mono     { font-family: var(--font-mono); }
 .t-meta     { font-family: var(--font-serif); font-style: italic; font-size: var(--text-ui); color: var(--ink-3); }
 .t-tabular  { font-variant-numeric: tabular-nums lining-nums; font-feature-settings: var(--feat-tabular); }
 
@@ -241,6 +240,7 @@ hr           { border: 0; border-top: var(--rule-1) solid var(--rule); }
 .prose {
   font-size: var(--text-body);
   line-height: var(--leading-prose);
+  font-variant-numeric: oldstyle-nums;  /* figures that sit in running text */
 
   > * + * { margin-top: 1.1em; }
   > :is(h1, h2, h3, h4) { margin-top: 1.9em; }

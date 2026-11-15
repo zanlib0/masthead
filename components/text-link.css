@@ -39,16 +39,14 @@
   &.-reference:hover { color: var(--accent-deep); text-decoration-color: var(--accent); }
   &.-reference:hover::after { color: var(--accent); }
 
-  /* — Running-head, small-caps tracked nav cue — */
-
-  /* Running-head: serif small-caps-style nav cue now — section
-     pagers, footers, in-page jumps. No League Spartan here. */
+  /* — Running-head: a small-caps tracked nav cue — section
+       pagers, footers, in-page jumps. — */
   &.-runninghead {
     font-family: var(--font-serif);
     font-weight: var(--weight-medium);
     font-size: var(--text-ui);
-    letter-spacing: var(--track-subhead);
-    text-transform: uppercase;
+    font-variant-caps: all-small-caps;
+    letter-spacing: var(--track-caps);
     text-decoration: none;
     color: var(--ink-3);
     border-bottom: 1px solid transparent;

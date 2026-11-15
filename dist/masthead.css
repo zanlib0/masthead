@@ -252,11 +252,11 @@
   --paper-sunk: var(--paper-100);
   --paper-edge: var(--paper-200);
   --ink: var(--ink-900);
-  --ink-2: var(--ink-700);
-  --ink-3: var(--ink-500);
+  --ink-2: var(--ink-500);
+  --ink-3: var(--ink-300);
   --rule: var(--paper-300);
   --rule-soft: var(--paper-200);
-  --rule-strong: var(--ink-2);
+  --rule-strong: var(--ink-700);
   --accent-chroma: 1;
   --accent-tint-l: var(--ramp-l-100);
   --accent-tint-c: var(--ramp-c-100);
@@ -285,8 +285,8 @@
   --paper-sunk: var(--ink-800);
   --paper-edge: var(--ink-700);
   --ink: var(--paper-100);
-  --ink-2: var(--paper-300);
-  --ink-3: var(--paper-500);
+  --ink-2: var(--paper-500);
+  --ink-3: var(--paper-700);
   --rule: var(--ink-600);
   --rule-soft: var(--ink-700);
   --rule-strong: var(--paper-400);
@@ -335,7 +335,7 @@
   --font-serif: "EB Garamond", "Hoefler Text", garamond, georgia, serif;
   --font-display: "League Spartan", "Helvetica Neue", helvetica, arial, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, menlo, "SF Mono", monospace;
-  --feat-serif: "onum", "kern", "liga", "calt";
+  --feat-serif: "kern", "liga", "calt";
   --feat-tabular: "tnum", "lnum", "kern";
   --text-ui: 1rem;
   --text-body: 1rem;
@@ -352,7 +352,7 @@
   --leading-prose: 1.55;
   --track-display: -.01em;
   --track-eyebrow: .18em;
-  --track-subhead: .14em;
+  --track-caps: .06em;
   --track-button: .08em;
   --underline-thickness: .6px;
   --underline-offset: .13em;
@@ -456,7 +456,8 @@ html {
 body {
   font-family: var(--font-serif);
   font-feature-settings: var(--feat-serif);
-  font-variant-numeric: oldstyle-nums;
+  font-variant-numeric: lining-nums;
+  font-size-adjust: .4;
   font-size: var(--text-body);
   font-weight: var(--weight-regular);
   line-height: var(--leading-ui);
@@ -505,10 +506,10 @@ h5 {
   font-family: var(--font-serif);
   font-weight: var(--weight-medium);
   font-size: var(--text-subhead);
-  letter-spacing: var(--track-subhead);
-  text-transform: uppercase;
-  text-box: trim-both cap alphabetic;
+  letter-spacing: var(--track-caps);
+  text-box: trim-both ex alphabetic;
   color: var(--ink-2);
+  font-variant-caps: all-small-caps;
 }
 
 h6 {
@@ -554,10 +555,10 @@ blockquote cite {
   font-style: normal;
   font-weight: var(--weight-medium);
   font-size: var(--text-ui);
-  letter-spacing: var(--track-subhead);
-  text-transform: uppercase;
+  letter-spacing: var(--track-caps);
   color: var(--ink-3);
   margin-top: var(--space-2);
+  font-variant-caps: all-small-caps;
   display: block;
 
   &:before {
@@ -568,7 +569,6 @@ blockquote cite {
 
 code, kbd, samp {
   font-family: var(--font-mono);
-  font-size: .8em;
 }
 
 kbd {
@@ -579,7 +579,6 @@ kbd {
   color: var(--ink-2);
   align-items: center;
   padding: .1em .4em .16em;
-  font-size: .7em;
   line-height: 1;
   display: inline-flex;
 }
@@ -588,10 +587,6 @@ pre {
   font-family: var(--font-mono);
   font-size: var(--text-ui);
   line-height: var(--leading-prose);
-}
-
-pre code {
-  font-size: inherit;
 }
 
 ul, ol {
@@ -656,12 +651,11 @@ a:hover {
 .t-subhead {
   font-family: var(--font-serif);
   font-weight: var(--weight-regular);
-  letter-spacing: var(--track-subhead);
-  font-variant: small-caps;
-  text-transform: lowercase;
-  text-box: trim-both cap alphabetic;
+  font-size: var(--text-subhead);
+  letter-spacing: var(--track-caps);
+  text-box: trim-both ex alphabetic;
   color: var(--ink-2);
-  font-size: 1.08333rem;
+  font-variant-caps: all-small-caps;
 }
 
 .t-eyebrow {
@@ -676,7 +670,6 @@ a:hover {
 
 .t-mono {
   font-family: var(--font-mono);
-  font-size: .83em;
 }
 
 .t-meta {
@@ -742,6 +735,7 @@ hr {
 .prose {
   font-size: var(--text-body);
   line-height: var(--leading-prose);
+  font-variant-numeric: oldstyle-nums;
 
   & > * + * {
     margin-top: 1.1em;
@@ -900,10 +894,11 @@ hr {
   & > .label {
     font-family: var(--font-serif);
     font-weight: var(--weight-medium);
-    font-style: italic;
     font-size: var(--text-ui);
-    text-box: trim-both cap alphabetic;
+    letter-spacing: var(--track-caps);
+    text-box: trim-both ex alphabetic;
     color: var(--ink-2);
+    font-variant-caps: all-small-caps;
   }
 
   & > .input {
@@ -915,7 +910,7 @@ hr {
 
   & > .input::placeholder {
     color: var(--ink-3);
-    opacity: .7;
+    opacity: 1;
   }
 
   & > .input:disabled {
@@ -1128,11 +1123,11 @@ hr {
     font-family: var(--font-serif);
     font-weight: var(--weight-medium);
     font-size: var(--text-ui);
-    letter-spacing: var(--track-subhead);
-    text-transform: uppercase;
+    letter-spacing: var(--track-caps);
     color: var(--ink-3);
     border-top: 1px solid var(--rule);
     padding-top: var(--space-3);
+    font-variant-caps: all-small-caps;
     display: flex;
   }
 
@@ -1175,21 +1170,21 @@ hr {
   width: 100%;
   max-width: 100%;
   font-family: var(--font-serif);
-  font-variant-numeric: tabular-nums oldstyle-nums;
-  font-feature-settings: "tnum", "onum", "kern";
+  font-variant-numeric: tabular-nums lining-nums;
   display: block;
   overflow-x: auto;
 
   & > thead th {
     font-family: var(--font-serif);
-    font-style: italic;
     font-weight: var(--weight-medium);
     font-size: var(--text-ui);
-    text-box: trim-both cap alphabetic;
+    letter-spacing: var(--track-caps);
+    text-box: trim-both ex alphabetic;
     color: var(--ink-2);
     text-align: left;
     padding: var(--space-1) var(--space-2);
     border-bottom: 1px solid var(--rule-strong);
+    font-variant-caps: all-small-caps;
   }
 
   & > tbody td {
@@ -1228,9 +1223,9 @@ hr {
     font-family: var(--font-serif);
     font-weight: var(--weight-medium);
     font-size: var(--text-ui);
-    letter-spacing: var(--track-subhead);
-    text-transform: uppercase;
+    letter-spacing: var(--track-caps);
     color: var(--ink-3);
+    font-variant-caps: all-small-caps;
   }
 
   &:hover > .leader {
@@ -1361,12 +1356,12 @@ hr {
     font-family: var(--font-serif);
     font-weight: var(--weight-medium);
     font-size: var(--text-ui);
-    letter-spacing: var(--track-subhead);
-    text-transform: uppercase;
+    letter-spacing: var(--track-caps);
     color: var(--ink-3);
     padding-bottom: var(--underline-offset);
     transition: color var(--duration-1), border-color var(--duration-1);
     border-bottom: 1px solid #0000;
+    font-variant-caps: all-small-caps;
     text-decoration: none;
   }
 

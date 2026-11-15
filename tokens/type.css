@@ -25,7 +25,7 @@
   --font-mono:    'IBM Plex Mono', ui-monospace, menlo, 'SF Mono', monospace;
 
   /* OpenType features — the reason to use a real book face */
-  --feat-serif:   "onum", "kern", "liga", "calt";
+  --feat-serif:   "kern", "liga", "calt";   /* figure style is font-variant-numeric's */
   --feat-tabular: "tnum", "lnum", "kern";
 
   /* The one chrome size. Every UI part — buttons, labels, inputs,
@@ -54,8 +54,9 @@
   /* Tracking */
   --track-display: -0.01em; /* big serif headings tighten a hair */
   --track-eyebrow:  0.18em; /* League Spartan all-caps eyebrow */
-  --track-subhead:  0.14em; /* serif all-caps — subtitle, table head,
-                               form label, runninghead, cite, card foot */
+  --track-caps:     0.06em; /* real small caps — h5, .t-subhead, every
+                               label, table head, runninghead, cite,
+                               card foot, toc meta */
   --track-button:   0.08em;
 
   /* Underline decoration — one hairline recipe for every link, so

@@ -16,19 +16,16 @@
   border-collapse: collapse;
   font-family: var(--font-serif);
 
-  /* Body's inherited --feat-serif carries "onum"; it would fight
-     tabular-nums and survive even under .-numeric (feature-settings
-     beats font-variant). So state the low-level features explicitly
-     per intent: catalogue body keeps old-style figures, tabular. */
-  font-variant-numeric: tabular-nums oldstyle-nums;
-  font-feature-settings: "tnum", "onum", "kern";
+  /* Chrome figures: lining, and tabular so columns align. */
+  font-variant-numeric: tabular-nums lining-nums;
 
   > thead th {
     font-family: var(--font-serif);       /* a ledger head, not a sans label */
-    font-style: italic;
     font-weight: var(--weight-medium);
     font-size: var(--text-ui);
-    text-box: trim-both cap alphabetic;   /* cap-trim — see DESIGN.md §3 */
+    font-variant-caps: all-small-caps;
+    letter-spacing: var(--track-caps);
+    text-box: trim-both ex alphabetic;    /* small-cap trim — see DESIGN.md §3 */
     color: var(--ink-2);
     text-align: left;
     padding: var(--space-1) var(--space-2);
@@ -75,8 +72,8 @@
     font-family: var(--font-serif);
     font-weight: var(--weight-medium);
     font-size: var(--text-ui);
-    letter-spacing: var(--track-subhead);
-    text-transform: uppercase;
+    font-variant-caps: all-small-caps;
+    letter-spacing: var(--track-caps);
     color: var(--ink-3);
   }
   &:hover > .leader { border-bottom-color: var(--accent); }

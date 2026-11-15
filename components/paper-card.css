@@ -55,8 +55,8 @@
     font-family: var(--font-serif);
     font-weight: var(--weight-medium);
     font-size: var(--text-ui);
-    letter-spacing: var(--track-subhead);
-    text-transform: uppercase;
+    font-variant-caps: all-small-caps;
+    letter-spacing: var(--track-caps);
     color: var(--ink-3);
     border-top: 1px solid var(--rule);
     padding-top: var(--space-3);
