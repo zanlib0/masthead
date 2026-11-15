@@ -12,11 +12,11 @@
    it reads right in light AND dark — no per-gem class needed).
    ============================================================ */
 .cancel-stamp {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45em;
-  padding: var(--space-1) var(--space-2);
+  /* inline-block, not inline-flex: text-box trim applies to block
+     containers, and a flex container's anonymous text item never
+     receives it — the lettering then sat ~1.5px low. */
+  display: inline-block;
+  padding: var(--space-2) var(--space-3);
 
   /* Garamond's semibold small caps — the seal's lettering is the
      heaviest type Masthead sets, at the one chrome size. */

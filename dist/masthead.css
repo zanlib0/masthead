@@ -783,13 +783,12 @@ hr {
   align-items: center;
   gap: var(--space-2);
   height: var(--control-h);
-  padding: 0 var(--space-3);
+  padding: 0 var(--space-3) .18em;
   font-family: var(--font-serif);
   font-weight: var(--weight-medium);
   font-size: var(--text-ui);
   letter-spacing: var(--track-caps);
   white-space: nowrap;
-  text-box: trim-both ex alphabetic;
   color: var(--press-ink);
   background-color: var(--press-fill);
   border: var(--rule-1) solid var(--press-frame);
@@ -808,6 +807,7 @@ hr {
     height: var(--icon-ui);
     stroke-width: var(--icon-stroke);
     flex: none;
+    translate: 0 .09em;
   }
 
   &:hover {
@@ -839,17 +839,21 @@ hr {
 
   &.-small {
     --control-h: var(--space-6);
-    padding: 0 var(--space-2);
+    padding-inline: var(--space-2);
   }
 
   &.-large {
     --control-h: var(--space-10);
-    padding: 0 var(--space-4);
+    padding-inline: var(--space-4);
   }
 
   &.-icon {
     aspect-ratio: 1;
     padding: 0;
+  }
+
+  &.-icon > .icon {
+    translate: none;
   }
 
   &:disabled, &[aria-disabled="true"] {
@@ -1415,7 +1419,7 @@ hr {
 }
 
 .cancel-stamp {
-  padding: var(--space-1) var(--space-2);
+  padding: var(--space-2) var(--space-3);
   font-family: var(--font-serif);
   font-weight: var(--weight-bold);
   font-size: var(--text-ui);
@@ -1426,12 +1430,9 @@ hr {
   border: 1px solid var(--accent);
   box-shadow: var(--plate-lift);
   border-radius: 6px;
-  justify-content: center;
-  align-items: center;
-  gap: .45em;
   font-variant-caps: all-small-caps;
   line-height: 1;
-  display: inline-flex;
+  display: inline-block;
 }
 
 .text-link {

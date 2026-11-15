@@ -302,10 +302,13 @@ text. Table number cells (`.-numeric`) and `.t-tabular` are tabular lining.
 ligatures).
 
 **Small‑cap trim (system rule).** Block small‑caps contexts — `h5`,
-`.t-subhead`, the form label, the table head, the button label and the seal —
+`.t-subhead`, the form label, the table head and the seal —
 apply `text-box: trim-both ex alphabetic`, trimming the line box to the
 small‑cap band so **symmetric, ruler‑based padding** centres the lettering.
-Inline contexts (`.text-link.-runninghead`, `.toc-row` meta, the card foot,
+The trim only reaches block containers: the seal is therefore `inline-block`,
+and the button — a flex container, so its label never receives the trim —
+carries a measured optical nudge instead (`0.18em` extra bottom padding, the
+icon shifted back down `0.09em`). Inline contexts (`.text-link.-runninghead`, `.toc-row` meta, the card foot,
 `blockquote cite`) are not trimmed. Browsers without `text-box` ignore it and
 fall back to the untrimmed rendering — non‑breaking.
 

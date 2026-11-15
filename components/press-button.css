@@ -33,7 +33,13 @@
   justify-content: center;
   gap: var(--space-2);                 /* icon <-> label, its own parts */
   height: var(--control-h);
-  padding: 0 var(--space-3);
+
+  /* Optical nudge, measured: text-box trim never reaches the label
+     (it is a flex container's anonymous item, not a block
+     container), so Garamond's small-cap band sits ~0.09em below the
+     em-box centre. A 0.18em bottom pad lifts it back to centre; the
+     icon is shifted down by the same 0.09em so it stays centred. */
+  padding: 0 var(--space-3) 0.18em;
   font-family: var(--font-serif);
   font-weight: var(--weight-medium);
   font-size: var(--text-ui);
@@ -41,10 +47,6 @@
   letter-spacing: var(--track-caps);
   line-height: 1;
   white-space: nowrap;
-
-  /* Trim to the small-cap band so the flex centring centres the
-     lettering, not the descender space (DESIGN.md §3). */
-  text-box: trim-both ex alphabetic;
   color: var(--press-ink);
   background-color: var(--press-fill);
   border: var(--rule-1) solid var(--press-frame);
@@ -60,6 +62,7 @@
     width: var(--icon-ui);
     height: var(--icon-ui);
     stroke-width: var(--icon-stroke);
+    translate: 0 0.09em;               /* undo the label nudge */
   }
 
   /* The --hover wash, laid OVER whatever the ground is (paper or a
@@ -85,9 +88,12 @@
     --press-frame: var(--err);
   }
 
-  &.-small { --control-h: var(--space-6); padding: 0 var(--space-2); }
-  &.-large { --control-h: var(--space-10); padding: 0 var(--space-4); }
-  &.-icon { aspect-ratio: 1; padding: 0; }   /* after the sizes: stays square */
+  &.-small { --control-h: var(--space-6); padding-inline: var(--space-2); }
+  &.-large { --control-h: var(--space-10); padding-inline: var(--space-4); }
+
+  /* After the sizes: stays square. No label, so no nudge to undo. */
+  &.-icon { aspect-ratio: 1; padding: 0; }
+  &.-icon > .icon { translate: none; }
 
   /* Disabled — spent: faint ink, quiet frame, no wash, no deboss.
      Two forms, styled alike:
