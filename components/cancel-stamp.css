@@ -28,7 +28,7 @@
   padding: 5px var(--space-2) 3px;
   font-family: var(--font-display);
   font-weight: var(--weight-bold);
-  font-size: var(--text-2xs);        /* chrome, not body — deliberately small */
+  font-size: var(--text-ui);        /* the one chrome size */
   line-height: 1;                    /* don't inherit the 1.55 prose leading */
   letter-spacing: 0.14em;
   text-transform: uppercase;

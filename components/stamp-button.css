@@ -39,7 +39,7 @@
      stamp is heavy ink. League Spartan carries it on its own
      variable axis — never synthesised (see base.css). */
   font-weight: 700;
-  font-size: var(--text-xs);           /* chrome, not body — deliberately small */
+  font-size: var(--text-ui);           /* the one chrome size */
   line-height: 1;                      /* don't inherit the 1.55 prose leading */
   letter-spacing: 0.15em;              /* the stamp's own wide tracking */
   text-transform: uppercase;
@@ -169,6 +169,6 @@
     box-shadow: var(--strike-bloom-none);
   }
 
-  &.-small { padding: var(--space-1) var(--space-3); font-size: var(--text-2xs); }
-  &.-large { padding: var(--space-3) var(--space-6); font-size: var(--text-ms); }
+  &.-small { padding: var(--space-1) var(--space-3); font-size: var(--text-ui); }
+  &.-large { padding: var(--space-3) var(--space-6); font-size: var(--text-ui); }
 }

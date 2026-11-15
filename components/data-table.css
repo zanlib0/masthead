@@ -27,7 +27,7 @@
     font-family: var(--font-serif);       /* a ledger head, not a sans label */
     font-style: italic;
     font-weight: var(--weight-medium);
-    font-size: var(--text-xs);
+    font-size: var(--text-ui);
     text-box: trim-both cap alphabetic;   /* cap-trim — see DESIGN.md §3 */
     color: var(--ink-2);
     text-align: left;
@@ -38,7 +38,7 @@
   > tbody td {
     padding: var(--space-2);
     border-bottom: 1px solid var(--rule-soft);
-    font-size: var(--text-ms);
+    font-size: var(--text-ui);
     color: var(--ink-2);
   }
   > tbody tr:hover td { background: var(--paper-sunk); }
@@ -63,7 +63,7 @@
   gap: var(--space-2);
   padding: var(--space-1) 0;
   font-family: var(--font-serif);
-  font-size: var(--text-ms);
+  font-size: var(--text-ui);
   color: var(--ink);
 
   > .leader {
@@ -74,7 +74,7 @@
   > .meta {
     font-family: var(--font-serif);
     font-weight: var(--weight-medium);
-    font-size: var(--text-xs);
+    font-size: var(--text-ui);
     letter-spacing: var(--track-subhead);
     text-transform: uppercase;
     color: var(--ink-3);

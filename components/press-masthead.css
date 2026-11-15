@@ -42,7 +42,7 @@
 
   > .nav a {
     font-family: var(--font-serif);
-    font-size: var(--text-base);
+    font-size: var(--text-body);
     text-transform: lowercase;
     color: var(--ink-3);
     text-decoration: none;

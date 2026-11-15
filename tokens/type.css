@@ -1,21 +1,20 @@
 /* ============================================================
    MASTHEAD · tokens/type.css
-   A semantic, REM-based scale. The narrative is still print —
-   a foundry sells 12pt and 36pt, body is the old 18pt reading
-   size — but the mechanism is rem so the reader's browser
-   font-size setting flows through (accessibility first).
+   A semantic, REM-based scale on a 16px root (base.css sets
+   html { font-size: 100% }), so the reader's browser font-size
+   setting flows through and third-party rem-sized widgets render
+   at their own size. px is used only incidentally (hairlines);
+   em only for sub-glyph nudges.
 
-   The reference root is 24px (base.css sets html { font-size:
-   150% } → 1.5 × the browser's ~16px default). Every value
-   below is targetpx / 24 expressed in rem, so each step lands
-   on a WHOLE pixel at the reference size and still scales
-   proportionally when the reader enlarges text. px is used
-   only incidentally (hairlines); em only for sub-glyph nudges.
+   TWO REGISTERS, one token remap (the same mechanism as
+   data-theme). The root is the APP register: one chrome size
+   (--text-ui) and a compact heading ladder. `.prose` remaps the
+   same token names to the READING register: body 1.5rem and the
+   book-scale heading ladder. Components and the .t-* roles read
+   the names, so they set whichever register applies.
 
-   Components read these directly. An opt-in fluid --display-*
-   tier (the caller reaches for it, like .prose) plus leading /
-   tracking / weight. Webfonts are @imported by the masthead.css
-   entrypoint (must precede all rules).
+   Webfonts are @imported by the masthead.css entrypoint (must
+   precede all rules).
    ============================================================ */
 :root {
   /* Families. League Spartan is now rationed — only the two ink
@@ -29,36 +28,28 @@
   --feat-serif:   "onum", "kern", "liga", "calt";
   --feat-tabular: "tnum", "lnum", "kern";
 
-  /* Semantic rem scale. px shown is at the 24px reference root;
-     value = px / 24 rem. Named by role, not by size, so a
-     retune never lies and the unit never leaks into the name. */
-  --text-2xs:     0.458333rem;  /*  11px — .stamp-button.-small */
-  --text-xs:      0.541667rem;  /*  13px — h6/.t-eyebrow, table head, card foot,
-                                          toc meta, runninghead, cite, form label,
-                                          stamp/cancel labels */
-  --text-sm:      0.583333rem;  /*  14px — small, .t-meta, secondary */
-  --text-ms:      0.666667rem;  /*  16px — table/card body, form input, toc row */
-  --text-subhead: 0.833333rem;  /*  20px — h5, the accented serif-caps subtitle */
-  --text-base:    1rem;         /*  24px — BODY (the old 18pt reading size) */
-  --text-h4:      1.208333rem;  /*  29px — h4 */
-  --text-lede:    1.333333rem;  /*  32px — lede, card title */
-  --text-h3:      1.625rem;     /*  39px — h3, .press-masthead title */
-  --text-h2:      2.208333rem;  /*  53px — h2, .t-heading */
-  --text-display: 3rem;         /*  72px — h1, .t-display (the title voice) */
+  /* The one chrome size. Every UI part — buttons, labels, inputs,
+     table cells, nav — sets this; it never remaps by register.
+     Hierarchy inside chrome comes from italic, small caps, ink
+     and rules, not from size. */
+  --text-ui: 1rem;              /* 16px */
 
-  /* Opt-in fluid display tier — NOT used by components. The caller
-     applies these where a hero must survive a phone. Viewport
-     coupling is the caller's choice, never the system's. Each is
-     bounded by two steps of the fixed scale above. */
-  --display-1: clamp(var(--text-h2), 4vw + var(--text-base), var(--text-display));
-  --display-2: clamp(var(--text-h3), 3vw + var(--text-base), var(--text-h2));
-  --display-3: clamp(var(--text-h4), 2vw + var(--text-sm),   var(--text-h3));
+  /* Register-mapped scale — APP values here; .prose remaps them
+     below. Named by role, not by size. px at the 16px root. */
+  --text-body:    1rem;         /* 16px — body (= --text-ui) */
+  --text-subhead: 1.125rem;     /* 18px — h5 / .t-subhead */
+  --text-h4:      1.1875rem;    /* 19px — h4, .press-masthead title */
+  --text-lede:    1.25rem;      /* 20px — lede, card title, blockquote */
+  --text-h3:      1.375rem;     /* 22px — h3 */
+  --text-h2:      1.625rem;     /* 26px — h2, .t-heading */
+  --text-display: 2rem;         /* 32px — h1, .t-display (one page title) */
 
   /* Leading — loosens as the line lengthens */
   --leading-tight:  1.05;   /* display / title voice */
   --leading-snug:   1.18;   /* headings */
-  --leading-normal: 1.45;   /* UI */
-  --leading-prose:  1.55;   /* body prose */
+  --leading-ui:     1.375;  /* chrome: 22px on the 16px UI size */
+  --leading-normal: 1.45;   /* lede, blockquote */
+  --leading-prose:  1.55;   /* running text */
 
   /* Tracking */
   --track-display: -0.01em; /* big serif headings tighten a hair */
@@ -82,4 +73,28 @@
   --weight-medium:   460;
   --weight-semibold: 520;
   --weight-bold:     600;
+}
+
+/* ---- Reading register -------------------------------------------
+   .prose remaps the scale to the book sizes (the old 24px reading
+   size and its ladder), exactly as data-theme remaps colour. */
+.prose {
+  --text-body:    1.5rem;     /* 24px */
+  --text-subhead: 1.25rem;    /* 20px */
+  --text-h4:      1.8125rem;  /* 29px */
+  --text-lede:    2rem;       /* 32px */
+  --text-h3:      2.4375rem;  /* 39px */
+  --text-h2:      3.3125rem;  /* 53px */
+  --text-display: 4.5rem;     /* 72px */
+}
+
+/* Opt-in fluid display tier — NOT used by components. The caller
+   applies these where a hero must survive a phone. Each is bounded
+   by two steps of the scale. Declared on .prose as well so the
+   clamp re-resolves against the reading register's steps. */
+:root,
+.prose {
+  --display-1: clamp(var(--text-h2), 4vw + var(--text-body), var(--text-display));
+  --display-2: clamp(var(--text-h3), 3vw + var(--text-body), var(--text-h2));
+  --display-3: clamp(var(--text-h4), 2vw + var(--text-ui),   var(--text-h3));
 }
