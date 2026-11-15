@@ -1,7 +1,7 @@
 /* ============================================================
    MASTHEAD · tokens/shadows.css
-   Print has relief — just not screen relief. A rubber stamp
-   bites the sheet and blooms a ring of ink on contact; a seal
+   Print has relief — just not screen relief. Type pressed into
+   the sheet leaves a deboss; a seal
    affixed to the page stands a hair proud and catches the desk
    lamp along one edge; a pile of paper throws a real cast. Those
    are the three — and only three — depth cues. Still refused:
@@ -11,33 +11,15 @@
    down-and-right.
 
    (a) stacked-paper card lift  — literal sheets behind a card.
-   (b) inked-strike bloom       — the .stamp-button's ink halo,
-       seen only on contact. Colours are color-mix() of that
-       tier's --strike-ink, NOT relative-colour/currentColor:
-       color-mix resolves to a concrete colour, so box-shadow
-       interpolates fluidly instead of snapping on/off.
+   (b) deboss                   — a pressed .press-button: the
+       sheet pushed in, a 1px hard inset on the upper-left inner
+       edge (the lamp's side of the recess). No transform.
    (c) affixed-plate lift       — the .cancel-stamp sits subtly
        off the page: a short hard ink edge + a soft drop.
    ============================================================ */
 :root {
   /* (a) Stacked-paper geometry — per-sheet offset, down & right. */
   --stack-shift: 5px;
-
-  /* (b) Inked-strike bloom. --strike-bloom-none is the SAME shadow
-     structure at zero/transparent, used at rest so every state
-     change is a list→list interpolation (no none↔list snap). The
-     visible blooms key off --strike-ink (set per tier on the
-     button), so secondary, primary and every gem halo in their
-     own ink with no duplication. */
-  --strike-bloom-none:
-    inset 0 0 0 0 transparent,
-    0 0 0 0 transparent;
-  --strike-bloom:
-    inset 0 0 0 1px color-mix(in oklab, var(--strike-ink) 10%, transparent),
-    2px 3px 10px   color-mix(in oklab, var(--strike-ink) 20%, transparent);
-  --strike-bloom-press:
-    inset 0 0 0 1px color-mix(in oklab, var(--strike-ink) 10%, transparent),
-    3px 4px 12px   color-mix(in oklab, var(--strike-ink) 28%, transparent);
 }
 
 /* ---- Light surfaces ---- */
@@ -46,6 +28,9 @@
   /* (a) Sheets: each step deeper = darker (more in shadow). */
   --sheet-1: var(--paper-200);
   --sheet-2: var(--paper-400);
+
+  /* (b) Deboss — the recess wall facing the lamp falls in shadow. */
+  --deboss: inset 1px 1px 0 oklch(from var(--ink) l c h / 22%);
 
   /* (c) Plate lift — a hard ink edge under the lower-right plus a
      short soft drop. Deep ink, low alpha: a seal lifted a hair
@@ -61,6 +46,7 @@
      rim-lit a touch lighter to keep their edges legible. */
   --sheet-1: var(--ink-800);
   --sheet-2: var(--ink-700);
+  --deboss: inset 1px 1px 0 oklch(0% 0 0deg / 60%);
 
   /* Same lamp, deeper terminus. The cast stays a true near-black
      (not the parchment --ink) so a lifted seal never haloes

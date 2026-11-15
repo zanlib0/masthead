@@ -1,0 +1,114 @@
+/* ============================================================
+   .press-button — a TYPESET button. A small-caps Garamond label
+   set inside a hairline frame, corners at the 2px ceiling. It
+   sits square in the line like the rules and inputs beside it.
+   Hover lays the --hover wash over the ground; press is a DEBOSS
+   — the sheet pushed in, a 1px inset shadow on the upper-left
+   inner edge (--deboss) — with no transform, scale or lean, so
+   nothing beside it moves.
+
+     default   → hairline --rule-strong frame, ink label (secondary)
+     .-accent  → filled --accent-solid, --accent-on label (primary)
+     .-ghost   → the label alone, no frame (tertiary)
+     .-danger  → destructive: --err frame and label
+     .-icon    → square, icon only (give it an aria-label)
+     .-small / .-large → a shorter / taller --control-h
+
+   States: :hover · :active · [aria-pressed="true"] (a stable
+   deboss) · :disabled and [aria-disabled="true"]. For apps,
+   aria-disabled is the default: the button stays focusable and
+   hoverable, so a tooltip can say why it is unavailable.
+
+   Height comes from --control-h, so a button, a boxed input and a
+   select line up in one bar. Intrinsic only: no margin / width /
+   placement.
+   ============================================================ */
+.press-button {
+  --press-ink: var(--ink);
+  --press-fill: transparent;
+  --press-frame: var(--rule-strong);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);                 /* icon <-> label, its own parts */
+  height: var(--control-h);
+  padding: 0 var(--space-3);
+  font-family: var(--font-serif);
+  font-weight: var(--weight-medium);
+  font-size: var(--text-ui);
+  font-variant-caps: all-small-caps;
+  letter-spacing: var(--track-caps);
+  line-height: 1;
+  white-space: nowrap;
+
+  /* Trim to the small-cap band so the flex centring centres the
+     lettering, not the descender space (DESIGN.md §3). */
+  text-box: trim-both ex alphabetic;
+  color: var(--press-ink);
+  background-color: var(--press-fill);
+  border: var(--rule-1) solid var(--press-frame);
+  border-radius: var(--radius-2);
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  appearance: none;
+  transition: background-color var(--duration-1), box-shadow var(--duration-1);
+
+  > .icon { flex: none; width: 1.15em; height: 1.15em; color: currentcolor; }
+
+  /* The --hover wash, laid OVER whatever the ground is (paper or a
+     filled accent) as a flat single-colour layer — not a gradient
+     effect, just the only way to stack a wash on a fill. */
+  &:hover { background-image: linear-gradient(var(--hover), var(--hover)); }
+
+  /* Press — the deboss. A transient gesture on :active; a stable
+     state on aria-pressed, which also takes the accent wash. */
+  &:active { box-shadow: var(--deboss); }
+
+  &[aria-pressed="true"] {
+    --press-fill: var(--accent-tint);
+
+    box-shadow: var(--deboss);
+  }
+
+  &.-accent {
+    --press-ink: var(--accent-on);
+    --press-fill: var(--accent-solid);
+    --press-frame: var(--accent-solid);
+  }
+
+  &.-ghost { --press-frame: transparent; }
+
+  &.-danger {
+    --press-ink: var(--err);
+    --press-frame: var(--err);
+  }
+
+  &.-ghost.-danger { --press-frame: transparent; }
+
+  &.-icon { aspect-ratio: 1; padding: 0; }
+  &.-small { --control-h: var(--space-6); padding: 0 var(--space-2); }
+  &.-large { --control-h: var(--space-10); padding: 0 var(--space-4); }
+  &.-icon.-small, &.-icon.-large { padding: 0; }
+
+  /* Disabled — spent: faint ink, quiet frame, no wash, no deboss.
+     Two forms, styled alike:
+       :disabled            — inert; out of the tab order.
+       [aria-disabled=true] — the app default: stays focusable and
+                              hoverable so AT announces it and a
+                              tooltip can explain it. */
+  &:disabled,
+  &[aria-disabled="true"] {
+    --press-ink: var(--ink-3);
+    --press-fill: transparent;
+    --press-frame: var(--rule);
+
+    background-image: none;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  &.-ghost:disabled,
+  &.-ghost[aria-disabled="true"] { --press-frame: transparent; }
+}

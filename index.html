@@ -80,7 +80,7 @@
 .cl-plates { margin-top: var(--space-12); }
 .cl-sub { max-width: 460px; margin: 0 auto; }
 .cl-sub .form-field + .form-field { margin-top: var(--space-5); }
-.cl-sub .stamp-button { margin-top: var(--space-6); }
+.cl-sub .press-button { margin-top: var(--space-6); }
 .cl-sub-foot { display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-6); }
 
 .cl-foot { margin-top: var(--space-24); color: var(--ink-3); font-size: var(--text-ui); font-style: italic; }
@@ -201,8 +201,8 @@
       accent surface recomputes per element — each bar reads its own
       <code class="t-mono">data-accent</code>, label knocked out in
       <code class="t-mono">--accent-on</code> at AA. <code class="t-mono">--radius-0</code>
-      squares the bar; no component uses this fill (the primary is the coloured
-      strike) — it is here for callers, per the §2 contract.</p>
+      squares the bar; <code class="t-mono">.press-button.-accent</code> uses the
+      same fill.</p>
 
     <div class="cl-grid -2" style="margin-top:var(--space-10)">
       <div>
@@ -227,8 +227,8 @@
           <div style="border-radius:var(--radius-2)">2px max</div>
         </div>
         <p class="cl-note">2px ceils cards &amp; inputs. The only exceptions are
-          in-component: the stamp-button&rsquo;s uneven hand-cut edge and the
-          cancel-stamp seal&rsquo;s softly rounded ~6px corners.</p>
+          in-component: the cancel-stamp seal&rsquo;s softly rounded ~6px
+          corners.</p>
       </div>
     </div>
 
@@ -305,42 +305,37 @@
     <p class="cl-lead">Each is a sealed box in an isolation frame. The frame and its
       padding are caller chrome; the component brings only itself.</p>
 
-    <!-- stamp-button -->
-    <h4 class="cl-h4">.stamp-button — an inked strike</h4>
+    <!-- press-button -->
+    <h4 class="cl-h4">.press-button — a typeset button</h4>
     <div class="cl-spec">
       <div class="cl-stage">
-        <button class="stamp-button">Subscribe</button>
-        <button class="stamp-button -accent">
+        <button class="press-button">Subscribe</button>
+        <button class="press-button -accent">
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Buy a licence
         </button>
-        <button class="stamp-button -ghost">Read more</button>
-        <button class="stamp-button" disabled>Unavailable</button>
-        <button class="stamp-button -small">Export</button>
-        <button class="stamp-button -large -accent">Get started</button>
+        <button class="press-button -ghost">Read more</button>
+        <button class="press-button -danger">Delete</button>
+        <button class="press-button -icon" aria-label="Delete"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg></button>
+        <button class="press-button -small">Export</button>
+        <button class="press-button -large -accent">Get started</button>
       </div>
       <div class="cl-stage">
-        <button class="stamp-button" aria-pressed="false">Toggle off</button>
-        <button class="stamp-button" aria-pressed="true">Toggle on</button>
-        <button class="stamp-button -accent" aria-pressed="true">Pinned</button>
-        <button class="stamp-button -ghost" aria-pressed="true">Showing</button>
-        <button class="stamp-button" aria-disabled="true">Aria-disabled (focusable)</button>
+        <button class="press-button" aria-pressed="false">Toggle off</button>
+        <button class="press-button" aria-pressed="true">Toggle on</button>
+        <button class="press-button -ghost" aria-pressed="true">Showing</button>
+        <button class="press-button -ghost -danger">Discard</button>
+        <button class="press-button" disabled>Unavailable</button>
+        <button class="press-button -accent" aria-disabled="true">Aria-disabled (focusable)</button>
       </div>
-      <div class="cl-cap"><span>default · -accent · -ghost · :disabled · -small · -large · aria-pressed · aria-disabled</span><span>hover &amp; press are live — the strike</span></div>
+      <div class="cl-cap"><span>default · -accent · -ghost · -danger · -icon · -small · -large · aria-pressed · disabled</span><span>hover is a wash, press a deboss</span></div>
     </div>
-    <p class="cl-note">Bottom row: a toggle. <code class="t-mono">aria-pressed="true"</code>
-      is a <em>stable</em> on-state — full ink and a resting bloom, no snap and no
-      depressed scale (a stamp left inked, not a button held down) — distinct from
-      the transient <code class="t-mono">:active</code> strike. The last button is
-      <code class="t-mono">aria-disabled</code>: styled spent but still
-      keyboard-focusable so assistive tech announces it (tab to it).</p>
-    <p class="cl-note">Print's call-to-action is a rubber stamp brought down by
-      hand — a keyline impression set slightly askew, its ink held back until
-      contact. The neutral strike is blue-black ink (secondary), the coloured
-      strike is gem ink (primary), the bare struck label has no frame (tertiary).
-      Hover vivifies the ink and squares the lean a touch; press snaps in fast,
-      bites down in scale and blooms a ring of bled ink, then eases weightily
-      back off. Disabled is a spent impression, settled at the pressed lean.</p>
+    <p class="cl-note">A small-caps label set in a hairline frame, square in the line.
+      Hover lays a 5% ink wash over the ground; press is a deboss — the sheet pushed
+      in, a hard 1px inset on the upper-left — and nothing moves.
+      <code class="t-mono">aria-pressed="true"</code> holds the deboss with the
+      accent tint. The last button is <code class="t-mono">aria-disabled</code>, the
+      app default: styled spent but still focusable and hoverable (tab to it).</p>
 
     <!-- form-field -->
     <h4 class="cl-h4">.form-field</h4>
@@ -487,9 +482,7 @@
       </div>
       <div class="cl-cap"><span>accent default · gem variants</span><span>square-set · softly rounded · subtly raised</span></div>
     </div>
-    <p class="cl-note">No longer a rubber impression — the
-      <code>.stamp-button</code> took the ink and the lean. The seal is a small
-      printed plate <em>applied</em> to the page: crisp, square-set, sitting a
+    <p class="cl-note">The seal is a small printed plate <em>applied</em> to the page: crisp, square-set, sitting a
       hair proud (a hard ink edge under the lower-right + a short soft drop, the
       lamp from upper-left). Softly rounded corners, square-set, no lean — it is
       the only thing that lifts off the page on its own.</p>
@@ -521,8 +514,8 @@
     <div class="cl-dark" data-theme="dark">
       <span class="t-meta">data-theme="dark" — candlelit, not screen-lit</span>
       <div class="cl-row" style="margin-top:var(--space-6)">
-        <button class="stamp-button -accent">Subscribe</button>
-        <button class="stamp-button -ghost">Read more</button>
+        <button class="press-button -accent">Subscribe</button>
+        <button class="press-button -ghost">Read more</button>
         <span class="cancel-stamp">Archived</span>
         <a class="text-link -reference" href="#">a reference</a>
       </div>
@@ -535,12 +528,12 @@
     <p class="cl-note">Same components, one attribute. Below: one button, six
       accents — <code>data-accent</code> only re-points hue &amp; chroma.</p>
     <div class="cl-row" style="margin-top:var(--space-4)">
-      <span data-accent="ruby"><button class="stamp-button -accent">Ruby</button></span>
-      <span data-accent="peridot"><button class="stamp-button -accent">Peridot</button></span>
-      <span data-accent="emerald"><button class="stamp-button -accent">Emerald</button></span>
-      <span data-accent="lapis"><button class="stamp-button -accent">Lapis</button></span>
-      <span data-accent="amethyst"><button class="stamp-button -accent">Amethyst</button></span>
-      <span data-accent="tourmaline"><button class="stamp-button -accent">Tourmaline</button></span>
+      <span data-accent="ruby"><button class="press-button -accent">Ruby</button></span>
+      <span data-accent="peridot"><button class="press-button -accent">Peridot</button></span>
+      <span data-accent="emerald"><button class="press-button -accent">Emerald</button></span>
+      <span data-accent="lapis"><button class="press-button -accent">Lapis</button></span>
+      <span data-accent="amethyst"><button class="press-button -accent">Amethyst</button></span>
+      <span data-accent="tourmaline"><button class="press-button -accent">Tourmaline</button></span>
     </div>
   </section>
 
@@ -673,7 +666,7 @@
               <input class="input" id="s2" type="email" placeholder="you@example.com">
             </div>
           </div>
-          <button class="stamp-button -accent -large" style="width:100%">Subscribe</button>
+          <button class="press-button -accent -large" style="width:100%">Subscribe</button>
           <div class="cl-sub-foot">
             <span class="t-meta">Volume I</span>
             <span class="cancel-stamp" data-accent="emerald">Paid</span>

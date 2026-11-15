@@ -277,6 +277,7 @@
   --info-tint: var(--gem-sapphire-100);
   --selection-bg: var(--accent-100);
   --selection-fg: var(--ink-900);
+  --hover: color-mix(in oklab, var(--ink) 5%, transparent);
   color-scheme: light;
 }
 
@@ -310,6 +311,7 @@
   --info-tint: var(--gem-sapphire-800);
   --selection-bg: var(--accent-800);
   --selection-fg: var(--paper-100);
+  --hover: color-mix(in oklab, var(--ink) 5%, transparent);
   color-scheme: dark;
 }
 
@@ -351,7 +353,6 @@
   --leading-prose: 1.55;
   --track-display: -.01em;
   --track-caps: .06em;
-  --track-button: .08em;
   --underline-thickness: .6px;
   --underline-offset: .13em;
   --weight-regular: 400;
@@ -392,6 +393,7 @@
   --space-16: 4rem;
   --space-20: 5rem;
   --space-24: 6rem;
+  --control-h: 2rem;
   --radius-0: 0;
   --radius-1: 1px;
   --radius-2: 2px;
@@ -399,17 +401,12 @@
   --rule-2: 2px;
   --rule-3: 3px;
   --stack-shift: 5px;
-  --strike-bloom-none: inset 0 0 0 0 transparent,
-    0 0 0 0 transparent;
-  --strike-bloom: inset 0 0 0 1px color-mix(in oklab, var(--strike-ink) 10%, transparent),
-    2px 3px 10px   color-mix(in oklab, var(--strike-ink) 20%, transparent);
-  --strike-bloom-press: inset 0 0 0 1px color-mix(in oklab, var(--strike-ink) 10%, transparent),
-    3px 4px 12px   color-mix(in oklab, var(--strike-ink) 28%, transparent);
 }
 
 :root, [data-theme="light"] {
   --sheet-1: var(--paper-200);
   --sheet-2: var(--paper-400);
+  --deboss: inset 1px 1px 0 oklch(from var(--ink) l c h / 22%);
   --plate-lift: 1px 1px 0          oklch(from var(--ink) l c h / 22%),
     1.5px 3px 5px -2px oklch(from var(--ink) l c h / 20%);
 }
@@ -417,6 +414,7 @@
 [data-theme="dark"] {
   --sheet-1: var(--ink-800);
   --sheet-2: var(--ink-700);
+  --deboss: inset 1px 1px 0 oklch(0% 0 0 / .6);
   --plate-lift: 1px 1px 0          oklch(0% 0 0 / .55),
     1.5px 3px 5px -2px oklch(0% 0 0 / .5);
 }
@@ -749,37 +747,33 @@ hr {
   }
 }
 
-.stamp-button {
-  --strike-ink: var(--ink);
-  --strike-out: .22s ease;
-  --strike-in: 60ms ease-in;
-  will-change: transform;
-  padding: var(--space-2) var(--space-4);
+.press-button {
+  --press-ink: var(--ink);
+  --press-fill: transparent;
+  --press-frame: var(--rule-strong);
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2);
+  height: var(--control-h);
+  padding: 0 var(--space-3);
   font-family: var(--font-serif);
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-medium);
   font-size: var(--text-ui);
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  text-box: trim-both cap alphabetic;
-  color: color-mix(in oklab, var(--strike-ink) 80%, transparent);
-  border: var(--rule-2) solid color-mix(in oklab, var(--strike-ink) 55%, transparent);
-  box-shadow: var(--strike-bloom-none);
+  letter-spacing: var(--track-caps);
+  white-space: nowrap;
+  text-box: trim-both ex alphabetic;
+  color: var(--press-ink);
+  background-color: var(--press-fill);
+  border: var(--rule-1) solid var(--press-frame);
+  border-radius: var(--radius-2);
   cursor: pointer;
   user-select: none;
   appearance: none;
-  transition: color        var(--strike-out),
-    border-color var(--strike-out),
-    box-shadow   var(--strike-out),
-    transform    var(--strike-out);
-  background: none;
-  border-radius: 2px 1px 3px / 1px 3px 1px 2px;
-  justify-content: center;
-  align-items: center;
-  gap: .5em;
+  transition: background-color var(--duration-1), box-shadow var(--duration-1);
+  font-variant-caps: all-small-caps;
   line-height: 1;
   text-decoration: none;
   display: inline-flex;
-  transform: rotate(-1.2deg);
 
   & > .icon {
     color: currentColor;
@@ -788,87 +782,68 @@ hr {
     height: 1.15em;
   }
 
-  &:focus-visible {
-    outline: 2px solid color-mix(in oklab, var(--strike-ink) 55%, transparent);
-    outline-offset: 4px;
-    border-radius: var(--radius-2);
-  }
-
   &:hover {
-    color: color-mix(in oklab, var(--strike-ink) 95%, transparent);
-    border-color: color-mix(in oklab, var(--strike-ink) 80%, transparent);
-    box-shadow: var(--strike-bloom);
-    transform: scale(1.02) rotate(0);
+    background-image: linear-gradient(var(--hover), var(--hover));
   }
 
   &:active {
-    color: var(--strike-ink);
-    border-color: color-mix(in oklab, var(--strike-ink) 98%, transparent);
-    box-shadow: var(--strike-bloom-press);
-    transition: color        var(--strike-in),
-      border-color var(--strike-in),
-      box-shadow   var(--strike-in),
-      transform    var(--strike-in);
-    transform: scale(.95);
+    box-shadow: var(--deboss);
   }
 
   &[aria-pressed="true"] {
-    color: var(--strike-ink);
-    border-color: color-mix(in oklab, var(--strike-ink) 98%, transparent);
-    box-shadow: var(--strike-bloom);
-  }
-
-  &[aria-pressed="true"]:active {
-    box-shadow: var(--strike-bloom-press);
-    transform: scale(.95);
-  }
-
-  &:disabled, &[aria-disabled="true"] {
-    color: color-mix(in oklab, var(--strike-ink) 72%, transparent);
-    border-color: color-mix(in oklab, var(--strike-ink) 54%, transparent);
-    box-shadow: var(--strike-bloom-none);
-    cursor: not-allowed;
-    transform: scale(.95);
-  }
-
-  &:disabled {
-    pointer-events: none;
+    --press-fill: var(--accent-tint);
+    box-shadow: var(--deboss);
   }
 
   &.-accent {
-    --strike-ink: var(--accent);
+    --press-ink: var(--accent-on);
+    --press-fill: var(--accent-solid);
+    --press-frame: var(--accent-solid);
   }
 
   &.-ghost {
-    --strike-ink: var(--ink-2);
-    border-color: #0000;
+    --press-frame: transparent;
   }
 
-  &.-ghost:hover {
-    color: color-mix(in oklab, var(--accent) 95%, transparent);
-    box-shadow: var(--strike-bloom-none);
-    border-color: #0000;
+  &.-danger {
+    --press-ink: var(--err);
+    --press-frame: var(--err);
   }
 
-  &.-ghost:active, &.-ghost[aria-pressed="true"] {
-    color: var(--accent);
-    box-shadow: var(--strike-bloom-none);
-    border-color: #0000;
+  &.-ghost.-danger {
+    --press-frame: transparent;
   }
 
-  &.-ghost:disabled, &.-ghost[aria-disabled="true"] {
-    box-shadow: var(--strike-bloom-none);
-    border-color: #0000;
+  &.-icon {
+    aspect-ratio: 1;
+    padding: 0;
   }
 
   &.-small {
-    padding: var(--space-1) var(--space-3);
-    font-size: var(--text-ui);
+    --control-h: var(--space-6);
+    padding: 0 var(--space-2);
   }
 
   &.-large {
-    padding: var(--space-3) var(--space-6);
-    font-size: var(--text-ui);
+    --control-h: var(--space-10);
+    padding: 0 var(--space-4);
+  }
+
+  &.-icon.-small, &.-icon.-large {
+    padding: 0;
+  }
+
+  &:disabled, &[aria-disabled="true"] {
+    --press-ink: var(--ink-3);
+    --press-fill: transparent;
+    --press-frame: var(--rule);
+    box-shadow: none;
+    cursor: not-allowed;
+    background-image: none;
+  }
+
+  &.-ghost:disabled, &.-ghost[aria-disabled="true"] {
+    --press-frame: transparent;
   }
 }
 

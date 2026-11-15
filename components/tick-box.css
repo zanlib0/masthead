@@ -7,8 +7,7 @@
    then the long sweep, ~280ms total. Toggling off truly reverses
    the gesture: the sweep recedes first, the bite last — via
    direction-asymmetric transition-delays (see below). No mock
-   erasing — the .stamp-button took the dramatic press; this is
-   quieter.
+   erasing.
 
    The draw is carried by `transition` (not `animation`), so a
    pre-checked or pristine input never flickers on initial paint
@@ -91,7 +90,7 @@
   &:hover { border-color: var(--ink); }
 
   /* Disabled — a spent cell: faded ink, recessed paper, no pointer.
-     Mirrors the .stamp-button's "spent impression" vocabulary. */
+     Mirrors the .press-button's spent state. */
   &:disabled {
     background: var(--paper-sunk);
     border-color: var(--rule);

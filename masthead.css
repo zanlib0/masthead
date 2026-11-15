@@ -17,7 +17,7 @@
 @import url('base.css');
 
 /* 3 — Components (RSCSS, one per file, order-independent). */
-@import url('components/stamp-button.css');
+@import url('components/press-button.css');
 @import url('components/form-field.css');
 @import url('components/tick-box.css');
 @import url('components/toggle-switch.css');

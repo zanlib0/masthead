@@ -296,6 +296,10 @@
   --selection-bg: var(--accent-100);
   --selection-fg: var(--ink-900);
 
+  /* Hover wash — ink at 5% over whatever is beneath, so it shows
+     on paper, on sunk panels and on a filled control alike. */
+  --hover: color-mix(in oklab, var(--ink) 5%, transparent);
+
   color-scheme: light;
 }
 
@@ -327,6 +331,7 @@
   --info:  var(--gem-sapphire-500);  --info-tint: var(--gem-sapphire-800);
   --selection-bg: var(--accent-800);
   --selection-fg: var(--paper-100);
+  --hover: color-mix(in oklab, var(--ink) 5%, transparent);
 
   color-scheme: dark;
 }

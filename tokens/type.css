@@ -54,7 +54,6 @@
   --track-caps:     0.06em; /* real small caps — h5, .t-subhead, every
                                label, table head, runninghead, cite,
                                card foot, toc meta */
-  --track-button:   0.08em;
 
   /* Underline decoration — one hairline recipe for every link, so
      bare <a>, .text-link and its variants rule at the same offset.
