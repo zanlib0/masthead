@@ -53,15 +53,13 @@ body {
    is the caller's, or the deferred .prose scope's.
 
    The HEADING LADDER is serif, sentence case, all the way down to
-   h4 — League Spartan is no longer the running-head face. h1's
-   default IS the display/title voice (Markdown `#` → article
+   h4. h1's default IS the display/title voice (Markdown `#` → article
    title with no extra class); where tag ≠ size — a hero line
    that is semantically an h2, or an app h1 that must stay
    restrained — the caller reaches for the detachable .t-* roles
-   below. Only the bottom two rungs are labels, not headings:
-     h5 — the accented serif all-caps subtitle (Image-1 effect)
-     h6 — the last-resort League Spartan eyebrow (captions,
-          footers, the smallest chrome label) */
+   below. The bottom two rungs are quieter:
+     h5 — the small-caps subtitle (Image-1 effect)
+     h6 — an italic heading at the UI size, in --ink-2 */
 h1, h2, h3, h4 {
   font-family: var(--font-serif);
   line-height: var(--leading-snug);
@@ -97,13 +95,11 @@ h5 {
 }
 
 h6 {
-  font-family: var(--font-display);
-  font-weight: var(--weight-semibold);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-regular);
   font-size: var(--text-ui);
-  letter-spacing: var(--track-eyebrow);
-  text-transform: uppercase;
-  text-box: trim-both cap alphabetic;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 
 p { font-size: var(--text-body); line-height: var(--leading-prose); text-wrap: pretty; }
@@ -191,10 +187,6 @@ a:hover { color: var(--accent-deep); text-decoration-color: var(--accent); }
    `color: var(--accent)` for the red-subtitle look — that accent
    pairing is the caller's call, one accent per surface (§7). */
 .t-subhead  { font-family: var(--font-serif); font-weight: var(--weight-regular); font-size: var(--text-subhead); font-variant-caps: all-small-caps; letter-spacing: var(--track-caps); text-box: trim-both ex alphabetic; color: var(--ink-2); }
-
-/* The last-resort label: the one surviving League Spartan in the
-   type primitives — captions, footers, the smallest chrome. */
-.t-eyebrow  { font-family: var(--font-display); font-weight: var(--weight-semibold); font-size: var(--text-ui); letter-spacing: var(--track-eyebrow); text-transform: uppercase; text-box: trim-both cap alphabetic; color: var(--ink-3); }
 
 /* Optically matched to the host text by body's font-size-adjust. */
 .t-mono     { font-family: var(--font-mono); }

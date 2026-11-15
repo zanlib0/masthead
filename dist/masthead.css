@@ -333,7 +333,6 @@
 
 :root {
   --font-serif: "EB Garamond", "Hoefler Text", garamond, georgia, serif;
-  --font-display: "League Spartan", "Helvetica Neue", helvetica, arial, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, menlo, "SF Mono", monospace;
   --feat-serif: "kern", "liga", "calt";
   --feat-tabular: "tnum", "lnum", "kern";
@@ -351,7 +350,6 @@
   --leading-normal: 1.45;
   --leading-prose: 1.55;
   --track-display: -.01em;
-  --track-eyebrow: .18em;
   --track-caps: .06em;
   --track-button: .08em;
   --underline-thickness: .6px;
@@ -513,13 +511,11 @@ h5 {
 }
 
 h6 {
-  font-family: var(--font-display);
-  font-weight: var(--weight-semibold);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-regular);
   font-size: var(--text-ui);
-  letter-spacing: var(--track-eyebrow);
-  text-transform: uppercase;
-  text-box: trim-both cap alphabetic;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 
 p {
@@ -658,16 +654,6 @@ a:hover {
   font-variant-caps: all-small-caps;
 }
 
-.t-eyebrow {
-  font-family: var(--font-display);
-  font-weight: var(--weight-semibold);
-  font-size: var(--text-ui);
-  letter-spacing: var(--track-eyebrow);
-  text-transform: uppercase;
-  text-box: trim-both cap alphabetic;
-  color: var(--ink-3);
-}
-
 .t-mono {
   font-family: var(--font-mono);
 }
@@ -769,8 +755,8 @@ hr {
   --strike-in: 60ms ease-in;
   will-change: transform;
   padding: var(--space-2) var(--space-4);
-  font-family: var(--font-display);
-  font-weight: 700;
+  font-family: var(--font-serif);
+  font-weight: var(--weight-bold);
   font-size: var(--text-ui);
   letter-spacing: .15em;
   text-transform: uppercase;
@@ -1296,13 +1282,12 @@ hr {
 }
 
 .cancel-stamp {
-  padding: 5px var(--space-2) 3px;
-  font-family: var(--font-display);
+  padding: var(--space-1) var(--space-2);
+  font-family: var(--font-serif);
   font-weight: var(--weight-bold);
   font-size: var(--text-ui);
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  text-box: trim-both cap alphabetic;
+  letter-spacing: var(--track-caps);
+  text-box: trim-both ex alphabetic;
   color: var(--accent-deep);
   background: var(--accent-tint);
   border: 1px solid var(--accent);
@@ -1311,6 +1296,7 @@ hr {
   justify-content: center;
   align-items: center;
   gap: .45em;
+  font-variant-caps: all-small-caps;
   line-height: 1;
   display: inline-flex;
 }
@@ -1396,14 +1382,6 @@ hr {
   src: url("fonts/eb-garamond/eb-garamond-italic-variable.woff2") format("woff2-variations");
   font-weight: 400 800;
   font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: League Spartan;
-  src: url("fonts/league-spartan/league-spartan-variable.woff2") format("woff2-variations");
-  font-weight: 100 900;
-  font-style: normal;
   font-display: swap;
 }
 

@@ -33,12 +33,8 @@
   justify-content: center;
   gap: 0.5em;                          /* icon <-> label, its own parts */
   padding: var(--space-2) var(--space-4);
-  font-family: var(--font-display);
-
-  /* The one place display type goes to a true 700: a struck
-     stamp is heavy ink. League Spartan carries it on its own
-     variable axis — never synthesised (see base.css). */
-  font-weight: 700;
+  font-family: var(--font-serif);
+  font-weight: var(--weight-bold);
   font-size: var(--text-ui);           /* the one chrome size */
   line-height: 1;                      /* don't inherit the 1.55 prose leading */
   letter-spacing: 0.15em;              /* the stamp's own wide tracking */

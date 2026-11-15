@@ -1,8 +1,7 @@
 /* ============================================================
    .cancel-stamp — the only badge in Masthead, and the only
-   thing that lifts off the page on its own. Not a rubber
-   impression (the .stamp-button took the ink and the lean):
-   this is an AFFIXED PLATE. A small printed seal applied to the
+   thing that lifts off the page on its own. This is an AFFIXED
+   PLATE. A small printed seal applied to the
    sheet, sitting a hair proud — a hard ink edge under the
    lower-right plus a short soft drop (--plate-lift, the desk
    lamp from upper-left). Crisp, square-set, subtly dimensional,
@@ -17,27 +16,20 @@
   align-items: center;
   justify-content: center;
   gap: 0.45em;
+  padding: var(--space-1) var(--space-2);
 
-  /* Documented optical exception to the --space ruler (DESIGN.md §3
-     sanctions these): text-box trims to the cap band, but League
-     Spartan's cap metric leaves a residual in Chrome so the seal
-     reads ~1-2px high on symmetric padding. Top-heavier vertical
-     padding nudges the caps back to optical centre; horizontal
-     stays on the ruler. Tune the 5/3 split in 1px steps (Chrome,
-     light + dark) if it ever drifts. */
-  padding: 5px var(--space-2) 3px;
-  font-family: var(--font-display);
+  /* Garamond's semibold small caps — the seal's lettering is the
+     heaviest type Masthead sets, at the one chrome size. */
+  font-family: var(--font-serif);
   font-weight: var(--weight-bold);
-  font-size: var(--text-ui);        /* the one chrome size */
-  line-height: 1;                    /* don't inherit the 1.55 prose leading */
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: var(--text-ui);
+  font-variant-caps: all-small-caps;
+  line-height: 1;                    /* don't inherit the prose leading */
+  letter-spacing: var(--track-caps);
 
-  /* Cap-trim to the cap band so padding can centre the all-caps
-     seal; it gets most of the way, the small Chrome residual is
-     the documented 5/3 padding nudge above (DESIGN.md §3). Ignored
-     where unsupported — falls back to the prior rendering. */
-  text-box: trim-both cap alphabetic;
+  /* Trim to the small-cap band so ruler padding centres the
+     lettering (DESIGN.md §3); ignored where unsupported. */
+  text-box: trim-both ex alphabetic;
   color: var(--accent-deep);
   background: var(--accent-tint);
   border: 1px solid var(--accent);

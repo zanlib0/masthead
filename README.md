@@ -50,7 +50,6 @@ what the system refuses to do — live in [DESIGN.md](DESIGN.md).
 Masthead is MIT (see [LICENSE](LICENSE)). Bundled webfonts are SIL OFL 1.1:
 
 - **EB Garamond** — Octavio Pardo, [octaviopardo/EBGaramond12](https://github.com/octaviopardo/EBGaramond12)
-- **League Spartan** — The League of Movable Type, [theleagueof/league-spartan](https://github.com/theleagueof/league-spartan)
 - **IBM Plex Mono** — IBM, [IBM/plex](https://github.com/IBM/plex)
 
 Each font's OFL is in its `fonts/<family>/` directory.

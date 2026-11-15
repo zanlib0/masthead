@@ -17,11 +17,9 @@
    precede all rules).
    ============================================================ */
 :root {
-  /* Families. League Spartan is now rationed — only the two ink
-     stamps (.stamp-button, .cancel-stamp) and the last-resort
-     eyebrow (h6 / .t-eyebrow) use it. Everything else is serif. */
+  /* Families. Two faces: EB Garamond sets everything, labels and
+     controls included; IBM Plex Mono sets code and serials. */
   --font-serif:   'EB Garamond', 'Hoefler Text', garamond, georgia, serif;
-  --font-display: 'League Spartan', 'Helvetica Neue', helvetica, arial, sans-serif;
   --font-mono:    'IBM Plex Mono', ui-monospace, menlo, 'SF Mono', monospace;
 
   /* OpenType features — the reason to use a real book face */
@@ -53,7 +51,6 @@
 
   /* Tracking */
   --track-display: -0.01em; /* big serif headings tighten a hair */
-  --track-eyebrow:  0.18em; /* League Spartan all-caps eyebrow */
   --track-caps:     0.06em; /* real small caps — h5, .t-subhead, every
                                label, table head, runninghead, cite,
                                card foot, toc meta */
@@ -68,8 +65,7 @@
 
   /* Weights — EB Garamond gets visually heavy fast, so the whole
      scale is pulled DOWN. "Bold" here is a restrained 600, never
-     700+. Rely on the variable axis; never synthesise (see base).
-     The lone 700 is the .stamp-button label on League Spartan. */
+     700+. Rely on the variable axis; never synthesise (see base). */
   --weight-regular:  400;
   --weight-medium:   460;
   --weight-semibold: 520;
