@@ -22,10 +22,10 @@
 .cl-h4:first-of-type { margin-top: var(--space-6); }
 
 .cl-grid { display: grid; gap: var(--space-6); }
-.cl-grid.-2 { grid-template-columns: repeat(2, 1fr); }
-.cl-grid.-3 { grid-template-columns: repeat(3, 1fr); }
-.cl-grid.-4 { grid-template-columns: repeat(4, 1fr); }
-@media (max-width: 760px) { .cl-grid.-2, .cl-grid.-3, .cl-grid.-4 { grid-template-columns: 1fr; } }
+.cl-grid.-two { grid-template-columns: repeat(2, 1fr); }
+.cl-grid.-three { grid-template-columns: repeat(3, 1fr); }
+.cl-grid.-four { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 760px) { .cl-grid.-two, .cl-grid.-three, .cl-grid.-four { grid-template-columns: 1fr; } }
 
 .cl-row { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
 .cl-stack > * + * { margin-top: var(--space-4); }
@@ -56,6 +56,46 @@
 .cl-type-row > code { font-family: var(--font-mono); font-size: var(--text-ui); color: var(--ink-3); }
 
 .cl-panel { margin-top: var(--space-6); padding: var(--space-6); background: var(--paper-sunk); max-width: 420px; }
+/* Caller-built surfaces from the public tokens (§2): a menu as a
+   loose sheet, a dialog over the tissue guard. */
+.cl-menu { background: var(--surface-raised); border: var(--rule-1) solid var(--rule); box-shadow: var(--overlay-lift); padding: var(--space-1) 0; min-width: 12rem; }
+.cl-menu > div { padding: var(--space-1) var(--space-3); line-height: var(--leading-ui); }
+.cl-menu > div:hover { background: var(--hover); }
+.cl-menu > .-selected { background: var(--selected); }
+.cl-menu > .-danger { color: var(--err-ink); }
+.cl-guard { position: relative; padding: var(--space-4); border: 1px solid var(--rule); max-width: 26rem; min-height: 11rem; }
+.cl-guard > .cl-scrim { position: absolute; inset: 0; background: var(--scrim); display: grid; place-items: center; }
+.cl-guard .cl-menu { padding: var(--space-4); }
+.cl-weights { display: grid; grid-template-columns: 9rem repeat(4, 1fr); gap: var(--space-2) var(--space-4); align-items: baseline; }
+.cl-weights > code { font-family: var(--font-mono); color: var(--ink-3); }
+.cl-weights > .-prose { font-size: 1.5rem; }
+.cl-weights > .-caps { font-variant-caps: all-small-caps; letter-spacing: var(--track-caps); }
+.cl-inks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-4); }
+.cl-inks > div { display: flex; flex-direction: column; gap: var(--space-1); }
+.cl-inks i { display: block; height: var(--space-2); }
+@media (max-width: 760px) { .cl-inks { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cl-weights { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cl-weights > span { overflow-wrap: anywhere; } .cl-weights > code { grid-column: 1 / -1; } }
+
+/* App dashboard — caller layout only. */
+.cl-app { display: grid; grid-template-columns: minmax(0, 1fr) 18rem; gap: var(--space-8); margin-top: var(--space-6); align-items: start; }
+@media (max-width: 760px) { .cl-app { grid-template-columns: minmax(0, 1fr); } }
+.cl-apphead { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+.cl-filter { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: end; margin: var(--space-4) 0; }
+.cl-filter > .form-field { flex: 1 1 12rem; }
+.cl-filter > .form-field.-narrow { flex: 0 1 10rem; }
+.cl-app .data-table { max-height: 20rem; }
+.cl-app .paper-card > * + * { margin-top: var(--space-4); }
+.cl-actions { display: flex; gap: var(--space-2); }
+/* A flat status mark: a gem glyph (the 500, a mark) + words in the *-ink token. */
+.cl-status::before { content: "\25CF" / ""; margin-right: 0.4em; font-size: 0.7em; vertical-align: 0.15em; }
+.cl-status.-ok { color: var(--ok-ink); }
+.cl-status.-ok::before { color: var(--ok); }
+.cl-status.-warn { color: var(--warn-ink); }
+.cl-status.-warn::before { color: var(--warn); }
+.cl-status.-err { color: var(--err-ink); }
+.cl-status.-err::before { color: var(--err); }
+.cl-status.-info { color: var(--info-ink); }
+.cl-status.-info::before { color: var(--info); }
+
 .cl-stub { border: 1px dashed var(--ink-3); border-radius: var(--radius-1); padding: var(--space-5); color: var(--ink-3); }
 .cl-stub h4 { color: var(--ink-2); margin-bottom: 4px; }
 .cl-stub p { font-size: var(--text-ui); font-style: italic; }
@@ -123,10 +163,11 @@
     </nav>
   </header>
   <p class="t-lede cl-lede">
-    A letterpress design system. Cool rag paper, blue&#8209;black ink, twelve
-    gemstone accents, hairline rules. Print has relief: the button is a rubber
-    stamp struck askew into the sheet, the badge is a seal affixed a hair proud
-    of it &mdash; everything else stays flat.
+    A letterpress design system for apps and articles. Cool rag paper,
+    blue&#8209;black ink, twelve gemstone accents, hairline rules. Print has
+    relief: a pressed button is debossed into the sheet, the badge is a seal
+    affixed a hair proud of it, a menu is a loose sheet laid on top &mdash;
+    everything else stays flat.
   </p>
   <p class="cl-note">
     Everything the system draws is layout&#8209;free. The
@@ -190,7 +231,44 @@
       <span class="cl-chip"><i style="background:var(--warn)"></i>--warn</span>
       <span class="cl-chip"><i style="background:var(--err)"></i>--err</span>
       <span class="cl-chip"><i style="background:var(--info)"></i>--info</span>
+      <span class="cl-chip"><i style="background:var(--surface-raised)"></i>--surface-raised</span>
+      <span class="cl-chip"><i style="background:var(--hover)"></i>--hover</span>
+      <span class="cl-chip"><i style="background:var(--selected)"></i>--selected</span>
     </div>
+
+    <h4 class="cl-h4">Status — the 500s mark, the inks speak</h4>
+    <div class="cl-inks" style="margin-top:var(--space-4)">
+      <div><i style="background:var(--ok)"></i><span style="color:var(--ok-ink)">Printed — <code class="t-mono">--ok-ink</code></span></div>
+      <div><i style="background:var(--warn)"></i><span style="color:var(--warn-ink)">Proofing — <code class="t-mono">--warn-ink</code></span></div>
+      <div><i style="background:var(--err)"></i><span style="color:var(--err-ink)">Jammed — <code class="t-mono">--err-ink</code></span></div>
+      <div><i style="background:var(--info)"></i><span style="color:var(--info-ink)">Queued — <code class="t-mono">--info-ink</code></span></div>
+    </div>
+    <p class="cl-note">Rules and glyphs take the gem 500; words take the
+      <code class="t-mono">*-ink</code> token, AA on both papers in both themes.</p>
+
+    <h4 class="cl-h4">Caller surfaces — the loose sheet and the tissue guard</h4>
+    <div class="cl-row" style="margin-top:var(--space-4);gap:var(--space-10);align-items:flex-start">
+      <div class="cl-menu" role="menu" aria-label="Run actions">
+        <div role="menuitem">Open proof</div>
+        <div role="menuitem" class="-selected">Duplicate run <kbd>D</kbd></div>
+        <div role="menuitem">Move to press&hellip;</div>
+        <div role="menuitem" class="-danger">Cancel run</div>
+      </div>
+      <div class="cl-guard">
+        <p>Run 0412 jammed on the Heidelberg at sheet 212. The plates are on
+          file and the paper stock is unchanged; the run can be resumed or
+          cancelled. Everything under the guard stays readable but set back,
+          and the dialog is a loose sheet laid on top.</p>
+        <div class="cl-scrim"><div class="cl-menu"><h6>Cancel run 0412?</h6><p class="t-meta">The plates stay on file.</p></div></div>
+      </div>
+    </div>
+    <p class="cl-note">Not components — caller CSS on
+      <code class="t-mono">--surface-raised</code>,
+      <code class="t-mono">--overlay-lift</code> (a hard, unblurred cast
+      down-right), <code class="t-mono">--hover</code> /
+      <code class="t-mono">--selected</code> and
+      <code class="t-mono">--scrim</code>, a paper-coloured veil rather than a
+      dark dim.</p>
 
     <h4 class="cl-h4">Caller surface — the reverse-type bar (<code class="t-mono">--accent-solid</code> / <code class="t-mono">--accent-on</code>)</h4>
     <div class="cl-row" style="margin-top:var(--space-4)">
@@ -205,7 +283,7 @@
       squares the bar; <code class="t-mono">.press-button.-accent</code> uses the
       same fill.</p>
 
-    <div class="cl-grid -2" style="margin-top:var(--space-10)">
+    <div class="cl-grid -two" style="margin-top:var(--space-10)">
       <div>
         <h4>Spacing — the 4px rem ruler</h4>
         <div class="cl-stack" style="margin-top:var(--space-4)">
@@ -257,14 +335,15 @@
     <div class="cl-kicker"><span class="t-meta">Part I · Plate 2</span><span class="cl-eyebrow-mono">base.css</span></div>
     <h2 class="t-heading">Primitives</h2>
     <hr class="rule">
-    <div class="cl-grid -2">
+    <div class="cl-grid -two">
       <div class="cl-spec">
         <div class="cl-stage" style="flex-direction:column;align-items:stretch;gap:var(--space-4)">
           <span class="t-display" style="font-size:var(--text-h2)">Display</span>
           <span class="t-heading">Heading</span>
-          <span class="t-subhead">Serif caps subhead</span>
+          <span class="t-subhead">Small-caps subhead</span>
           <span class="t-lede">A lede, set in italic serif.</span>
-          <span class="t-body">Body — EB Garamond at twenty-four, weight 400.</span>
+          <span class="t-body">Body — EB Garamond at sixteen, weight 400; twenty-four in .prose.</span>
+          <h5>h5 — the small-caps subtitle</h5>
           <h6>h6 — a quiet italic heading</h6>
           <span class="t-mono">mono · 0027</span>
           <span class="t-meta">metadata, italic</span>
@@ -273,7 +352,7 @@
       </div>
       <div class="cl-spec">
         <div class="cl-stage" style="flex-direction:column;align-items:stretch;gap:var(--space-5)">
-          <span class="t-body"><strong>Strong</strong> is a restrained 600 — no spilling ink.</span>
+          <span class="t-body"><strong>Strong</strong> is a restrained 520 — no spilling ink.</span>
           <hr class="rule">
           <hr class="rule-thick">
           <div class="rule-double"></div>
@@ -283,12 +362,35 @@
         <div class="cl-cap"><span>weight · marks · rules</span><span>.rule · .fleuron-divider · .ornament</span></div>
       </div>
     </div>
+    <div class="cl-spec" style="margin-top:var(--space-6)" data-shot="weights">
+      <div class="cl-stage -block">
+        <div class="cl-weights">
+          <code>weight</code><code>400 regular</code><code>460 medium</code><code>520 semibold</code><code>600 bold</code>
+          <code>ui · 16</code>
+          <span style="font-weight:400">Hamburgefonstiv 0412</span>
+          <span style="font-weight:460">Hamburgefonstiv 0412</span>
+          <span style="font-weight:520">Hamburgefonstiv 0412</span>
+          <span style="font-weight:600">Hamburgefonstiv 0412</span>
+          <code>small caps · 16</code>
+          <span class="-caps" style="font-weight:400">Labels and heads</span>
+          <span class="-caps" style="font-weight:460">Labels and heads</span>
+          <span class="-caps" style="font-weight:520">Labels and heads</span>
+          <span class="-caps" style="font-weight:600">Labels and heads</span>
+          <code>prose · 24</code>
+          <span class="-prose" style="font-weight:400">Hamburgefonstiv</span>
+          <span class="-prose" style="font-weight:460">Hamburgefonstiv</span>
+          <span class="-prose" style="font-weight:520">Hamburgefonstiv</span>
+          <span class="-prose" style="font-weight:600">Hamburgefonstiv</span>
+        </div>
+      </div>
+      <div class="cl-cap"><span>the four weights — labels &amp; buttons use 460, the seal 600</span><span>is anything above regular spilling?</span></div>
+    </div>
     <div class="cl-spec" style="margin-top:var(--space-6)">
       <div class="cl-stage -block" style="padding:var(--space-10) var(--space-8)">
         <span class="t-display" style="font-size:var(--text-h2)">Margaret Beaumont</span>
         <div class="t-subhead" style="color:var(--accent);margin-top:var(--space-2)">Master Typesetter</div>
         <hr class="rule" style="margin:var(--space-4) 0">
-        <p class="t-body" style="max-width:52ch">The accented serif all-caps
+        <p class="t-body" style="max-width:52ch">The accented small-caps
           subtitle — a foundry-specimen device in real small caps. The
           accent pairing (<code class="t-mono">color: var(--accent)</code>) is the
           caller's, one per surface; <code class="t-mono">.t-subhead</code> itself
@@ -448,7 +550,7 @@
 
     <!-- paper-card -->
     <h4 class="cl-h4">.paper-card — flat default, stacked-paper lift</h4>
-    <div class="cl-grid -4">
+    <div class="cl-grid -four">
       <article class="paper-card">
         <div class="title">Flat</div>
         <div class="body">The default. Content that sits in the page.</div>
@@ -592,10 +694,10 @@
     <hr class="rule">
     <p class="cl-lead">Named and specified in DESIGN.md, intentionally unbuilt
       until a real use-case needs them — the same discipline as <code>.prose</code>.</p>
-    <div class="cl-grid -3" style="margin-top:var(--space-6)">
-      <div class="cl-stub"><h4>.prose</h4><p>Opt-in long-form rhythm + measure. Caller owns it meanwhile.</p></div>
+    <div class="cl-grid -three" style="margin-top:var(--space-6)">
+      <div class="cl-stub"><h4>Status mark</h4><p>A flat printer&rsquo;s glyph plus words — the dashboard below builds one in caller CSS.</p></div>
+      <div class="cl-stub"><h4>App shell</h4><p>Compact top bar, sidebar items, tabs, breadcrumbs, segmented control.</p></div>
       <div class="cl-stub"><h4>Instrument gauge</h4><p>Victorian readout: ruled box, label, tabular value, unit.</p></div>
-      <div class="cl-stub"><h4>Tabs</h4><p>App-shell chrome; built when a shell needs it.</p></div>
       <div class="cl-stub"><h4>text-link -folio · -manicule</h4><p>Leader-dot folio link; &#9758; manicule link.</p></div>
       <div class="cl-stub"><h4>Press Ornaments tier</h4><p>Cartouche, ticket/perforation, vertical-type, serial, microtype.</p></div>
     </div>
@@ -605,14 +707,135 @@
   <!-- PART 2 — USE-CASES                                                -->
   <!-- ================================================================ -->
   <section class="cl-section" id="cases">
-    <div class="cl-kicker"><span class="t-meta">Part II</span><span class="cl-eyebrow-mono">core only · 3 accents</span></div>
+    <div class="cl-kicker"><span class="t-meta">Part II</span><span class="cl-eyebrow-mono">core only · 4 accents</span></div>
     <h2 class="t-heading">In use</h2>
     <hr class="rule">
-    <p class="cl-lead">Three surfaces built from core v1 only. Each picks a
-      different accent to prove single-accent retinting. All layout is caller CSS.</p>
+    <p class="cl-lead">Four surfaces — an app and three pages — built from the
+      core only. Each picks a different accent to prove single-accent retinting.
+      All layout is caller CSS.</p>
+
+    <!-- App dashboard -->
+    <div class="cl-uc" data-accent="sapphire" style="margin-top:var(--space-8)">
+      <div class="cl-uc-tag"><span>use-case · app dashboard</span><span>data-accent="sapphire"</span></div>
+      <div class="cl-uc-body">
+        <header class="press-masthead">
+          <a class="title" href="#">Pressroom</a>
+          <nav class="nav">
+            <a href="#" aria-current="page">Runs</a>
+            <a href="#">Presses</a>
+            <a href="#">Paper stock</a>
+          </nav>
+        </header>
+        <div class="cl-app">
+          <main>
+            <div class="cl-apphead">
+              <h1>Print runs</h1>
+              <span class="t-meta">5 runs this week · 8,050 copies</span>
+            </div>
+            <form class="cl-filter" role="search" onsubmit="return false">
+              <div class="form-field -boxed">
+                <label class="label" for="f1">Search</label>
+                <input class="input" id="f1" type="search" placeholder="Title or run &#8470;">
+              </div>
+              <div class="form-field -boxed -narrow">
+                <label class="label" for="f2">Status</label>
+                <select class="input" id="f2"><option>Any status</option><option>Printed</option><option>Proofing</option><option>Jammed</option><option>Queued</option></select>
+              </div>
+              <button class="press-button">Apply</button>
+              <button class="press-button -ghost" aria-disabled="true">Clear</button>
+            </form>
+            <div class="data-table">
+              <table>
+                <thead><tr>
+                  <th style="width:var(--space-8)"><input class="tick-box" type="checkbox" aria-label="Select all runs" data-indeterminate></th>
+                  <th class="-numeric" aria-sort="ascending">Run</th>
+                  <th>Title</th>
+                  <th>Press</th>
+                  <th class="-numeric">Copies</th>
+                  <th>Status</th>
+                  <th style="width:var(--space-10)"><span class="_sr-only">Actions</span></th>
+                </tr></thead>
+                <tbody>
+                <tr>
+                  <td><input class="tick-box" type="checkbox" aria-label="Select run 0409"></td>
+                  <td class="-numeric">0409</td>
+                  <td><a href="#">Field notes, vol. I</a></td>
+                  <td>Albion</td>
+                  <td class="-numeric">1,200</td>
+                  <td><span class="cl-status -ok">Printed</span></td>
+                  <td><button class="press-button -ghost -icon -small" aria-label="Actions for run 0409"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button></td>
+                </tr>
+                <tr>
+                  <td><input class="tick-box" type="checkbox" aria-label="Select run 0410"></td>
+                  <td class="-numeric">0410</td>
+                  <td><a href="#">Catalogue of forms</a></td>
+                  <td>Columbian</td>
+                  <td class="-numeric">850</td>
+                  <td><span class="cl-status -ok">Printed</span></td>
+                  <td><button class="press-button -ghost -icon -small" aria-label="Actions for run 0410"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button></td>
+                </tr>
+                <tr aria-selected="true">
+                  <td><input class="tick-box" type="checkbox" checked aria-label="Select run 0411"></td>
+                  <td class="-numeric">0411</td>
+                  <td><a href="#">On stacked paper</a></td>
+                  <td>Albion</td>
+                  <td class="-numeric">2,400</td>
+                  <td><span class="cl-status -warn">Proofing</span></td>
+                  <td><button class="press-button -ghost -icon -small" aria-label="Actions for run 0411"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button></td>
+                </tr>
+                <tr>
+                  <td><input class="tick-box" type="checkbox" aria-label="Select run 0412"></td>
+                  <td class="-numeric">0412</td>
+                  <td><a href="#">The gemstone palette</a></td>
+                  <td>Heidelberg</td>
+                  <td class="-numeric">600</td>
+                  <td><span class="cl-status -err">Jammed</span></td>
+                  <td><button class="press-button -ghost -icon -small" aria-label="Actions for run 0412"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button></td>
+                </tr>
+                <tr>
+                  <td><input class="tick-box" type="checkbox" aria-label="Select run 0413"></td>
+                  <td class="-numeric">0413</td>
+                  <td><a href="#">A field guide to hairlines</a></td>
+                  <td>Columbian</td>
+                  <td class="-numeric">3,000</td>
+                  <td><span class="cl-status -info">Queued</span></td>
+                  <td><button class="press-button -ghost -icon -small" aria-label="Actions for run 0413"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></button></td>
+                </tr>
+                </tbody>
+                <tfoot><tr><td></td><td></td><th scope="row">Total</th><td></td><td class="-numeric">8,050</td><td></td><td></td></tr></tfoot>
+              </table>
+            </div>
+          </main>
+          <aside class="paper-card" aria-labelledby="new-run">
+            <h2 class="title" id="new-run">Schedule a run</h2>
+            <div class="form-field">
+              <label class="label" for="n1">Title</label>
+              <input class="input" id="n1" type="text" value="Notes on the deboss">
+            </div>
+            <div class="form-field">
+              <label class="label" for="n2">Copies</label>
+              <input class="input" id="n2" type="text" inputmode="numeric" value="12,000" aria-invalid="true" aria-describedby="n2e">
+              <span class="error" id="n2e">Enter between 1 and 10,000 copies.</span>
+            </div>
+            <div class="form-field">
+              <label class="label" for="n3">Press</label>
+              <select class="input" id="n3"><option>Albion</option><option>Columbian</option><option>Heidelberg</option></select>
+            </div>
+            <div class="form-field -inline">
+              <span class="label" id="n4l">Proof first</span>
+              <label class="toggle-switch"><input type="checkbox" checked aria-labelledby="n4l"></label>
+            </div>
+            <div class="cl-actions">
+              <button class="press-button -accent">Schedule</button>
+              <button class="press-button -ghost">Cancel</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
 
     <!-- Devblog -->
-    <div class="cl-uc" data-accent="lapis" style="margin-top:var(--space-8)">
+    <div class="cl-uc" data-accent="lapis">
       <div class="cl-uc-tag"><span>use-case · devblog</span><span>data-accent="lapis"</span></div>
       <div class="cl-uc-body">
         <header class="press-masthead">
@@ -673,7 +896,7 @@
               <a href="#">archived</a>
             </nav>
           </header>
-          <div class="cl-grid -2 cl-plates">
+          <div class="cl-grid -two cl-plates">
             <article class="paper-card -framed">
               <span class="t-meta">Plate &#8470; 004</span>
               <div class="title" style="margin-top:var(--space-2)">On Composition</div>

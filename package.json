@@ -9,10 +9,12 @@
     "lint": "stylelint '**/*.css'",
     "lint:fix": "stylelint '**/*.css' --fix",
     "dev": "lightningcss --bundle --watch masthead.css -o dist/masthead.css",
-    "release": "./scripts/release.sh"
+    "release": "./scripts/release.sh",
+    "shots": "node scripts/shots.mjs"
   },
   "devDependencies": {
     "lightningcss-cli": "^1.x",
+    "playwright": "^1.65.1",
     "stylelint": "^16.x",
     "stylelint-config-standard": "^36.x"
   }

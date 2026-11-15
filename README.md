@@ -63,6 +63,16 @@ with no `@supports` guards and no transpile. `text-box` trimming is progressive:
 browsers without it fall back to untrimmed lines. Older browsers degrade per
 feature.
 
+## Development
+
+```sh
+npm run lint    # stylelint
+npm run build   # bundle into dist/
+npm run shots   # screenshot index.html, light + dark at 1280 and 390, into shots/
+```
+
+`npm run shots` uses Playwright; run `npx playwright install chromium` once first.
+
 ## The contract
 
 The design system's rules — what each token means, how components compose,

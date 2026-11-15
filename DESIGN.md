@@ -130,7 +130,8 @@ declaration is what makes per‑subtree accent — and the accent‑derived
 **Ink carries hierarchy.** At one UI size (§3) the three text inks have to do the
 work size used to do, so they are spread wide — about **18 / 10 / 5:1** against
 `--paper` in both themes — and all three clear AA on `--paper` and
-`--paper-sunk`.
+`--paper-sunk`. On a `--selected` ground (an accent tint) only `--ink` and
+`--ink-2` hold AA in both themes; keep `--ink-3` and the status inks off it.
 
 **Marks vs. text.** A mid gem can't be both a vivid mark and legible text on both
 papers, so status is split: the **500s** are for glyphs, rules and fills; words
