@@ -1,44 +1,67 @@
 # Masthead
 
 A small, opinionated **letterpress** design system — cool rag paper, blue-black
-ink, twelve gemstone accents, hairline rules. CSS only, one file, one link.
+ink, twelve gemstone accents, hairline rules. CSS only, one file, one link. It
+sets both apps (compact chrome at one UI size) and articles (a reading register,
+`.prose`).
 
 See: https://zanlib0.github.io/masthead.
 
 ## Install
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zanlib0/masthead/dist/masthead.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zanlib0/masthead@<commit>/dist/masthead.min.css">
 ```
 
+Pin the link to a commit (or a tag, once there are tags). Without `@…` the link
+follows `master`, and every change ships to your pages the moment it lands.
+
 Link `dist/masthead.min.css` — never the source `masthead.css` (that's the
-authoring entrypoint and pulls 11 files via `@import`).
+authoring entrypoint and pulls the rest via `@import`).
+
+Upgrading from v0.1? See [MIGRATION.md](MIGRATION.md).
 
 ## Hello, world
 
 ```html
 <!doctype html>
-<html data-theme="light" data-accent="ruby">
+<html lang="en" data-theme="light" data-accent="lapis">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zanlib0/masthead@v0.1.0/dist/masthead.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/zanlib0/masthead@<commit>/dist/masthead.min.css">
   </head>
   <body>
     <article class="paper-card">
-      <h2>Tuesday's Press</h2>
-      <p>Set in EB Garamond. The card is paper; the button below is a stamp.</p>
-      <button class="stamp-button -accent">Order one</button>
+      <h2 class="title">Tuesday's Press</h2>
+      <div class="body">Set in EB Garamond at one UI size.</div>
+      <div class="form-field">
+        <label class="label" for="email">Email</label>
+        <input class="input" id="email" type="email">
+      </div>
+      <button class="press-button -accent">Subscribe</button>
+    </article>
+
+    <article class="prose" style="max-width: 64ch">
+      <h1>On stacked paper</h1>
+      <p>Long-form text goes in <code>.prose</code>: a 24px reading size,
+        old-style figures and its own vertical rhythm.</p>
     </article>
   </body>
 </html>
 ```
 
+All spacing between components (the margins, the grid, the measure) is yours;
+Masthead's components carry none.
+
 ## Browser support
 
-Requires **Chrome/Edge 117+, Safari 16.4+, Firefox 128+** (Baseline 2024+).
-Masthead uses `oklch()`, `color-mix()`, native nesting, and relative-color
-syntax with no `@supports` guards and no transpile. Older browsers degrade
-per feature.
+Requires **Chrome/Edge 127+, Safari 17.4+, Firefox 128+** (Baseline 2024+).
+Masthead uses `oklch()`, `color-mix()`, native nesting, relative-color syntax,
+`font-size-adjust`, `:user-invalid`, `:has()` and alt text on generated content,
+with no `@supports` guards and no transpile. `text-box` trimming is progressive:
+browsers without it fall back to untrimmed lines. Older browsers degrade per
+feature.
 
 ## The contract
 
