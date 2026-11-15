@@ -1,10 +1,15 @@
 /* ============================================================
    MASTHEAD · tokens/motion.css
-   The one UI-transition primitive. A quiet cross-fade for
-   colour/decoration changes (links, nav, hovers) — print doesn't
-   animate, so motion is rationed to this single short duration.
-   The prefers-reduced-motion block in base.css collapses it.
+   Print doesn't animate, so motion is rationed. --duration-1 is
+   the quiet cross-fade for colour/decoration changes (links, nav,
+   hovers). --duration-2 and the two eases are for things that
+   enter and leave — a caller's popover, dialog or toast: ease-out
+   to arrive, ease-in to go. The prefers-reduced-motion block in
+   base.css collapses all of it.
    ============================================================ */
 :root {
   --duration-1: 120ms;
+  --duration-2: 200ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);   /* enter: fast, settling */
+  --ease-in:  cubic-bezier(0.4, 0, 1, 1);   /* exit: gathering pace */
 }

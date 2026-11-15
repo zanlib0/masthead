@@ -394,22 +394,27 @@ caps width, never positions itself.
 
 **Print has relief; screens have gloss. We take the relief and refuse the
 gloss.** The lamp is fixed at the upper-left, so every cast falls
-down‑and‑right. Exactly three physical depth cues, all in `tokens/shadows.css`:
+down‑and‑right and every recess is shadowed on its upper‑left wall. Three
+physical depth cues, all in `tokens/shadows.css`, each earned by something
+paper actually does:
 
-1. **Stacked‑paper card lift** — `.paper-card.-stack-1/-2` set literal duplicate
-   sheets behind the card (`--sheet-1`, `--sheet-2`), offset down‑and‑right by
-   `--stack-shift`, **no blur, no rotation**. Each deeper sheet sits further into
-   shadow (in dark mode rim‑lit slightly *lighter*, since nothing beats a
-   near‑black page). Encodes *how much is behind the surface*, never interactivity.
-2. **Inked‑strike bloom** — the `.stamp-button` holds its ink until contact, then
-   `:hover` / `:active` bloom `--strike-bloom` / `--strike-bloom-press`: a
-   hairline inset of bled ink + a soft press halo, `color-mix`ed from the tier's
-   `--strike-ink` (concrete colour ⇒ fluid interpolation, never a snap; a
-   zero-state `--strike-bloom-none` keeps rest→hover a list→list tween). Paired
-   with a real `transform` (rotate + scale) — the strike *is* the relief.
-3. **Affixed‑plate lift** — the `.cancel-stamp` carries `--plate-lift` (a hard
-   ink edge + short soft drop): a seal a hair proud of the page, not a
-   card‑sized float.
+1. **Stacked paper** — `.paper-card.-stack-1/-2` draw literal duplicate sheets
+   behind the card (`--sheet-1`, `--sheet-2`) as hard box‑shadows offset
+   down‑and‑right by `--stack-shift`, **no blur, no rotation**. Each deeper
+   sheet sits further into shadow (in dark mode rim‑lit slightly *lighter*,
+   since nothing beats a near‑black page). Encodes *how much is behind the
+   surface*, never interactivity.
+2. **The deboss** — type pressed into the sheet. A pressed `.press-button`
+   (`:active`, or held by `aria-pressed="true"`) takes `--deboss`: a hard 1px
+   inset on the upper‑left inner edge, the recess wall facing the lamp. No
+   transform, no scale, nothing beside it moves.
+3. **The affixed plate and the loose sheet** — things that sit *on* the page.
+   The `.cancel-stamp` carries `--plate-lift` (a hard ink edge + short soft
+   drop): a seal a hair proud of the page. A caller's menu, popover or
+   dialog is a **loose sheet** laid on top: `--surface-raised` with a
+   hairline edge and `--overlay-lift`, a hard, unblurred offset
+   down‑and‑right. Behind a modal, `--scrim` is the **tissue guard** — the
+   paper‑coloured veil bound in front of a book plate — never a dark dim.
 
 Still categorically refused: glassmorphism, Material elevation tiers, gloss/sheen
 gradients, bevels, ambient soft floats, drop shadows on flat type or rules. Depth

@@ -169,8 +169,8 @@ a {
 a:hover { color: var(--accent-deep); text-decoration-color: var(--accent); }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
 }
 
 /* ---------- Primitives — non-interactive type & marks ----------

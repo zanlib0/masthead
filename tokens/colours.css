@@ -293,8 +293,21 @@
   --warn:  var(--gem-amber-500);     --warn-tint: var(--gem-amber-100);
   --err:   var(--gem-ruby-500);      --err-tint:  var(--gem-ruby-100);
   --info:  var(--gem-sapphire-500);  --info-tint: var(--gem-sapphire-100);
+
+  /* Status TEXT — the 500s are for marks and rules; set words in
+     these. Step 600 in light, 400 in dark (remapped by theme like
+     --accent-deep); AA on --paper and --paper-sunk in both. */
+  --ok-ink:   var(--gem-emerald-600);
+  --warn-ink: var(--gem-amber-600);
+  --err-ink:  var(--gem-ruby-600);
+  --info-ink: var(--gem-sapphire-600);
   --selection-bg: var(--accent-100);
   --selection-fg: var(--ink-900);
+
+  /* Surfaces for things that float: a menu or popover sheet, and
+     the tissue guard (a paper-coloured veil) behind a modal. */
+  --surface-raised: var(--paper-50);
+  --scrim: oklch(from var(--paper) l c h / 72%);
 
   /* Hover wash — ink at 5% over whatever is beneath, so it shows
      on paper, on sunk panels and on a filled control alike. */
@@ -329,8 +342,14 @@
   --warn:  var(--gem-amber-500);     --warn-tint: var(--gem-amber-800);
   --err:   var(--gem-ruby-500);      --err-tint:  var(--gem-ruby-800);
   --info:  var(--gem-sapphire-500);  --info-tint: var(--gem-sapphire-800);
+  --ok-ink:   var(--gem-emerald-400);
+  --warn-ink: var(--gem-amber-400);
+  --err-ink:  var(--gem-ruby-400);
+  --info-ink: var(--gem-sapphire-400);
   --selection-bg: var(--accent-800);
   --selection-fg: var(--paper-100);
+  --surface-raised: var(--ink-800);
+  --scrim: oklch(from var(--paper) l c h / 72%);
   --hover: color-mix(in oklab, var(--ink) 5%, transparent);
 
   color-scheme: dark;
@@ -357,6 +376,11 @@
   --accent-tint:  oklch(var(--accent-tint-l)  calc(var(--accent-tint-c)  * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
   --accent-deep:  oklch(var(--accent-deep-l)  calc(var(--accent-deep-c)  * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
   --accent-solid: oklch(var(--accent-solid-l) calc(var(--accent-solid-c) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+
+  /* Accent-derived state tokens live here too, so they follow a
+     subtree's data-accent: the selected surface and the focus ring. */
+  --selected:         var(--accent-tint);
+  --focus-ring-color: var(--accent);
 
   /* --accent-on stays paper-based on the theme blocks (constant). */
 }

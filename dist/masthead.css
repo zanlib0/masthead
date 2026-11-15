@@ -275,8 +275,14 @@
   --err-tint: var(--gem-ruby-100);
   --info: var(--gem-sapphire-500);
   --info-tint: var(--gem-sapphire-100);
+  --ok-ink: var(--gem-emerald-600);
+  --warn-ink: var(--gem-amber-600);
+  --err-ink: var(--gem-ruby-600);
+  --info-ink: var(--gem-sapphire-600);
   --selection-bg: var(--accent-100);
   --selection-fg: var(--ink-900);
+  --surface-raised: var(--paper-50);
+  --scrim: oklch(from var(--paper) l c h / 72%);
   --hover: color-mix(in oklab, var(--ink) 5%, transparent);
   color-scheme: light;
 }
@@ -309,8 +315,14 @@
   --err-tint: var(--gem-ruby-800);
   --info: var(--gem-sapphire-500);
   --info-tint: var(--gem-sapphire-800);
+  --ok-ink: var(--gem-emerald-400);
+  --warn-ink: var(--gem-amber-400);
+  --err-ink: var(--gem-ruby-400);
+  --info-ink: var(--gem-sapphire-400);
   --selection-bg: var(--accent-800);
   --selection-fg: var(--paper-100);
+  --surface-raised: var(--ink-800);
+  --scrim: oklch(from var(--paper) l c h / 72%);
   --hover: color-mix(in oklab, var(--ink) 5%, transparent);
   color-scheme: dark;
 }
@@ -331,6 +343,8 @@
   --accent-tint: oklch(var(--accent-tint-l)  calc(var(--accent-tint-c)  * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
   --accent-deep: oklch(var(--accent-deep-l)  calc(var(--accent-deep-c)  * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
   --accent-solid: oklch(var(--accent-solid-l) calc(var(--accent-solid-c) * var(--accent-c) * var(--accent-chroma)) var(--accent-h));
+  --selected: var(--accent-tint);
+  --focus-ring-color: var(--accent);
 }
 
 :root {
@@ -353,6 +367,8 @@
   --leading-prose: 1.55;
   --track-display: -.01em;
   --track-caps: .06em;
+  --icon-ui: 1rem;
+  --icon-stroke: 1.5;
   --underline-thickness: .6px;
   --underline-offset: .13em;
   --weight-regular: 400;
@@ -400,13 +416,19 @@
   --rule-1: 1px;
   --rule-2: 2px;
   --rule-3: 3px;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
   --stack-shift: 5px;
+  --layer-sticky: 10;
+  --layer-dropdown: 20;
+  --layer-toast: 30;
 }
 
 :root, [data-theme="light"] {
   --sheet-1: var(--paper-200);
   --sheet-2: var(--paper-400);
   --deboss: inset 1px 1px 0 oklch(from var(--ink) l c h / 22%);
+  --overlay-lift: 4px 4px 0 oklch(from var(--ink) l c h / 14%);
   --plate-lift: 1px 1px 0          oklch(from var(--ink) l c h / 22%),
     1.5px 3px 5px -2px oklch(from var(--ink) l c h / 20%);
 }
@@ -415,12 +437,16 @@
   --sheet-1: var(--ink-800);
   --sheet-2: var(--ink-700);
   --deboss: inset 1px 1px 0 oklch(0% 0 0 / .6);
+  --overlay-lift: 4px 4px 0 oklch(0% 0 0 / .5);
   --plate-lift: 1px 1px 0          oklch(0% 0 0 / .55),
     1.5px 3px 5px -2px oklch(0% 0 0 / .5);
 }
 
 :root {
   --duration-1: .12s;
+  --duration-2: .2s;
+  --ease-out: cubic-bezier(.2, 0, 0, 1);
+  --ease-in: cubic-bezier(.4, 0, 1, 1);
 }
 
 *, :before, :after {
@@ -606,8 +632,8 @@ a:hover {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
 }
 
 .t-display {
@@ -776,10 +802,11 @@ hr {
   display: inline-flex;
 
   & > .icon {
+    width: var(--icon-ui);
+    height: var(--icon-ui);
     color: currentColor;
+    stroke-width: var(--icon-stroke);
     flex: none;
-    width: 1.15em;
-    height: 1.15em;
   }
 
   &:hover {
@@ -791,7 +818,7 @@ hr {
   }
 
   &[aria-pressed="true"] {
-    --press-fill: var(--accent-tint);
+    --press-fill: var(--selected);
     box-shadow: var(--deboss);
   }
 
@@ -806,7 +833,7 @@ hr {
   }
 
   &.-danger {
-    --press-ink: var(--err);
+    --press-ink: var(--err-ink);
     --press-frame: var(--err);
   }
 

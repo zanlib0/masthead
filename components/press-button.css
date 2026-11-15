@@ -10,7 +10,7 @@
      default   → hairline --rule-strong frame, ink label (secondary)
      .-accent  → filled --accent-solid, --accent-on label (primary)
      .-ghost   → the label alone, no frame (tertiary)
-     .-danger  → destructive: --err frame and label
+     .-danger  → destructive: --err frame, --err-ink label
      .-icon    → square, icon only (give it an aria-label)
      .-small / .-large → a shorter / taller --control-h
 
@@ -55,7 +55,13 @@
   appearance: none;
   transition: background-color var(--duration-1), box-shadow var(--duration-1);
 
-  > .icon { flex: none; width: 1.15em; height: 1.15em; color: currentcolor; }
+  > .icon {
+    flex: none;
+    width: var(--icon-ui);
+    height: var(--icon-ui);
+    color: currentcolor;
+    stroke-width: var(--icon-stroke);
+  }
 
   /* The --hover wash, laid OVER whatever the ground is (paper or a
      filled accent) as a flat single-colour layer — not a gradient
@@ -67,7 +73,7 @@
   &:active { box-shadow: var(--deboss); }
 
   &[aria-pressed="true"] {
-    --press-fill: var(--accent-tint);
+    --press-fill: var(--selected);
 
     box-shadow: var(--deboss);
   }
@@ -81,7 +87,7 @@
   &.-ghost { --press-frame: transparent; }
 
   &.-danger {
-    --press-ink: var(--err);
+    --press-ink: var(--err-ink);
     --press-frame: var(--err);
   }
 

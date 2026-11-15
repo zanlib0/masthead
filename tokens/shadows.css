@@ -16,10 +16,19 @@
        edge (the lamp's side of the recess). No transform.
    (c) affixed-plate lift       — the .cancel-stamp sits subtly
        off the page: a short hard ink edge + a soft drop.
+       Its sibling, the LOOSE SHEET (--overlay-lift): a menu,
+       popover or dialog laid on the page casts a hard, unblurred
+       offset down-right, the stacked-paper cast without the pile.
    ============================================================ */
 :root {
   /* (a) Stacked-paper geometry — per-sheet offset, down & right. */
   --stack-shift: 5px;
+
+  /* Stacking order for caller-built layers (the top layer already
+     covers native <dialog> and popover). */
+  --layer-sticky:   10;   /* a sticky table head or bar */
+  --layer-dropdown: 20;   /* a menu over the content */
+  --layer-toast:    30;   /* above everything in the page */
 }
 
 /* ---- Light surfaces ---- */
@@ -31,6 +40,9 @@
 
   /* (b) Deboss — the recess wall facing the lamp falls in shadow. */
   --deboss: inset 1px 1px 0 oklch(from var(--ink) l c h / 22%);
+
+  /* (c) Loose sheet — a hard cast, no blur. */
+  --overlay-lift: 4px 4px 0 oklch(from var(--ink) l c h / 14%);
 
   /* (c) Plate lift — a hard ink edge under the lower-right plus a
      short soft drop. Deep ink, low alpha: a seal lifted a hair
@@ -47,6 +59,7 @@
   --sheet-1: var(--ink-800);
   --sheet-2: var(--ink-700);
   --deboss: inset 1px 1px 0 oklch(0% 0 0deg / 60%);
+  --overlay-lift: 4px 4px 0 oklch(0% 0 0deg / 50%);
 
   /* Same lamp, deeper terminus. The cast stays a true near-black
      (not the parchment --ink) so a lifted seal never haloes

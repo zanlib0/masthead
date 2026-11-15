@@ -37,4 +37,9 @@
   --rule-1: 1px;
   --rule-2: 2px;
   --rule-3: 3px;
+
+  /* Focus ring geometry (colour is --focus-ring-color, which
+     follows the accent). One ring for every control. */
+  --focus-ring-width:  2px;
+  --focus-ring-offset: 2px;
 }

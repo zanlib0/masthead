@@ -55,6 +55,11 @@
                                label, table head, runninghead, cite,
                                card foot, toc meta */
 
+  /* Icons — sized to the UI text they sit beside; the stroke is
+     in viewBox units (1.5 of 24 ≈ a 1px hairline at 16px). */
+  --icon-ui:     1rem;
+  --icon-stroke: 1.5;
+
   /* Underline decoration — one hairline recipe for every link, so
      bare <a>, .text-link and its variants rule at the same offset.
      Thickness stays px (a true hairline); offset is em so it
