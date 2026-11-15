@@ -1425,7 +1425,7 @@ hr {
 .cancel-stamp {
   padding: var(--space-2) var(--space-3);
   font-family: var(--font-serif);
-  font-weight: var(--weight-bold);
+  font-weight: var(--weight-medium);
   font-size: var(--text-ui);
   letter-spacing: var(--track-caps);
   text-box: trim-both ex alphabetic;

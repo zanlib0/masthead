@@ -287,8 +287,9 @@ is no eyebrow style.
 
 **Weights** are pulled **down** (Garamond goes heavy fast): regular 400 / medium
 460 / semibold 520 / bold 600, and `font-synthesis: none` (never fake a weight).
-Labels and button labels are medium; the `.cancel-stamp` lettering is the
-heaviest type in the system, bold 600. Nothing goes above 600.
+Labels, button labels and the `.cancel-stamp` lettering are medium — heavier
+small caps read as spilled ink at the UI size; the seal's plate, tint and lift
+carry its weight instead. Nothing goes above 600.
 
 **Leading** loosens as the line lengthens: `--leading-tight` 1.05 (display),
 `--leading-snug` 1.18 (headings), `--leading-ui` 1.375 (chrome — the body
