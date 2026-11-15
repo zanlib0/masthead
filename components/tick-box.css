@@ -13,8 +13,10 @@
    pre-checked or pristine input never flickers on initial paint
    — no JS sentinel needed.
 
-     default  → ink tick
-     .-accent → accent tick (one accent per surface — §7)
+     default        → ink tick
+     .-accent       → accent tick (one accent per surface — §7)
+     :indeterminate → a level dash, "some of these" (a select-all
+                      box); set by script, input.indeterminate = true
 
    Sized in em so the box and check scale with the caller's
    font-size. Intrinsic only: no margin / width / placement —
@@ -87,6 +89,16 @@
   &:checked::before { width: 0.32em; transition: width var(--tick-bite) linear; }
   &:checked::after  { width: 1.22em; transition: width var(--tick-sweep) var(--tick-curve) var(--tick-bite); }
 
+  /* Indeterminate — the sweep alone, laid level across the box. */
+  &:indeterminate::before { width: 0; }
+
+  &:indeterminate::after {
+    left: 0.25em;
+    top: calc(50% - var(--tick-stroke) / 2);
+    width: 0.6em;
+    transform: none;
+  }
+
   &:hover { border-color: var(--ink); }
 
   /* Disabled — a spent cell: faded ink, recessed paper, no pointer.
@@ -102,5 +114,5 @@
        checked so the empty/checked states share a colour story
        (and every data-accent flows through --accent here). — */
   &.-accent { --tick-ink: var(--accent); }
-  &.-accent:checked { border-color: var(--accent); }
+  &.-accent:is(:checked, :indeterminate) { border-color: var(--accent); }
 }

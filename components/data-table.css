@@ -1,49 +1,87 @@
 /* ============================================================
-   .data-table — a catalogue table, and the .toc-row line.
-   width:100% lets the grid fill the caller's container (same
-   idea as an input filling its field); the container size and
-   placement remain the caller's.
+   .data-table — a catalogue table, in a wrapper:
+
+     <div class="data-table"><table>…</table></div>
+
+   The wrapper is the component and scrolls a wide table sideways
+   inside the caller's container; the <table> stays a real table
+   (semantics intact) and fills the wrapper. Give the wrapper a
+   max-height and the head sticks while the body scrolls.
+
+   Rows: hover takes --hover; aria-selected="true" takes --selected
+   (both can show at once). Heads: aria-sort draws ↑ / ↓. Cells:
+   .-numeric on a th/td right-aligns it with tabular lining figures
+   — put it on every cell of a number column. tfoot is a totals row.
    ============================================================ */
 .data-table {
-  /* display:block + overflow-x:auto lets a wide table scroll horizontally
-     inside its caller's container instead of pushing the page wider. The
-     inner thead/tbody/tr/td keep their table-* displays, so the browser
-     still lays them out as a table within the scrollable block. */
-  display: block;
   overflow-x: auto;
-  max-width: 100%;
-  width: 100%;
-  border-collapse: collapse;
-  font-family: var(--font-serif);
 
-  /* Chrome figures: lining, and tabular so columns align. */
-  font-variant-numeric: tabular-nums lining-nums;
-
-  > thead th {
-    font-family: var(--font-serif);       /* a ledger head, not a sans label */
-    font-weight: var(--weight-medium);
+  > table {
+    width: 100%;                          /* fills the wrapper, not the page */
+    border-collapse: collapse;
+    font-family: var(--font-serif);
     font-size: var(--text-ui);
+    line-height: var(--leading-ui);
+  }
+
+  > table > thead th {
+    position: sticky;                     /* internal: sticks within the wrapper */
+    top: 0;
+    z-index: var(--layer-sticky);
+    font-weight: var(--weight-medium);
     font-variant-caps: all-small-caps;
     letter-spacing: var(--track-caps);
-    text-box: trim-both ex alphabetic;    /* small-cap trim — see DESIGN.md §3 */
     color: var(--ink-2);
-    text-align: left;
-    padding: var(--space-1) var(--space-2);
+    text-align: start;
+    text-box: trim-both ex alphabetic;    /* small-cap trim — DESIGN.md §3 */
+    padding: var(--space-2);
+    background: var(--paper);
     border-bottom: 1px solid var(--rule-strong);
   }
 
-  > tbody td {
+  > table > thead th[aria-sort="ascending"],
+  > table > thead th[aria-sort="descending"] { color: var(--ink); }
+
+  /* The arrow is decoration — aria-sort already names the order —
+     so its alt text is empty. */
+  > table > thead th[aria-sort="ascending"]::after { content: "\2191" / ""; margin-left: 0.25em; }
+  > table > thead th[aria-sort="descending"]::after { content: "\2193" / ""; margin-left: 0.25em; }
+
+  > table > tbody td {
     padding: var(--space-2);
     border-bottom: 1px solid var(--rule-soft);
-    font-size: var(--text-ui);
     color: var(--ink-2);
   }
-  > tbody tr:hover td { background: var(--paper-sunk); }
 
-  /* Numeric variant: lining figures for columns of pure number. */
-  &.-numeric > tbody td {
+  /* Selected paints the row; hover washes the cells over it, so a
+     hovered selected row still reads as selected. */
+  > table > tbody tr[aria-selected="true"] { background: var(--selected); }
+  > table > tbody tr:hover > td { background: var(--hover); }
+
+  /* Totals: a firm rule above the foot. (Collapsed borders give an
+     equal-weight tie to the cell above, so set it from that side.) */
+  > table > tbody:has(+ tfoot) > tr:last-child > td { border-bottom-color: var(--rule-strong); }
+
+  > table > tfoot :is(th, td) {
+    padding: var(--space-2);
+    border-top: 1px solid var(--rule-strong);
+    font-weight: var(--weight-medium);
+    color: var(--ink);
+    text-align: start;
+  }
+
+  /* A number column: right-aligned, tabular lining figures. */
+  > table :is(th, td).-numeric {
+    text-align: end;
     font-variant-numeric: tabular-nums lining-nums;
-    font-feature-settings: var(--feat-tabular);   /* "tnum","lnum","kern" */
+  }
+
+  /* The wrapper clips overflow, so a ring drawn outside a row or
+     cell would be cut off: focusable rows and cells ring inside.
+     Controls inside cells keep the normal ring — cell padding
+     (≥ --space-1) holds it. */
+  > table :is(tr, th, td):focus-visible {
+    outline-offset: calc(var(--focus-ring-width) * -1);
   }
 }
 

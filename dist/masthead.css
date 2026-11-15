@@ -621,9 +621,13 @@ a {
   color: var(--ink);
   text-decoration: underline;
   text-decoration-thickness: var(--underline-thickness);
-  text-decoration-color: var(--rule);
   text-underline-offset: var(--underline-offset);
   transition: text-decoration-color var(--duration-1), color var(--duration-1);
+  text-decoration-color: #0000;
+}
+
+:is(p, .prose) a {
+  text-decoration-color: var(--rule);
 }
 
 a:hover {
@@ -879,6 +883,12 @@ hr {
   flex-direction: column;
   display: flex;
 
+  &:is(fieldset) {
+    border: 0;
+    min-width: 0;
+    padding: 0;
+  }
+
   & > .label {
     font-family: var(--font-serif);
     font-weight: var(--weight-medium);
@@ -889,10 +899,27 @@ hr {
     font-variant-caps: all-small-caps;
   }
 
+  & > legend.label {
+    padding: 0 0 var(--space-2);
+  }
+
+  & > .hint {
+    font-style: italic;
+    font-size: var(--text-ui);
+    color: var(--ink-3);
+  }
+
+  & > .error {
+    font-size: var(--text-ui);
+    color: var(--err-ink);
+  }
+
   & > .input {
     width: 100%;
+    min-height: var(--control-h);
     font-family: var(--font-serif);
     font-size: var(--text-ui);
+    line-height: var(--leading-ui);
     color: var(--ink);
   }
 
@@ -906,11 +933,27 @@ hr {
     cursor: not-allowed;
   }
 
+  & > textarea.input {
+    min-height: calc(var(--control-h) * 3);
+    resize: vertical;
+  }
+
+  & > select.input {
+    appearance: none;
+    cursor: pointer;
+    background-image: linear-gradient(45deg, #0000 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, #0000 50%);
+    background-position: right var(--space-3) center,
+      right var(--space-2) center;
+    background-size: var(--space-1) var(--space-1);
+    background-repeat: no-repeat;
+  }
+
   &:not(.-boxed) > .input {
     border: 0;
     border-bottom: 1px solid var(--ink);
     border-radius: var(--radius-0);
-    background: none;
+    padding: var(--space-1) 0;
+    background-color: #0000;
   }
 
   &:not(.-boxed) > .input:disabled {
@@ -918,20 +961,86 @@ hr {
   }
 
   &:not(.-boxed) > .input:focus-visible {
-    border-bottom-color: var(--accent);
+    border-bottom: 2px solid var(--focus-ring-color);
+    padding-bottom: calc(var(--space-1) - 1px);
     outline: none;
   }
 
   &.-boxed > .input {
     border: 1px solid var(--rule);
-    background: var(--paper);
+    background-color: var(--paper);
     border-radius: var(--radius-1);
     padding: var(--space-1) var(--space-2);
   }
 
   &.-boxed > .input:focus-visible {
-    border-color: var(--accent);
+    border-color: var(--focus-ring-color);
     outline: none;
+  }
+
+  &:not(.-boxed) > select.input, &.-boxed > select.input {
+    padding-right: var(--space-6);
+  }
+
+  &:not(.-boxed) > .input:is([aria-invalid="true"], :user-invalid), &.-boxed > .input:is([aria-invalid="true"], :user-invalid) {
+    border-color: var(--err);
+  }
+
+  & > label > input[type="radio"] {
+    appearance: none;
+    vertical-align: middle;
+    background: var(--paper);
+    border: var(--rule-1) solid var(--rule-strong);
+    cursor: pointer;
+    width: 1.1em;
+    height: 1.1em;
+    transition: border-color var(--duration-1);
+    border-radius: 50%;
+    place-content: center;
+    display: inline-grid;
+
+    &:before {
+      content: "";
+      background: var(--ink);
+      width: .5em;
+      height: .5em;
+      transition: transform var(--duration-1);
+      border-radius: 50%;
+      transform: scale(0);
+    }
+
+    &:checked:before {
+      transform: scale(1);
+    }
+
+    &:hover {
+      border-color: var(--ink);
+    }
+
+    &:disabled {
+      background: var(--paper-sunk);
+      border-color: var(--rule);
+      cursor: not-allowed;
+    }
+
+    &:disabled:before {
+      background: var(--ink-3);
+    }
+  }
+
+  &.-inline {
+    align-items: center;
+    gap: var(--space-1) var(--space-4);
+    grid-template-columns: minmax(0, 1fr) auto;
+    display: grid;
+
+    & > .label, & > .hint, & > .error {
+      grid-column: 1;
+    }
+
+    & > :not(.label, .hint, .error) {
+      grid-area: 1 / 2;
+    }
   }
 }
 
@@ -989,6 +1098,17 @@ hr {
     transition: width var(--tick-sweep) var(--tick-curve) var(--tick-bite);
   }
 
+  &:indeterminate:before {
+    width: 0;
+  }
+
+  &:indeterminate:after {
+    left: .25em;
+    top: calc(50% - var(--tick-stroke) / 2);
+    width: .6em;
+    transform: none;
+  }
+
   &:hover {
     border-color: var(--ink);
   }
@@ -1004,7 +1124,7 @@ hr {
     --tick-ink: var(--accent);
   }
 
-  &.-accent:checked {
+  &.-accent:is(:checked, :indeterminate) {
     border-color: var(--accent);
   }
 }
@@ -1028,11 +1148,11 @@ hr {
   }
 
   &:before {
-    content: "off";
+    content: "off" / "";
   }
 
   &:after {
-    content: "on";
+    content: "on" / "";
   }
 
   &:not(:has(:checked)):before {
@@ -1119,25 +1239,16 @@ hr {
     display: flex;
   }
 
-  &.-stack-1:before, &.-stack-2:before, &.-stack-2:after {
-    content: "";
-    border: 1px solid var(--rule);
-    border-radius: var(--radius-1);
-    z-index: -1;
-    position: absolute;
-    inset: 0;
+  &.-stack-1 {
+    box-shadow: var(--stack-shift) var(--stack-shift) 0 -1px var(--sheet-1),
+      var(--stack-shift) var(--stack-shift) 0 0    var(--rule);
   }
 
-  &.-stack-1:before, &.-stack-2:before {
-    background: var(--sheet-1);
-    transform: translate(var(--stack-shift), var(--stack-shift));
-  }
-
-  &.-stack-2:after {
-    background: var(--sheet-2);
-    transform: translate(calc(var(--stack-shift) * 2),
-      calc(var(--stack-shift) * 2));
-    z-index: -2;
+  &.-stack-2 {
+    box-shadow: var(--stack-shift) var(--stack-shift) 0 -1px var(--sheet-1),
+      var(--stack-shift) var(--stack-shift) 0 0    var(--rule),
+      calc(var(--stack-shift) * 2) calc(var(--stack-shift) * 2) 0 -1px var(--sheet-2),
+      calc(var(--stack-shift) * 2) calc(var(--stack-shift) * 2) 0 0    var(--rule);
   }
 
   &.-framed {
@@ -1154,41 +1265,78 @@ hr {
 }
 
 .data-table {
-  border-collapse: collapse;
-  width: 100%;
-  max-width: 100%;
-  font-family: var(--font-serif);
-  font-variant-numeric: tabular-nums lining-nums;
-  display: block;
   overflow-x: auto;
 
-  & > thead th {
+  & > table {
+    border-collapse: collapse;
+    width: 100%;
     font-family: var(--font-serif);
-    font-weight: var(--weight-medium);
     font-size: var(--text-ui);
+    line-height: var(--leading-ui);
+  }
+
+  & > table > thead th {
+    z-index: var(--layer-sticky);
+    font-weight: var(--weight-medium);
     letter-spacing: var(--track-caps);
-    text-box: trim-both ex alphabetic;
     color: var(--ink-2);
-    text-align: left;
-    padding: var(--space-1) var(--space-2);
+    text-align: start;
+    text-box: trim-both ex alphabetic;
+    padding: var(--space-2);
+    background: var(--paper);
     border-bottom: 1px solid var(--rule-strong);
     font-variant-caps: all-small-caps;
+    position: sticky;
+    top: 0;
   }
 
-  & > tbody td {
+  & > table > thead th[aria-sort="ascending"], & > table > thead th[aria-sort="descending"] {
+    color: var(--ink);
+  }
+
+  & > table > thead th[aria-sort="ascending"]:after {
+    content: "↑" / "";
+    margin-left: .25em;
+  }
+
+  & > table > thead th[aria-sort="descending"]:after {
+    content: "↓" / "";
+    margin-left: .25em;
+  }
+
+  & > table > tbody td {
     padding: var(--space-2);
     border-bottom: 1px solid var(--rule-soft);
-    font-size: var(--text-ui);
     color: var(--ink-2);
   }
 
-  & > tbody tr:hover td {
-    background: var(--paper-sunk);
+  & > table > tbody tr[aria-selected="true"] {
+    background: var(--selected);
   }
 
-  &.-numeric > tbody td {
+  & > table > tbody tr:hover > td {
+    background: var(--hover);
+  }
+
+  & > table > tbody:has( + tfoot) > tr:last-child > td {
+    border-bottom-color: var(--rule-strong);
+  }
+
+  & > table > tfoot :is(th, td) {
+    padding: var(--space-2);
+    border-top: 1px solid var(--rule-strong);
+    font-weight: var(--weight-medium);
+    color: var(--ink);
+    text-align: start;
+  }
+
+  & > table :is(th, td).-numeric {
+    text-align: end;
     font-variant-numeric: tabular-nums lining-nums;
-    font-feature-settings: var(--feat-tabular);
+  }
+
+  & > table :is(tr, th, td):focus-visible {
+    outline-offset: calc(var(--focus-ring-width) * -1);
   }
 }
 
@@ -1231,9 +1379,9 @@ hr {
 
   & > .title {
     font-family: var(--font-serif);
+    font-style: italic;
     font-weight: var(--weight-regular);
-    font-size: var(--text-h3);
-    text-transform: lowercase;
+    font-size: var(--text-h4);
     letter-spacing: 0;
     color: var(--accent);
     line-height: 1;
@@ -1249,8 +1397,7 @@ hr {
 
   & > .nav a {
     font-family: var(--font-serif);
-    font-size: var(--text-body);
-    text-transform: lowercase;
+    font-size: var(--text-ui);
     color: var(--ink-3);
     transition: color var(--duration-1);
     text-decoration: none;

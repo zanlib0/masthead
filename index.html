@@ -55,6 +55,7 @@
 .cl-type-row { display: grid; grid-template-columns: 9rem 1fr; gap: var(--space-5); align-items: baseline; padding: var(--space-2) 0; border-bottom: 1px solid var(--rule-soft); }
 .cl-type-row > code { font-family: var(--font-mono); font-size: var(--text-ui); color: var(--ink-3); }
 
+.cl-panel { margin-top: var(--space-6); padding: var(--space-6); background: var(--paper-sunk); max-width: 420px; }
 .cl-stub { border: 1px dashed var(--ink-3); border-radius: var(--radius-1); padding: var(--space-5); color: var(--ink-3); }
 .cl-stub h4 { color: var(--ink-2); margin-bottom: 4px; }
 .cl-stub p { font-size: var(--text-ui); font-style: italic; }
@@ -343,14 +344,47 @@
       <div class="cl-stage" style="gap:var(--space-8);align-items:flex-start">
         <div class="form-field" style="width:240px">
           <label class="label" for="d1">Email address</label>
-          <input class="input" id="d1" type="email" placeholder="you@example.com">
+          <input class="input" id="d1" type="email" placeholder="you@example.com" aria-describedby="d1h">
+          <span class="hint" id="d1h">We write once a month.</span>
         </div>
         <div class="form-field -boxed" style="width:240px">
           <label class="label" for="d2">Mail-order box</label>
           <input class="input" id="d2" type="text" placeholder="Catalogue &#8470;">
         </div>
+        <div class="form-field -boxed" style="width:240px">
+          <label class="label" for="d3">Paper stock</label>
+          <select class="input" id="d3"><option>Laid, cream-free</option><option>Wove</option><option>Rag</option></select>
+        </div>
+        <div class="form-field" style="width:240px">
+          <label class="label" for="d4">Plate number</label>
+          <input class="input" id="d4" type="text" value="N-0O4" aria-invalid="true" aria-describedby="d4e">
+          <span class="error" id="d4e">Use digits only, e.g. 004.</span>
+        </div>
       </div>
-      <div class="cl-cap"><span>default ruled line · -boxed</span><span>focus an input for the accent</span></div>
+      <div class="cl-stage" style="gap:var(--space-8);align-items:flex-start">
+        <div class="form-field -boxed" style="width:240px">
+          <label class="label" for="d5">Colophon</label>
+          <textarea class="input" id="d5" rows="3">Set in EB Garamond.</textarea>
+        </div>
+        <fieldset class="form-field" style="width:240px">
+          <legend class="label">Delivery</legend>
+          <label><input type="radio" name="d6" checked> By post</label>
+          <label><input type="radio" name="d6"> Collect from the press</label>
+          <label><input type="radio" name="d6" disabled> Courier (unavailable)</label>
+        </fieldset>
+        <div style="display:flex;flex-direction:column;gap:var(--space-3);width:320px">
+          <div class="form-field -inline">
+            <span class="label" id="d7l">Weekly digest</span>
+            <span class="hint">Every Tuesday morning.</span>
+            <label class="toggle-switch"><input type="checkbox" checked aria-labelledby="d7l"></label>
+          </div>
+          <div class="form-field -inline -boxed">
+            <label class="label" for="d8">Accent</label>
+            <select class="input" id="d8"><option>Ruby</option><option>Lapis</option><option>Emerald</option></select>
+          </div>
+        </div>
+      </div>
+      <div class="cl-cap"><span>ruled line · -boxed · select · textarea · radios · .hint · .error · -inline</span><span>focus an input for the 2px line</span></div>
     </div>
 
     <!-- tick-box -->
@@ -367,8 +401,12 @@
           <label><input class="tick-box -accent" type="checkbox" checked> Subscribe to the press</label>
           <label><input class="tick-box -accent" type="checkbox" checked disabled> Pre-paid postage</label>
         </div>
+        <div style="display:flex;flex-direction:column;gap:var(--space-2)">
+          <label><input class="tick-box" type="checkbox" data-indeterminate> Some plates chosen</label>
+          <label><input class="tick-box -accent" type="checkbox" data-indeterminate> Some issues paid</label>
+        </div>
       </div>
-      <div class="cl-cap"><span>default ink tick · -accent</span><span>two strokes draw on in sequence</span></div>
+      <div class="cl-cap"><span>default ink tick · -accent · :indeterminate</span><span>two strokes draw on in sequence</span></div>
     </div>
 
     <!-- toggle-switch -->
@@ -428,23 +466,33 @@
         <div class="body">Catalogue plate — a quiet doubled rule.</div>
       </article>
     </div>
+    <div class="cl-panel">
+      <article class="paper-card -framed -stack-1">
+        <div class="title">-framed -stack-1, in a panel</div>
+        <div class="body">The sheets are hard box-shadows, so they survive a
+          panel with its own background, and combine with -framed.</div>
+      </article>
+    </div>
     <p class="cl-note">Elevation encodes how much is <em>behind</em> the surface,
       never interactivity. Deeper sheets sit further into shadow. Use
       <code>-stack-2</code> sparingly — never a whole grid of it.</p>
 
     <!-- data-table + toc-row -->
     <h4 class="cl-h4">.data-table &amp; .toc-row</h4>
-    <div class="cl-grid -2">
+    <div class="cl-stack">
       <div class="cl-spec"><div class="cl-stage -block" style="padding:var(--space-5)">
-        <table class="data-table -numeric">
-          <thead><tr><th>City</th><th>Index</th><th>Reading</th></tr></thead>
-          <tbody>
-            <tr><td>Reykjav&iacute;k</td><td>14</td><td>Good</td></tr>
-            <tr><td>Lisbon</td><td>38</td><td>Fair</td></tr>
-            <tr><td>Jakarta</td><td>171</td><td>Poor</td></tr>
-          </tbody>
-        </table>
-      </div><div class="cl-cap"><span>.data-table</span><span>softened head rule, tabular figures</span></div></div>
+        <div class="data-table">
+          <table>
+            <thead><tr><th style="width:var(--space-8)"><input class="tick-box" type="checkbox" aria-label="Select all" data-indeterminate></th><th aria-sort="ascending">City</th><th class="-numeric">Index</th><th>Reading</th></tr></thead>
+            <tbody>
+              <tr><td><input class="tick-box" type="checkbox" aria-label="Select Jakarta"></td><td>Jakarta</td><td class="-numeric">171</td><td>Poor</td></tr>
+              <tr aria-selected="true"><td><input class="tick-box" type="checkbox" checked aria-label="Select Lisbon"></td><td>Lisbon</td><td class="-numeric">38</td><td>Fair</td></tr>
+              <tr><td><input class="tick-box" type="checkbox" aria-label="Select Reykjav&iacute;k"></td><td>Reykjav&iacute;k</td><td class="-numeric">14</td><td>Good</td></tr>
+            </tbody>
+            <tfoot><tr><td></td><th scope="row">Mean</th><td class="-numeric">74</td><td></td></tr></tfoot>
+          </table>
+        </div>
+      </div><div class="cl-cap"><span>.data-table — wrapper form</span><span>aria-sort · aria-selected · .-numeric · tfoot</span></div></div>
       <div class="cl-spec"><div class="cl-stage -block" style="padding:var(--space-6)">
         <div class="toc-row"><span>On the Composition of Small Apps</span><span class="leader"></span><span class="meta">3 min</span></div>
         <div class="toc-row"><span>A Field Guide to Hairlines</span><span class="leader"></span><span class="meta">6 min</span></div>
@@ -682,5 +730,9 @@
   </p>
 
 </div>
+<script>
+  // Caller demo only: indeterminate is a DOM property, not an attribute.
+  for (const box of document.querySelectorAll('[data-indeterminate]')) box.indeterminate = true;
+</script>
 </body>
 </html>

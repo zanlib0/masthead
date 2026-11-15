@@ -3,12 +3,12 @@
    Lift = literal duplicate sheets offset behind it: solid paper,
    hairline edge, NO blur, NO rotation. Each deeper sheet sits
    further into shadow (--sheet-1 darker, --sheet-2 darkest).
-   `position: relative` here is internal decoration scaffolding,
-   not placement of the card in the page. Caveat: the negative-z
-   under-sheets assume the card is not nested inside an opaque,
-   stacking-context-forming ancestor (rare; the honest tradeoff
-   of the negative-z "sheets behind" technique).
-   -framed and -stack-* are mutually exclusive (both use ::before).
+   The sheets are hard box-shadows (a sheet-coloured shadow inset
+   by 1px over a rule-coloured one = a sheet with a hairline
+   edge), so they need no z-index and survive inside any panel
+   with its own background. -framed combines with -stack-*.
+   `position: relative` here is internal scaffolding for the
+   -framed inner rule, not placement of the card in the page.
 
    WHEN TO USE WHICH (elevation = how much is behind the surface,
    never interactivity — the button owns "press me"):
@@ -62,33 +62,20 @@
     padding-top: var(--space-3);
   }
 
-  /* Shared under-sheet template. */
-  &.-stack-1::before,
-  &.-stack-2::before,
-  &.-stack-2::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border: 1px solid var(--rule);
-    border-radius: var(--radius-1);
-    z-index: -1;
+  /* One sheet beneath — one step into shadow. */
+  &.-stack-1 {
+    box-shadow:
+      var(--stack-shift) var(--stack-shift) 0 -1px var(--sheet-1),
+      var(--stack-shift) var(--stack-shift) 0 0    var(--rule);
   }
 
-  /* First sheet beneath — one step into shadow. Shared by both
-     -stack-1 and the front sheet of -stack-2 (identical). */
-  &.-stack-1::before,
-  &.-stack-2::before {
-    background: var(--sheet-1);
-    transform: translate(var(--stack-shift), var(--stack-shift));
-  }
-
-  /* Second sheet — the deeper one is darker still (no rotation). */
-  &.-stack-2::after {
-    background: var(--sheet-2);
-    transform: translate(
-      calc(var(--stack-shift) * 2),
-      calc(var(--stack-shift) * 2));
-    z-index: -2;
+  /* Two sheets — the deeper one is darker still (no rotation). */
+  &.-stack-2 {
+    box-shadow:
+      var(--stack-shift) var(--stack-shift) 0 -1px var(--sheet-1),
+      var(--stack-shift) var(--stack-shift) 0 0    var(--rule),
+      calc(var(--stack-shift) * 2) calc(var(--stack-shift) * 2) 0 -1px var(--sheet-2),
+      calc(var(--stack-shift) * 2) calc(var(--stack-shift) * 2) 0 0    var(--rule);
   }
 
   /* Catalogue plate — a quiet doubled rule, inset. Softened:

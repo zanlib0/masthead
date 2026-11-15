@@ -156,16 +156,20 @@ pre { font-family: var(--font-mono); font-size: var(--text-ui); line-height: var
 ul, ol { padding-left: 1.3em; }
 li::marker { color: var(--ink-3); }
 
-/* Bare links stay legible & accessible everywhere. The richer
-   treatments live in components/text-link.css (.text-link). */
+/* Bare links. In chrome (a table cell, a list, a toolbar) a link is
+   unadorned until hover — the place it sits already says "link".
+   In running text (a paragraph, anything in .prose) it carries the
+   hairline underline at rest. The richer treatments live in
+   components/text-link.css (.text-link), which always underlines. */
 a {
   color: var(--ink);
   text-decoration: underline;
   text-decoration-thickness: var(--underline-thickness);
-  text-decoration-color: var(--rule);
+  text-decoration-color: transparent;
   text-underline-offset: var(--underline-offset);
   transition: text-decoration-color var(--duration-1), color var(--duration-1);
 }
+:is(p, .prose) a { text-decoration-color: var(--rule); }
 a:hover { color: var(--accent-deep); text-decoration-color: var(--accent); }
 
 :focus-visible {

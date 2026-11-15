@@ -19,6 +19,11 @@
    <input type="checkbox"> in <label class="toggle-switch">; the
    internal gap holds the named positions to the rail.
 
+   Naming: the margin words are decoration with empty alt text
+   (content: "off" / ""), so they stay out of the accessible name.
+   The setting's real name lives outside the switch — point the
+   input at it with aria-labelledby="<id of the setting's label>".
+
      default  → blue-black ink pip
      :checked → gem-ink pip + "on" in --accent-deep
    ============================================================ */
@@ -45,8 +50,8 @@
     transition: color var(--duration-1);
   }
 
-  &::before { content: 'off'; }
-  &::after  { content: 'on'; }
+  &::before { content: 'off' / ''; }
+  &::after  { content: 'on' / ''; }
   &:not(:has(:checked))::before { color: var(--ink-2); }
   &:has(:checked)::after        { color: var(--accent-deep); }
 
