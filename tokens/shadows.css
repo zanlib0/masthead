@@ -41,7 +41,7 @@
   /* (b) Deboss — the recess wall facing the lamp falls in shadow.
      On paper a 2px wall reads; on a filled (accent) ground an ink
      wall vanishes, so a filled press also shades the fill itself
-     (--press-shade, laid over it like the --hover wash) and casts
+     (--press-shade, an inset spread so it eases with the wall) and casts
      a darker wall (--deboss-solid). */
   --deboss:       inset 2px 2px 0 oklch(from var(--ink) l c h / 24%);
   --deboss-solid: inset 2px 2px 0 oklch(0% 0 0deg / 30%);

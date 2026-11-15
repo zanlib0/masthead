@@ -801,6 +801,7 @@ hr {
   font-variant-caps: all-small-caps;
   line-height: 1;
   text-decoration: none;
+  transition: box-shadow .1s ease-out, background-color .1s ease-out;
   display: inline-flex;
 
   & > .icon {
@@ -830,8 +831,7 @@ hr {
   }
 
   &.-accent:is(:active, [aria-pressed="true"]) {
-    background-image: linear-gradient(var(--press-shade), var(--press-shade));
-    box-shadow: var(--deboss-solid);
+    box-shadow: var(--deboss-solid), inset 0 0 0 100vmax var(--press-shade);
   }
 
   &.-ghost {

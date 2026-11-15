@@ -56,8 +56,9 @@
   text-decoration: none;
   appearance: none;
 
-  /* No transition: a press is contact, not motion — it lands the
-     instant the pointer does, and lifts the instant it leaves. */
+  /* A quick 100ms press: fast enough to read as contact, slow
+     enough to be seen. The hover wash stays instant. */
+  transition: box-shadow 100ms ease-out, background-color 100ms ease-out;
 
   > .icon {
     flex: none;
@@ -86,8 +87,7 @@
   /* A filled press: the ink wall can't show on a dark fill, so the
      fill itself sinks into shadow and the wall deepens. */
   &.-accent:is(:active, [aria-pressed="true"]) {
-    background-image: linear-gradient(var(--press-shade), var(--press-shade));
-    box-shadow: var(--deboss-solid);
+    box-shadow: var(--deboss-solid), inset 0 0 0 100vmax var(--press-shade);
   }
 
   &.-ghost { border-color: transparent; }   /* beats every --press-frame */

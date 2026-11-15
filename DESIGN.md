@@ -334,7 +334,7 @@ A small‑caps Garamond label (`--text-ui`, medium) set in a hairline
 `--rule-strong` frame with 2px corners, square in the line. Height is
 `--control-h`, so it lines up with boxed inputs and selects in one bar.
 **Hover** lays the `--hover` wash over the ground; **press** is a **deboss**
-(`--deboss`, §6), instant, with no transition. Nothing transforms, leans or
+(`--deboss`, §6), easing in over 100ms. Nothing transforms, leans or
 scales.
 - **default (secondary):** ink label, hairline frame, transparent ground.
 - **`.-accent` (primary):** filled `--accent-solid`, `--accent-on` label; every
@@ -506,9 +506,9 @@ paper actually does:
    (`:active`, or held by `aria-pressed="true"`) takes `--deboss`: a hard 2px
    inset on the upper‑left inner edge, the recess wall facing the lamp. A
    filled (`-accent`) button can't show an ink wall on its dark ground, so its
-   fill sinks into shadow (`--press-shade`, laid over like the hover wash) and
-   takes the darker `--deboss-solid` wall. The press is **instant** — no
-   transition: contact, not motion. No transform, no scale, nothing beside it
+   fill sinks into shadow (`--press-shade`, an inset spread over the fill) and
+   takes the darker `--deboss-solid` wall. The press eases in over **100ms** —
+   quick enough to read as contact. No transform, no scale, nothing beside it
    moves.
 3. **The affixed plate and the loose sheet** — things that sit *on* the page.
    The `.cancel-stamp` carries `--plate-lift` (a hard ink edge + short soft
