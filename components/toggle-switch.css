@@ -4,7 +4,7 @@
    of a switch: the track is a single hairline rule (the structure
    that boxes do elsewhere), the state is a small ink pip that
    slides its length, and the two positions are NAMED in the
-   margin — italic serif "off" / "on", the way a catalogue labels a
+   margin — roman serif "off" / "on", the way a catalogue labels a
    setting. The label that wins (off when resting, on when thrown)
    firms from --ink-3; thrown, "on" takes gem ink (--accent-deep).
    No gloss, no knob shadow — the slide IS the affordance.
@@ -37,13 +37,12 @@
   cursor: pointer;
   user-select: none;
 
-  /* The named positions — italic serif in the margin. Both faint
+  /* The named positions — roman serif in the margin. Both faint
      at rest; the active side firms (off when resting, on when
      thrown), so the pair always reads which way the rail is set. */
   &::before,
   &::after {
     font-family: var(--font-serif);
-    font-style: italic;
     font-size: var(--text-ui);
     line-height: 1;
     color: var(--ink-3);

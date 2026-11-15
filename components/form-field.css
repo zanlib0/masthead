@@ -5,7 +5,7 @@
      > .label   small-caps label (a <label>, or a <legend> when
                 the field is a <fieldset> of radios)
      > .input   <input>, <select> or <textarea>
-     > .hint    italic --ink-3 help line
+     > .hint    --ink-3 help line
      > .error   the message, in --err-ink (link it to the control
                 with aria-describedby)
 
@@ -44,7 +44,7 @@
      itself. */
   > legend.label { padding: 0 0 var(--space-2); }
 
-  > .hint { font-style: italic; color: var(--ink-3); }
+  > .hint { color: var(--ink-3); }
   > .error { color: var(--err-ink); }
 
   /* Shared control chrome (both variants). Height is --control-h

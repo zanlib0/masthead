@@ -84,7 +84,7 @@ scaled to Garamond's x‑height. Remove caller shrinks such as
 |---|---|
 | `.stamp-button` | **`.press-button`** (no alias) — see §4 |
 | `.t-eyebrow` | removed, no alias. Use `.t-meta` for a caption, `h6` for a small heading, `.t-subhead` for a small‑caps subtitle — or drop the label |
-| `h6` (League Spartan eyebrow) | now a quiet italic heading at `--text-ui` in `--ink-2` |
+| `h6` (League Spartan eyebrow) | now a quiet roman heading at `--text-ui`, medium, in `--ink-2` |
 | `.t-subhead` (lowercase + small‑caps hack) | real `all-small-caps` at `--text-subhead`; your text's case is kept |
 | `<table class="data-table">` | **`<div class="data-table"><table>…</table></div>`** — see §5 |
 | `.data-table.-numeric` (whole table) | `.-numeric` on each number **cell** (`th`/`td`) |

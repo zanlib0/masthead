@@ -251,7 +251,7 @@ steps), re‑resolved inside `.prose`.
 Every chrome part — buttons, labels, inputs, selects, table cells and heads, card
 body and foot, nav, toggle words, seals, `.t-meta` — is set at **`--text-ui`**.
 There is no meta step. A printed page is set in one size and gets its hierarchy
-from italic, small caps, ink and rules; so does Masthead's chrome:
+from small caps, ink and rules; so does Masthead's chrome:
 
 - **Small caps for labels.** Form labels, table heads, card feet, running heads,
   toc meta, `blockquote cite`, the seal, the button label, `h5` and `.t-subhead`
@@ -259,7 +259,10 @@ from italic, small caps, ink and rules; so does Masthead's chrome:
   never faked, tracked by `--track-caps` (0.06em). **Never `text-transform`** on
   anything that carries user content: the author's case survives, so "API" and
   "api" stay different.
-- **Italic + `--ink-3` for meta** (`.t-meta`, `.hint`, the toggle's margin words).
+- **`--ink-3` for meta** (`.t-meta`, `.hint`, the toggle's margin words) — roman,
+  not italic. **Italic is reserved** for emphasis (`<em>`), citations
+  (`.text-link.-reference`) and the `.press-masthead` wordmark; chrome never
+  leans.
 - **Ink for weight of voice** — the wide `--ink` / `-2` / `-3` spread (§2).
 - **Rules** for structure.
 
@@ -274,7 +277,7 @@ and `.t-mono` therefore sit at `1em` with no per‑element shrink.
 **The heading ladder.** `h1`–`h4` are **serif, sentence case**, descending the
 scale; `h1` is light (`--weight-regular` — the title voice is quiet, not loud),
 `h2`–`h4` medium. `h5` is the **small‑caps subtitle** (`--text-subhead`,
-`--ink-2`; medium as `h5`, regular as `.t-subhead`); `h6` is a **quiet italic heading** at `--text-ui` in `--ink-2`. The
+`--ink-2`; medium as `h5`, regular as `.t-subhead`); `h6` is a **quiet roman heading** at `--text-ui`, medium, in `--ink-2`. The
 treatments are detachable as `.t-display` / `.t-heading` / `.t-subhead` — apply
 where **tag ≠ size**: a hero line that is semantically an `h2`, or an app `h1`
 that must stay restrained. Pairing `.t-subhead` with `color: var(--accent)` (the
@@ -350,7 +353,7 @@ A small‑caps Garamond label (`--text-ui`, medium) set in a hairline
 
 ### `.form-field` — label over control, with hint and error
 `> .label` (small caps, `--ink-2`, x‑band trimmed) · `> .input` (an `<input>`,
-`<select>` or `<textarea>`) · optional `> .hint` (italic `--ink-3`) and
+`<select>` or `<textarea>`) · optional `> .hint` (`--ink-3`) and
 `> .error` (`--err-ink`; link it with `aria-describedby`).
 - **Default:** a ruled writing line in ink. **Focus** turns it into a real **2px
   accent underline** (the line is the field's own focus mark).
@@ -380,7 +383,7 @@ wraps it in `<label>` and the natural inline whitespace handles the gap.
 ### `.toggle-switch` — a pip riding a hairline rail
 The quietest reading of a switch: the track is a single hairline rule, the state
 is a small ink pip that slides its length, and the two positions are **named in
-the margin** — italic serif `off` / `on`. The active side firms from `--ink-3`;
+the margin** — roman serif `off` / `on`. The active side firms from `--ink-3`;
 thrown, `on` takes `--accent-deep` and the pip + rail go `--accent`. Built on a
 bare `<input type="checkbox">` the caller wraps in `<label class="toggle-switch">`.
 The margin words are generated with **empty alt text** (`content: "off" / ""`), so
@@ -520,7 +523,8 @@ is rationed to those three cues and earned by a physical metaphor each time.
 **Do**
 - Read only semantic aliases; theme via `data-theme` / `data-accent`.
 - Keep components layout‑free; let the caller place them.
-- Set chrome at `--text-ui`; get hierarchy from italic, small caps, ink and rules.
+- Set chrome at `--text-ui`; get hierarchy from small caps, ink and rules.
+- Keep italic for emphasis (`<em>`), citations (`.-reference`) and the wordmark.
 - Put long‑form content in `.prose`; keep the app register everywhere else.
 - One accent per surface; let status borrow gems with intent — `*-ink` for words,
   the 500s for marks.

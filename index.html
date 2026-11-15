@@ -39,7 +39,7 @@
   font-family: var(--font-mono); font-size: var(--text-ui); color: var(--ink-3);
   display: flex; justify-content: space-between; gap: var(--space-4);
 }
-.cl-note { font-family: var(--font-serif); font-style: italic; font-size: var(--text-ui); color: var(--ink-3); margin-top: var(--space-3); max-width: 66ch; }
+.cl-note { font-family: var(--font-serif); font-size: var(--text-ui); color: var(--ink-3); margin-top: var(--space-3); max-width: 66ch; }
 
 .cl-ramp { display: grid; grid-template-columns: repeat(10, 1fr); border: 1px solid var(--rule); border-radius: var(--radius-1); overflow: hidden; }
 .cl-ramp > div { height: 46px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 3px; font-family: var(--font-mono); font-size: 9px; color: oklch(0 0 0 / .42); }
@@ -98,7 +98,7 @@
 
 .cl-stub { border: 1px dashed var(--ink-3); border-radius: var(--radius-1); padding: var(--space-5); color: var(--ink-3); }
 .cl-stub h4 { color: var(--ink-2); margin-bottom: 4px; }
-.cl-stub p { font-size: var(--text-ui); font-style: italic; }
+.cl-stub p { font-size: var(--text-ui); }
 
 .cl-dark { background: var(--paper); color: var(--ink); border-radius: var(--radius-2); padding: var(--space-10) var(--space-8); }
 
@@ -124,14 +124,14 @@
 .cl-sub .press-button { margin-top: var(--space-6); }
 .cl-sub-foot { display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-6); }
 
-.cl-foot { margin-top: var(--space-24); color: var(--ink-3); font-size: var(--text-ui); font-style: italic; }
+.cl-foot { margin-top: var(--space-24); color: var(--ink-3); font-size: var(--text-ui); }
 .cl-folio-mono { font-family: var(--font-mono); font-size: var(--text-ui); color: var(--ink-3); }
 .cl-lede { max-width: 60ch; margin-top: var(--space-6); }
 
 /* kbd demo helpers — caller-owned, not part of Masthead. */
 .cl-keycombo { display: inline-flex; align-items: baseline; gap: var(--space-1); }
 .cl-keycombo .sep { font-family: var(--font-serif); font-size: var(--text-ui); color: var(--ink-3); }
-.cl-keycombo .action { font-family: var(--font-serif); font-style: italic; font-size: var(--text-ui); color: var(--ink-3); margin-left: var(--space-2); }
+.cl-keycombo .action { font-family: var(--font-serif); font-size: var(--text-ui); color: var(--ink-3); margin-left: var(--space-2); }
 .cl-kbdprose { font-family: var(--font-serif); font-size: var(--text-ui); color: var(--ink-2); line-height: var(--leading-prose); border-top: 1px solid var(--rule-soft); padding-top: var(--space-3); margin-top: var(--space-4); max-width: 60ch; }
 
 /* Caller-layer mobile reflow. The system handles its own components;
@@ -341,12 +341,12 @@
           <span class="t-display" style="font-size:var(--text-h2)">Display</span>
           <span class="t-heading">Heading</span>
           <span class="t-subhead">Small-caps subhead</span>
-          <span class="t-lede">A lede, set in italic serif.</span>
+          <span class="t-lede">A lede, set larger in a softer ink.</span>
           <span class="t-body">Body — EB Garamond at sixteen, weight 400; twenty-four in .prose.</span>
           <h5>h5 — the small-caps subtitle</h5>
-          <h6>h6 — a quiet italic heading</h6>
+          <h6>h6 — a quiet roman heading</h6>
           <span class="t-mono">mono · 0027</span>
-          <span class="t-meta">metadata, italic</span>
+          <span class="t-meta">metadata, faint</span>
         </div>
         <div class="cl-cap"><span>type roles</span><span>.t-display … .t-subhead … .t-meta</span></div>
       </div>
@@ -616,7 +616,7 @@
           </nav>
         </header>
       </div>
-      <div class="cl-cap"><span>lowercase italic title · roman nav · accent dot on current</span><span>one hairline beneath</span></div>
+      <div class="cl-cap"><span>italic wordmark · roman nav · accent dot on current</span><span>one hairline beneath</span></div>
     </div>
 
     <!-- cancel-stamp -->

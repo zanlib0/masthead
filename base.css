@@ -59,7 +59,7 @@ body {
    restrained — the caller reaches for the detachable .t-* roles
    below. The bottom two rungs are quieter:
      h5 — the small-caps subtitle (Image-1 effect)
-     h6 — an italic heading at the UI size, in --ink-2 */
+     h6 — a quiet roman heading at the UI size, medium, in --ink-2 */
 h1, h2, h3, h4 {
   font-family: var(--font-serif);
   line-height: var(--leading-snug);
@@ -96,8 +96,7 @@ h5 {
 
 h6 {
   font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: var(--weight-regular);
+  font-weight: var(--weight-medium);
   font-size: var(--text-ui);
   color: var(--ink-2);
 }
@@ -194,7 +193,7 @@ a:hover { color: var(--accent-deep); text-decoration-color: var(--accent); }
 
 /* Optically matched to the host text by body's font-size-adjust. */
 .t-mono     { font-family: var(--font-mono); }
-.t-meta     { font-family: var(--font-serif); font-style: italic; font-size: var(--text-ui); color: var(--ink-3); }
+.t-meta     { font-family: var(--font-serif); font-size: var(--text-ui); color: var(--ink-3); }
 .t-tabular  { font-variant-numeric: tabular-nums lining-nums; }
 
 /* Hairline rules — appearance only, zero margin. */

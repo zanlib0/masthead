@@ -27,8 +27,9 @@
 
   /* The one chrome size. Every UI part — buttons, labels, inputs,
      table cells, nav — sets this; it never remaps by register.
-     Hierarchy inside chrome comes from italic, small caps, ink
-     and rules, not from size. */
+     Hierarchy inside chrome comes from small caps, ink and
+     rules, not from size. Italic is reserved for emphasis,
+     citations and the wordmark (DESIGN.md §3). */
   --text-ui: 1rem;              /* 16px */
 
   /* Register-mapped scale — APP values here; .prose remaps them

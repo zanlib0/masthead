@@ -535,8 +535,7 @@ h5 {
 
 h6 {
   font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: var(--weight-regular);
+  font-weight: var(--weight-medium);
   font-size: var(--text-ui);
   color: var(--ink-2);
 }
@@ -687,7 +686,6 @@ a:hover {
 
 .t-meta {
   font-family: var(--font-serif);
-  font-style: italic;
   font-size: var(--text-ui);
   color: var(--ink-3);
 }
@@ -893,7 +891,6 @@ hr {
 
   & > .hint {
     color: var(--ink-3);
-    font-style: italic;
   }
 
   & > .error {
@@ -1125,7 +1122,6 @@ hr {
 
   &:before, &:after {
     font-family: var(--font-serif);
-    font-style: italic;
     font-size: var(--text-ui);
     color: var(--ink-3);
     transition: color var(--duration-1);
