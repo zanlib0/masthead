@@ -440,7 +440,7 @@ beneath. Case is the author's — nothing is lower‑cased. At narrow widths it
 stacks (§8).
 
 ### `.cancel-stamp` — an affixed seal (the only badge; no status badges)
-A small printed plate **applied** to the sheet: Garamond **600 small caps** at
+A small printed plate **applied** to the sheet: Garamond **medium small caps** at
 `--text-ui` on an `--accent-tint` ground, an `--accent` border, `--accent-deep`
 lettering, sitting a hair proud on `--plate-lift` (§6). Its corners are
 **softly rounded** (~6px: a stuck‑on label, the one component allowed past the
