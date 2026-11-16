@@ -195,7 +195,7 @@ select‑all head.
 - **Links.** Bare `<a>` in chrome (table cells, lists, nav) is no longer
   underlined until hover; links inside `p` and `.prose` still are. Use
   `.text-link` where a link must always look like one.
-- **`.press-masthead`.** The title is an italic accent wordmark at `--text-h4`
+- **`.press-masthead`.** The title is a roman accent wordmark at `--text-h4`
   (~19px, was 39px); nav links are `--text-ui`. Feiten's inline
   `padding: var(--space-6)` around it now means 24px, not 36px.
 - **`.paper-card`** stacks are box‑shadows now: they show inside panels with a

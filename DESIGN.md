@@ -266,9 +266,8 @@ from small caps, ink and rules; so does Masthead's chrome:
   anything that carries user content: the author's case survives, so "API" and
   "api" stay different.
 - **`--ink-3` for meta** (`.t-meta`, `.hint`, the toggle's margin words) — roman,
-  not italic. **Italic is reserved** for emphasis (`<em>`), citations
-  (`.text-link.-reference`) and the `.press-masthead` wordmark; chrome never
-  leans.
+  not italic. **Italic is reserved** for emphasis (`<em>`) and citations
+  (`.text-link.-reference`); chrome never leans.
 - **Ink for weight of voice** — the wide `--ink` / `-2` / `-3` spread (§2).
 - **Rules** for structure.
 
@@ -434,7 +433,7 @@ it. Small‑caps heads over a `--rule-strong` underline, hairline rows,
 **article‑contents line** — section title + reading‑time, *not* page numbers.
 
 ### `.press-masthead` — the namesake
-An **italic serif accent wordmark** (`--text-h4`, ~19px) left, roman links at
+A **roman serif accent wordmark** (`--text-h4`, ~19px) left, roman links at
 `--text-ui` right, an **accent dot** before `a[aria-current="page"]`, one hairline
 beneath. Case is the author's — nothing is lower‑cased. At narrow widths it
 stacks (§8).
@@ -536,7 +535,7 @@ is rationed to those three cues and earned by a physical metaphor each time.
 - Read only semantic aliases; theme via `data-theme` / `data-accent`.
 - Keep components layout‑free; let the caller place them.
 - Set chrome at `--text-ui`; get hierarchy from small caps, ink and rules.
-- Keep italic for emphasis (`<em>`), citations (`.-reference`) and the wordmark.
+- Keep italic for emphasis (`<em>`) and citations (`.-reference`).
 - Put long‑form content in `.prose`; keep the app register everywhere else.
 - One accent per surface; let status borrow gems with intent — `*-ink` for words,
   the 500s for marks.

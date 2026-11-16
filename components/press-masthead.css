@@ -1,5 +1,5 @@
 /* ============================================================
-   .press-masthead — the namesake: an italic serif wordmark in
+   .press-masthead — the namesake: a roman serif wordmark in
    accent on the left, a row of roman links at the UI size on the
    right, an accent dot before the current page, a single hairline
    rule beneath. Case is the author's — nothing is transformed. No nameplate
@@ -24,7 +24,6 @@
 
   > .title {
     font-family: var(--font-serif);
-    font-style: italic;
     font-weight: var(--weight-regular);
     font-size: var(--text-h4);
     letter-spacing: 0;

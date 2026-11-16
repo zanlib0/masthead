@@ -1387,7 +1387,6 @@ hr {
 
   & > .title {
     font-family: var(--font-serif);
-    font-style: italic;
     font-weight: var(--weight-regular);
     font-size: var(--text-h4);
     letter-spacing: 0;
